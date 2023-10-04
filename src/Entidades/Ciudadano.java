@@ -6,7 +6,7 @@ public class Ciudadano {
         private String nombreCompleto;
         private String email;
         private String celular;
-        private String patologia = null;
+        private String patologia;
         private String ambitoLaboral;
 
     public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String ambitoLaboral) {
@@ -14,9 +14,18 @@ public class Ciudadano {
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.celular = celular;
+        this.patologia=null;
         this.ambitoLaboral = ambitoLaboral;
     }
-
+public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String patologia, String ambitoLaboral) {
+        this.DNI = DNI;
+        this.nombreCompleto = nombreCompleto;
+        this.email = email;
+        this.celular = celular;
+        this.patologia=patologia;
+        this.ambitoLaboral = ambitoLaboral;
+    }
+    
     public int getDNI() {
         return DNI;
     }
@@ -53,6 +62,7 @@ public class Ciudadano {
         return patologia;
     }
 
+   
     public void setPatologia(String patologia) {
         this.patologia = patologia;
     }
@@ -63,6 +73,11 @@ public class Ciudadano {
 
     public void setAmbitoLaboral(String ambitoLaboral) {
         this.ambitoLaboral = ambitoLaboral;
+    }
+
+    @Override
+    public String toString() {
+        return "Ciudadano: " + "DNI: " + DNI + ", nombreCompleto: " + nombreCompleto + ", email: " + email + ", celular: " + celular + ", patologia: " + patologia + ", ambitoLaboral: " + ambitoLaboral;
     }
         
         
