@@ -7,11 +7,11 @@ public class citaVacunacion {
     private int codCita;
     private Ciudadano persona;
     private String fechaHoraCita;
-    private String centroVacunacion;
+    private CentroVacunacion centroVacunacion;
     private LocalDateTime fechaHoraVacunacion;
     private Vacuna dosis;
 
-    public citaVacunacion(int codCita, Ciudadano persona, String fechaHoraCita, String centroVacunacion, LocalDateTime fechaHoraVacunacion, Vacuna dosis) {
+    public citaVacunacion(int codCita, Ciudadano persona, String fechaHoraCita, CentroVacunacion centroVacunacion, LocalDateTime fechaHoraVacunacion, Vacuna dosis) {
         this.codCita = codCita;
         this.persona = persona;
         this.fechaHoraCita = fechaHoraCita;
@@ -44,11 +44,11 @@ public class citaVacunacion {
         this.fechaHoraCita = fechaHoraCita;
     }
 
-    public String getCentroVacunacion() {
+    public CentroVacunacion getCentroVacunacion() {
         return centroVacunacion;
     }
 
-    public void setCentroVacunacion(String centroVacunacion) {
+    public void setCentroVacunacion(CentroVacunacion centroVacunacion) {
         this.centroVacunacion = centroVacunacion;
     }
 
