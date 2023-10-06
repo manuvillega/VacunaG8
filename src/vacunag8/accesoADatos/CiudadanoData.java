@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class CiudadanoData {
  private Connection conexion;
@@ -87,6 +88,28 @@ public class CiudadanoData {
         }
 
         return ciudadanos;
+    }
+    
+    public Ciudadano obtenerCiudadanoPorDni(int dni){
+        Ciudadano ciudadano = null;
+        try{
+            String sql = "SELECT * FROM ciudadano where DNI = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int DNI = rs.getInt("DNI");
+                String nombreCompleto = rs.getString("nombreCompleto");
+                String email = rs.getString("email");
+                String celular = rs.getString("celular");
+                String patologia = rs.getString("patologia");
+                String ambitoLaboral = rs.getString("ambitoLaboral");
+            }
+            
+        } catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, "error al obtener ciudadano"+ex);
+        }
+        return ciudadano;
     }
 
      //buscar Ciudadano en espera

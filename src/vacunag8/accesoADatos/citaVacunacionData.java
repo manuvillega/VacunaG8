@@ -6,8 +6,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class citaVacunacionData {
@@ -15,6 +19,7 @@ public class citaVacunacionData {
 
     public citaVacunacionData(Connection conexion) {
         this.conexion = conexion;
+        
     }
     
     public void CrearCita(citaVacunacion cita){
@@ -69,7 +74,19 @@ public class citaVacunacionData {
    }
     
    public List<citaVacunacion> listarCitasCumplidas(){
-       String sql = "SELECT ";
+       List <citaVacunacion> cita = new ArrayList<citaVacunacion>();
+       String sql = "SELECT * FROM citavacunacion"
+                    + "WHERE dosis > 0";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+           
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No fue posible conectar para listar citas cumplidas"+ex);
+        }
+      
+
         return null;
    }
 }
