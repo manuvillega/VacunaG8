@@ -33,8 +33,18 @@ public class Conexion {
                 JOptionPane.showMessageDialog(null, "Error al conectarse a la Base de Datos");
             }
         }
-        return connection;
+        return connection;        
 
     }
 
+    public static void desconectar() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                JOptionPane.showMessageDialog(null, "Conexión cerrada!.", "",  JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
