@@ -30,6 +30,12 @@ public class citaVacunacionData {
             preparedStatement.setInt(2, 1);
             preparedStatement.setString(3, cita.getFechaHoraCita());
             preparedStatement.setString(4, cita.getCentroVacunacion().getNombre());
+            int exito = preparedStatement.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Cita vacunacion creada");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo crear la cita de vacunacion");
+            }
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "No fue posible conectar para crear cita"+e);
         }
@@ -41,6 +47,12 @@ public class citaVacunacionData {
         try(PreparedStatement preparedStatement = conexion.prepareStatement(sql)){
             preparedStatement.setString(1, cita.getFechaHoraCita());
             preparedStatement.setInt(2, cita.getPersona().getDNI());
+            int exito = preparedStatement.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Cita vacunacion modificada");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo modificar la cita de vacunacion");
+            }
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "No fue posible conectar para modificar cita"+e);
         }
@@ -54,6 +66,12 @@ public class citaVacunacionData {
             preparedStatement.setDate(1, nuevaDate);
             preparedStatement.setInt(2, cita.getDosis().getNroSerieDosis());
             preparedStatement.setInt(3, cita.getPersona().getDNI());
+            int exito = preparedStatement.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha actualizado la vacunacion");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo actualizar la vacunacion");
+            }
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "No fue posible conectar para modificar cita"+e);
         }
@@ -64,9 +82,16 @@ public class citaVacunacionData {
        LocalDateTime fecha = cita.getFechaHoraVacunacion();
        LocalDateTime fechaNueva = fecha.plusDays(42);
        try(PreparedStatement preparedStatement = conexion.prepareStatement(sql)){
+           
             Date nuevaDate = Date.valueOf(fechaNueva.toLocalDate());
             preparedStatement.setDate(1, nuevaDate);
             preparedStatement.setInt(2, cita.getPersona().getDNI());
+             int exito = preparedStatement.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha establecido una nueva cita");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo establecer una nueva cita de vacunacion");
+            }
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "No fue posible conectar para modificar cita"+e);
         }
