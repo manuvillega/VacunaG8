@@ -2,15 +2,25 @@
 package Entidades;
 
 public class Laboratorio {
+    private int idLaboratorio;
     private int cuit[] = new int[11];
     private String nomLaboratorio;
     private String pais;
     private String domComercial;
 
-    public Laboratorio(String nomLaboratorio, String pais, String domComercial) {
+    public Laboratorio(int idLaboratorio, String nomLaboratorio, String pais, String domComercial) {
+        this.idLaboratorio = idLaboratorio;
         this.nomLaboratorio = nomLaboratorio;
         this.pais = pais;
         this.domComercial = domComercial;
+    }
+
+    public int getIdLaboratorio() {
+        return idLaboratorio;
+    }
+
+    public void setIdLaboratorio(int idLaboratorio) {
+        this.idLaboratorio = idLaboratorio;
     }
 
     public int[] getCuit() {
@@ -43,7 +53,6 @@ public class Laboratorio {
 
     public void setDomComercial(String domComercial) {
         this.domComercial = domComercial;
-    }
-    
+    }      
     
 }
