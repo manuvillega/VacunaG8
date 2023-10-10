@@ -53,6 +53,6 @@ public class Laboratorio {
 
     public void setDomComercial(String domComercial) {
         this.domComercial = domComercial;
-    }      
+    }       
     
 }
