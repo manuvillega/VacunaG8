@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class citaVacunacionData {
@@ -96,6 +94,25 @@ public class citaVacunacionData {
             JOptionPane.showMessageDialog(null, "No fue posible conectar para modificar cita"+e);
         }
        return fechaNueva;
+   }
+   
+   public LocalDateTime postergarCita(citaVacunacion cita){
+       String sql = "UPDATE citavacunacion SET fechaHoraCita = ? WHERE 1";
+       LocalDateTime fechas = cita.getFechaHoraVacunacion();
+       LocalDateTime citas = fechas.plusDays(14);
+       try(PreparedStatement preparedStatement = conexion.prepareStatement(sql)){
+           Date nuevaDate = Date.valueOf(citas.toLocalDate());
+           preparedStatement.setDate(1, nuevaDate);
+           int exito = preparedStatement.executeUpdate();    
+           if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Se han postergado las citas 2 semanas");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo postergar las citas");
+            }    
+   } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No fue posible conectar para modificar cita"+e);
+   }
+       return citas;
    }
     
    public List<citaVacunacion> listarCitasCumplidas(){
