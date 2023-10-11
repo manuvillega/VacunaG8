@@ -1,18 +1,29 @@
-
 package Entidades;
 
+import Utilidades.ValidarCUIT;
+
 public class Laboratorio {
+
     private int idLaboratorio;
-    private int cuit[] = new int[11];
+    private String cuit;
     private String nomLaboratorio;
     private String pais;
     private String domComercial;
 
-    public Laboratorio(int idLaboratorio, String nomLaboratorio, String pais, String domComercial) {
-        this.idLaboratorio = idLaboratorio;
+    public Laboratorio(String cuit, String nomLaboratorio, String pais, String domComercial) {
+        this.cuit = cuit;
         this.nomLaboratorio = nomLaboratorio;
         this.pais = pais;
         this.domComercial = domComercial;
+    }
+
+    public Laboratorio(int idLaboratorio, String cuit, String nomLaboratorio, String pais, String domComercial) {
+        this.idLaboratorio = idLaboratorio;
+        this.cuit = cuit;
+        this.nomLaboratorio = nomLaboratorio;
+        this.pais = pais;
+        this.domComercial = domComercial;
+        //setCuit(cuit);  
     }
 
     public int getIdLaboratorio() {
@@ -23,12 +34,18 @@ public class Laboratorio {
         this.idLaboratorio = idLaboratorio;
     }
 
-    public int[] getCuit() {
+    public String getCuit() {
         return cuit;
     }
 
-    public void setCuit(int[] cuit) {
-        this.cuit = cuit;
+    //  validación del CUIT
+    public boolean setCuit(String cuit) {
+        if (cuit != null && ValidarCUIT.esUnCUITValido(cuit)) {
+            this.cuit = cuit;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String getNomLaboratorio() {
@@ -53,6 +70,10 @@ public class Laboratorio {
 
     public void setDomComercial(String domComercial) {
         this.domComercial = domComercial;
-    }       
-    
+    }
+
+    @Override
+    public String toString() {
+        return "Laboratorio: \nidLaboratorio: " + idLaboratorio + ", cuit: " + cuit + ", nomLaboratorio: " + nomLaboratorio + ", pais: " + pais + ", domComercial: " + domComercial;
+    }
 }

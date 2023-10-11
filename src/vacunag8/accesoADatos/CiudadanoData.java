@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class CiudadanoData {
  private Connection conexion;
@@ -17,7 +16,7 @@ public class CiudadanoData {
     }
 
     public void insertarCiudadano(Ciudadano ciudadano) {
-        String sql = "INSERT INTO Ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo) " +
+        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
@@ -29,7 +28,7 @@ public class CiudadanoData {
             preparedStatement.setString(6, ciudadano.getAmbitoLaboral());
 
             preparedStatement.executeUpdate();
-            System.out.println("Ciudadano insertado correctamente.");
+            System.out.println("ciudadano insertado correctamente.");
         } catch (SQLException e) {
             System.err.println("Error al insertar ciudadano: " + e.getMessage());
         }
@@ -47,7 +46,7 @@ public class CiudadanoData {
             preparedStatement.setInt(6, ciudadano.getDNI());
 
             preparedStatement.executeUpdate();
-            System.out.println("Ciudadano actualizado!.");
+            System.out.println("ciudadano actualizado!.");
         } catch (SQLException e) {
             System.err.println("Error al actualizar ciudadano: " + e.getMessage());
         }
@@ -89,59 +88,9 @@ public class CiudadanoData {
 
         return ciudadanos;
     }
-    
-    public Ciudadano obtenerCiudadanoPorDni(int dni){
-        Ciudadano ciudadano = null;
-        try{
-            String sql = "SELECT * FROM ciudadano where DNI = ?";
-            PreparedStatement ps = conexion.prepareStatement(sql);
-            ps.setInt(1, dni);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                int DNI = rs.getInt("DNI");
-                String nombreCompleto = rs.getString("nombreCompleto");
-                String email = rs.getString("email");
-                String celular = rs.getString("celular");
-                String patologia = rs.getString("patologia");
-                String ambitoLaboral = rs.getString("ambitoLaboral");
-            }
-            
-        } catch(SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error al obtener ciudadano"+ex);
-        }
-        return ciudadano;
-    }
 
      //buscar Ciudadano en espera
     public void buscarCiudadano(Ciudadano ciudadano) {
-            
-    }
-    
-    public Ciudadano buscarCiudadanoPorDni(int dni){
-        Ciudadano ciudadano = null;
-        try{
-            String sql = "SELECT * FROM ciudadano WHERE DNI = ?";
-            PreparedStatement ps = conexion.prepareStatement(sql);
-            ps.setInt(1, dni);
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs.next()){
-                int DNI = dni;
-                String nombreCompleto = rs.getString("nombreCompleto");
-                String email = rs.getString("email");
-                String celular = rs.getString("celular");
-                String patologia = rs.getString("patologia");
-                String ambitoLaboral = rs.getString("ambitoLaboral");
-                ciudadano = new Ciudadano(DNI, email, celular, patologia, ambitoLaboral);
-                
-            }
-            ps.close();
-            
-        } catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "error al acceder a la tabla Ciudadano");
-        }
-        return ciudadano;
+
     }
 }
-        
- 

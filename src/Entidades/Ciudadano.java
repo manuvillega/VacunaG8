@@ -77,7 +77,7 @@ public Ciudadano(int DNI, String nombreCompleto, String email, String celular, S
 
     @Override
     public String toString() {
-        return "Ciudadano: " + "DNI: " + DNI + ", nombreCompleto: " + nombreCompleto + ", email: " + email + ", celular: " + celular + ", patologia: " + patologia + ", ambitoLaboral: " + ambitoLaboral;
+        return "Ciudadano: \n" + "DNI: " + DNI + ", nombreCompleto: " + nombreCompleto + ", email: " + email + ", celular: " + celular + ", patologia: " + patologia + ", ambitoLaboral: " + ambitoLaboral;
     }
         
         

@@ -125,7 +125,7 @@ public class citaVacunacionData {
             while(rs.next()){
                citaVacunacion CitaVacunacion = new citaVacunacion();
                
-               CitaVacunacion.setPersona(persona);
+//               CitaVacunacion.setPersona(persona);
                 
             }
             
