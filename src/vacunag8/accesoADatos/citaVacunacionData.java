@@ -153,4 +153,38 @@ public class citaVacunacionData {
 
         return cita;
    }
+   
+   public List<citaVacunacion> listarCitasNoCumplidas(){
+       List <citaVacunacion> cita = new ArrayList<citaVacunacion>();
+       String sql = "SELECT * FROM citavacunacion"
+                    + "WHERE dosis = 0";
+        try {
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+               citaVacunacion CitaVacunacion = new citaVacunacion();
+               CitaVacunacion.setCodCita(rs.getInt("codigoCita"));
+               int dni = rs.getInt("persona");
+               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDni(dni);           
+               CitaVacunacion.setPersona(persona);
+               CitaVacunacion.setFechaHoraCita(rs.getString("fechaHoraCita")); 
+               int idCentro = rs.getInt("centroVacunacion");
+               CentroVacunacion centro = centroVacunacionData.obtenerCentroVacunacionPorId(idCentro);
+               CitaVacunacion.setCentroVacunacion(centro);
+               Date date = rs.getDate("fechaHoraVacunacion");
+               LocalDateTime fechaHoraVacunacion = date.toLocalDate().atStartOfDay();
+               CitaVacunacion.setFechaHoraVacunacion(fechaHoraVacunacion);
+               int cod = rs.getInt("vacuna");
+               Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(cod);
+               CitaVacunacion.setDosis(vacuna);
+               cita.add(CitaVacunacion);
+            }
+                      
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No fue posible conectar para listar citas no cumplidas"+ex);
+        }
+      
+
+        return cita;
+   }
 }
