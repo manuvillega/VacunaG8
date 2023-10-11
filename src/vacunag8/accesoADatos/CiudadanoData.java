@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class CiudadanoData {
  private Connection conexion;
@@ -89,10 +90,30 @@ public class CiudadanoData {
         return ciudadanos;
     }
 
-     //buscar Ciudadano en espera
-//    public void buscarCiudadanoPorDni(dni) {
-
-//    }
+     public Ciudadano buscarCiudadanoPorDni(int dni){
+         Ciudadano ciudadano = null;
+         try{
+            String sql = "SELECT * FROM ciudadano WHERE DNI = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                int DNI = dni;
+                String nombreCompleto = rs.getString("nombreCompleto");
+                String email = rs.getString("email");
+                String celular = rs.getString("celular");
+                String patologia = rs.getString("patologia");
+                String ambitoLaboral = rs.getString("ambitoLaboral");
+                ciudadano = new Ciudadano(DNI, nombreCompleto, email, celular, patologia, ambitoLaboral);
+            }
+            ps.close();
+            
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla Vacuna");
+        }
+         return ciudadano;
+     }
 }
         
  

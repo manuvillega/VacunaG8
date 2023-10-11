@@ -131,8 +131,8 @@ public class citaVacunacionData {
                citaVacunacion CitaVacunacion = new citaVacunacion();
                CitaVacunacion.setCodCita(rs.getInt("codigoCita"));
                int dni = rs.getInt("persona");
-//               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDni(dni);           
-//               CitaVacunacion.setPersona(persona);
+               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDni(dni);           
+               CitaVacunacion.setPersona(persona);
                CitaVacunacion.setFechaHoraCita(rs.getString("fechaHoraCita")); 
                int idCentro = rs.getInt("centroVacunacion");
                CentroVacunacion centro = centroVacunacionData.obtenerCentroVacunacionPorId(idCentro);
