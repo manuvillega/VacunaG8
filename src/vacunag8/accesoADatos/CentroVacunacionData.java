@@ -3,6 +3,7 @@ package vacunag8.accesoADatos;
 import Entidades.CentroVacunacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,7 +61,29 @@ public class CentroVacunacionData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "no fue posible conectar para crear Centro");
         }
-    }          
+    }
+    
+    public CentroVacunacion obtenerCentroVacunacionPorId(int id){
+        CentroVacunacion centroVacunacion = null;
+        try{
+            String sql = "SELECT * FROM centrovacunacion WHERE IDcentro = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                int IDcentro = id;
+                String nombre = rs.getString("nombre");
+                String direccion = rs.getString("direccion");
+                centroVacunacion = new CentroVacunacion(IDcentro, nombre, direccion);            
+            }
+            ps.close();
+            
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla CentroVacunacion");
+        }
+        return centroVacunacion;
+    }
         
 }
     

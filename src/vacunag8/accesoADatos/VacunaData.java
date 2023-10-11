@@ -4,6 +4,7 @@ import Entidades.Vacuna;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,7 +70,31 @@ public class VacunaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "error de conexion con tabla vacuna");
         }
-    }    
+    }
+
+    public Vacuna obtenerVacunaPorNroSerie(int nroSerie){
+        Vacuna vacuna = null;
+        try{
+            String sql = "SELECT * FROM vacuna WHERE nroSerieDosis = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, nroSerie);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                int nroSerieDosis = nroSerie;
+                String marca = rs.getString("marca");
+                double medida = rs.getDouble("medida");
+                Date fechaCaduca = rs.getDate("fechaCaduca");
+                boolean colocada = rs.getBoolean("colocada");
+                vacuna = new Vacuna(nroSerieDosis, marca, medida, fechaCaduca);
+            }
+            ps.close();
+            
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla Vacuna");
+        }
+        return vacuna;
+    }
     
 }    
             

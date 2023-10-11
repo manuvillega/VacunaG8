@@ -1,6 +1,9 @@
 
 package vacunag8.accesoADatos;
 
+import Entidades.CentroVacunacion;
+import Entidades.Ciudadano;
+import Entidades.Vacuna;
 import Entidades.citaVacunacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +22,9 @@ public class citaVacunacionData {
         this.conexion = conexion;
         
     }
-    
+     CiudadanoData ciudadanoData;
+     VacunaData vacunaData;
+     CentroVacunacionData centroVacunacionData;
     public void CrearCita(citaVacunacion cita){
         String sql = "INSERT INTO citavacunacion (persona, codRefuerzo, fechaHoraCita, centroVacunacion)"
                 + "VALUES(?, ?, ?, ?, ?)";
@@ -27,7 +32,7 @@ public class citaVacunacionData {
             preparedStatement.setInt(1, cita.getPersona().getDNI());
             preparedStatement.setInt(2, 1);
             preparedStatement.setString(3, cita.getFechaHoraCita());
-            preparedStatement.setString(4, cita.getCentroVacunacion().getNombre());
+            preparedStatement.setInt(4, cita.getCentroVacunacion().getIDcentro());
             int exito = preparedStatement.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Cita vacunacion creada");
@@ -124,17 +129,28 @@ public class citaVacunacionData {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                citaVacunacion CitaVacunacion = new citaVacunacion();
-               
-//               CitaVacunacion.setPersona(persona);
-                
+               CitaVacunacion.setCodCita(rs.getInt("codigoCita"));
+               int dni = rs.getInt("persona");
+               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDni(dni);           
+               CitaVacunacion.setPersona(persona);
+               CitaVacunacion.setFechaHoraCita(rs.getString("fechaHoraCita")); 
+               int idCentro = rs.getInt("centroVacunacion");
+               CentroVacunacion centro = centroVacunacionData.obtenerCentroVacunacionPorId(idCentro);
+               CitaVacunacion.setCentroVacunacion(centro);
+               Date date = rs.getDate("fechaHoraVacunacion");
+               LocalDateTime fechaHoraVacunacion = date.toLocalDate().atStartOfDay();
+               CitaVacunacion.setFechaHoraVacunacion(fechaHoraVacunacion);
+               int cod = rs.getInt("vacuna");
+               Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(cod);
+               CitaVacunacion.setDosis(vacuna);
+               cita.add(CitaVacunacion);
             }
-            
-           
+                      
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No fue posible conectar para listar citas cumplidas"+ex);
         }
       
 
-        return null;
+        return cita;
    }
 }
