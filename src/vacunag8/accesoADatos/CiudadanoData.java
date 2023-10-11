@@ -114,7 +114,33 @@ public class CiudadanoData {
 
      //buscar Ciudadano en espera
     public void buscarCiudadano(Ciudadano ciudadano) {
-
+            
+    }
+    
+    public Ciudadano buscarCiudadanoPorDni(int dni){
+        Ciudadano ciudadano = null;
+        try{
+            String sql = "SELECT * FROM ciudadano WHERE DNI = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                int DNI = dni;
+                String nombreCompleto = rs.getString("nombreCompleto");
+                String email = rs.getString("email");
+                String celular = rs.getString("celular");
+                String patologia = rs.getString("patologia");
+                String ambitoLaboral = rs.getString("ambitoLaboral");
+                ciudadano = new Ciudadano(DNI, email, celular, patologia, ambitoLaboral);
+                
+            }
+            ps.close();
+            
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla Ciudadano");
+        }
+        return ciudadano;
     }
 }
         

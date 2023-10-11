@@ -122,6 +122,12 @@ public class citaVacunacionData {
         try {
             PreparedStatement ps = conexion.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+               citaVacunacion CitaVacunacion = new citaVacunacion();
+               
+               CitaVacunacion.setPersona(persona);
+                
+            }
             
            
         } catch (SQLException ex) {

@@ -20,6 +20,10 @@ public class citaVacunacion {
         this.dosis = dosis;
     }
 
+    public citaVacunacion() {
+       
+    }
+
     public int getCodCita() {
         return codCita;
     }
@@ -67,6 +71,8 @@ public class citaVacunacion {
     public void setDosis(Vacuna dosis) {
         this.dosis = dosis;
     }
+
+
     
     
 }
