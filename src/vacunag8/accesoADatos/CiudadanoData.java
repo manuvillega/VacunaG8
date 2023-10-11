@@ -90,7 +90,9 @@ public class CiudadanoData {
     }
 
      //buscar Ciudadano en espera
-    public void buscarCiudadano(Ciudadano ciudadano) {
+//    public void buscarCiudadanoPorDni(dni) {
 
-    }
+//    }
 }
+        
+ 
