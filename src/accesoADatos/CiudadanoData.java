@@ -1,4 +1,9 @@
-package vacunag8.accesoADatos;
+package accesoADatos;
+            
+/**
+ *
+ * @author Gonz@_
+ */
 
 import Entidades.Ciudadano;
 import java.sql.Connection;
@@ -16,7 +21,7 @@ public class CiudadanoData {
     }
 
     public void insertarCiudadano(Ciudadano ciudadano) {
-        String sql = "INSERT INTO Ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo) " +
+        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
@@ -28,7 +33,7 @@ public class CiudadanoData {
             preparedStatement.setString(6, ciudadano.getAmbitoLaboral());
 
             preparedStatement.executeUpdate();
-            System.out.println("Ciudadano insertado correctamente.");
+            System.out.println("ciudadano insertado correctamente.");
         } catch (SQLException e) {
             System.err.println("Error al insertar ciudadano: " + e.getMessage());
         }
@@ -46,7 +51,7 @@ public class CiudadanoData {
             preparedStatement.setInt(6, ciudadano.getDNI());
 
             preparedStatement.executeUpdate();
-            System.out.println("Ciudadano actualizado!.");
+            System.out.println("ciudadano actualizado!.");
         } catch (SQLException e) {
             System.err.println("Error al actualizar ciudadano: " + e.getMessage());
         }
@@ -90,8 +95,28 @@ public class CiudadanoData {
     }
 
      //buscar Ciudadano en espera
-    public void buscarCiudadano(Ciudadano ciudadano) {
+    public  Ciudadano buscarPorDNI(int dni) {
+        String query = "SELECT * FROM ciudadano WHERE DNI = ?";
+        Ciudadano ciudadano = null;
 
+        try (PreparedStatement statement = conexion.prepareStatement(query)) {
+            statement.setInt(1, dni);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String nombreCompleto = resultSet.getString("nombreCompleto");
+                String email = resultSet.getString("email");
+                String celular = resultSet.getString("celular");
+                String patologia = resultSet.getString("patologia");
+                String ambitoLaboral = resultSet.getString("ambitoLaboral");
+
+                ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener ciudadano por DNI: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return ciudadano;
     }
 }
         
