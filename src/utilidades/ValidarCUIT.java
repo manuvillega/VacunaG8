@@ -1,5 +1,9 @@
 package Utilidades;
 
+/**
+ *
+ * @author Gonz@_
+ */
 
 public class ValidarCUIT {
 
