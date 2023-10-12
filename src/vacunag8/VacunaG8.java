@@ -69,33 +69,33 @@ public class VacunaG8 {
         String direccion = JOptionPane.showInputDialog("Ingrese la dirección:");
 
 //        // validacion de apoyo
-//        if (!ValidarCUIT.esUnCUITValido(cuitCompleto)) {
-//            String cuitSinUltimoDigito = cuitCompleto.substring(0, 10);
-//            int digitoVerificadorCalculado = ValidarCUIT.calcularDigitoVerificador(cuitSinUltimoDigito);
-//            int option = JOptionPane.showConfirmDialog(
-//                    null,
-//                    "El CUIT ingresado es incorrecto. ¿Desea utilizar el CUIT corregido: " + cuitSinUltimoDigito + digitoVerificadorCalculado + "?",
-//                    "Confirmación",
-//                    JOptionPane.YES_NO_OPTION
-//            );
-//            if (option == JOptionPane.YES_OPTION) {
-//                cuitCompleto = cuitSinUltimoDigito + digitoVerificadorCalculado;
-//            } else {
-//                // cierra sale el programa si el usaario no quiere el CUIT correcto 
-//                System.exit(0);
-//            }
-//        }
+        if (!ValidarCUIT.esUnCUITValido(cuitCompleto)) {
+            String cuitSinUltimoDigito = cuitCompleto.substring(0, 10);
+            int digitoVerificadorCalculado = ValidarCUIT.calcularDigitoVerificador(cuitSinUltimoDigito);
+            int option = JOptionPane.showConfirmDialog(
+                    null,
+                    "El CUIT ingresado es incorrecto. ¿Desea utilizar el CUIT corregido: " + cuitSinUltimoDigito + digitoVerificadorCalculado + "?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (option == JOptionPane.YES_OPTION) {
+                cuitCompleto = cuitSinUltimoDigito + digitoVerificadorCalculado;
+            } else {
+                // cierra sale el programa si el usaario no quiere el CUIT correcto 
+                System.exit(0);
+            }
+        }
 
         // inserta-crear un nuevo laboratorio
         Laboratorio laboratorio = new Laboratorio(cuitCompleto, nombreLaboratorio, pais, direccion);
         laboratorioData.agregarLaboratorio(laboratorio);
 
         // obtiene un laboratorio por CUIT
-        Laboratorio laboratorioObtenido = laboratorioData.obtenerLaboratorioPorCUIT("20344545552");
+        Laboratorio laboratorioObtenido = laboratorioData.obtenerLaboratorioPorCUIT(cuitCompleto);
         System.out.println("Laboratorio obtenido: " + laboratorioObtenido);
 
         // actualiza- modifica un laboratorio
-        laboratorioObtenido.setNomLaboratorio("Laboratorio 3");
+        laboratorioObtenido.setNomLaboratorio("Laboratorio 4");
         laboratorioData.actualizarLaboratorio(laboratorioObtenido);
 
         // borra-eliminar un laboratorio
