@@ -96,7 +96,6 @@ public class CiudadanoData {
     }
 
 
-     //buscar Ciudadano en espera
     public  Ciudadano buscarPorDNI(int dni) {
         String query = "SELECT * FROM ciudadano WHERE DNI = ?";
         Ciudadano ciudadano = null;
