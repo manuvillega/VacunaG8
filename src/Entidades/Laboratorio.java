@@ -4,6 +4,7 @@ package Entidades;
  *
  * @author Gonz@_
  */
+import Utilidades.ValidarCUIT;
 import utilidades.ValidarCUIT;
 
 public class Laboratorio {
