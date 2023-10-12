@@ -6,13 +6,13 @@ package vacunag8;
  */
 
 import Entidades.Laboratorio;
+import Utilidades.ValidarCUIT;
 import java.sql.Connection;
 import java.util.List;
 import accesoADatos.Conexion;
 import accesoADatos.LaboratorioData;
 import javax.swing.JOptionPane;
 import utilidades.ValidarCUIT;
-
 
 public class VacunaG8 {
 
@@ -70,7 +70,6 @@ public class VacunaG8 {
         String direccion = JOptionPane.showInputDialog("Ingrese la dirección:");
 
 //        // validacion de apoyo
-
         if (!ValidarCUIT.esUnCUITValido(cuitCompleto)) {
             String cuitSinUltimoDigito = cuitCompleto.substring(0, 10);
             int digitoVerificadorCalculado = ValidarCUIT.calcularDigitoVerificador(cuitSinUltimoDigito);
@@ -88,23 +87,17 @@ public class VacunaG8 {
             }
         }
 
-
         // inserta-crear un nuevo laboratorio
         Laboratorio laboratorio = new Laboratorio(cuitCompleto, nombreLaboratorio, pais, direccion);
         laboratorioData.agregarLaboratorio(laboratorio);
 
         // obtiene un laboratorio por CUIT
-<<<<<<< HEAD
         Laboratorio laboratorioObtenido = laboratorioData.obtenerLaboratorioPorCUIT(cuitCompleto);
         System.out.println("Laboratorio obtenido: " + laboratorioObtenido);
 
         // actualiza- modifica un laboratorio
-        laboratorioObtenido.setNomLaboratorio("Laboratorio 4");
-=======
-        Laboratorio laboratorioObtenido = laboratorioData.obtenerLaboratorioPorCUIT("20344545552");
-        System.out.println("Laboratorio obtenido: " + laboratorioObtenido);
-
-        laboratorioData.actualizarLaboratorio(laboratorioObtenido);
+        /*laboratorioObtenido.setNomLaboratorio("Laboratorio 4");
+        laboratorioData.actualizarLaboratorio(laboratorioObtenido);*/
 
         // borra-eliminar un laboratorio
         //laboratorioData.eliminarLaboratorio("...");
