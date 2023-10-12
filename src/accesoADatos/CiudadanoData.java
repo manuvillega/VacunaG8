@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class CiudadanoData {
  private Connection conexion;
@@ -94,6 +95,7 @@ public class CiudadanoData {
         return ciudadanos;
     }
 
+
      //buscar Ciudadano en espera
     public  Ciudadano buscarPorDNI(int dni) {
         String query = "SELECT * FROM ciudadano WHERE DNI = ?";
@@ -118,6 +120,6 @@ public class CiudadanoData {
         }
         return ciudadano;
     }
-}
+
         
  

@@ -5,6 +5,7 @@ package accesoADatos;
  * @author Gonz@_
  */
 
+
 import Entidades.Laboratorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import utilidades.ValidarCUIT;
+=======
 
 public class LaboratorioData {
 
@@ -22,8 +25,8 @@ public class LaboratorioData {
         this.conexion = conexion;
     }
 
-    public void agregarLaboratorio(Laboratorio laboratorio) {
-    // Valida el CUIT antes de agregarlo a la base de datos
+    public void agregarLaboratorio(Laboratorio laborator
+	// Valida el CUIT antes de agregarlo a la base de datos
     String cuit = laboratorio.getCuit();  // obtiene el CUIT
     System.out.println("CUIT antes de validación: " + cuit);
     if (!ValidarCUIT.esUnCUITValido(cuit)) {

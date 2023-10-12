@@ -75,8 +75,7 @@ public class Laboratorio {
     public void setDomComercial(String domComercial) {
         this.domComercial = domComercial;
     }
-        
-        
+
     @Override
     public String toString() {
         return "Laboratorio: \nidLaboratorio: " + idLaboratorio + ", cuit: " + cuit + ", nomLaboratorio: " + nomLaboratorio + ", pais: " + pais + ", domComercial: " + domComercial;
