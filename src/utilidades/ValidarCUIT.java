@@ -1,4 +1,4 @@
-package Utilidades;
+package utilidades;
 
 /**
  *
@@ -67,4 +67,3 @@ public class ValidarCUIT {
         return (resto == 0) ? 0 : (11 - resto);
     }
 }
-

@@ -1,4 +1,4 @@
-package vacunag8.accesoADatos;
+package accesoADatos;
 
 import Entidades.Vacuna;
 import java.sql.Connection;
@@ -19,7 +19,7 @@ public class VacunaData {
     }
     public void cargarVacunas(Vacuna cargar){
         
-        String sql = "INSERT INTO vacuna (nroSerieDosis, marca, medida, fechaCaduca, disponible) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vacuna (nroSerieDosis, marca, medida, fechaCaduca, colocada) VALUES (?, ?, ?, ?, ?)";
         
         try {
             PreparedStatement ps = conexion.prepareStatement(sql);
@@ -33,7 +33,7 @@ public class VacunaData {
             System.out.println("Se han cargado vacunas");
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error de conexion con tabla vacuna");
+            JOptionPane.showMessageDialog(null, "error de conexion con tabla vacuna 1");
         }  
         
     }
@@ -52,7 +52,7 @@ public class VacunaData {
             System.out.println("se ha modificado vacuna");
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error de conexion con tabla vacuna");
+            JOptionPane.showMessageDialog(null, "error de conexion con tabla vacuna 2");
         }    
     }
     
@@ -68,7 +68,7 @@ public class VacunaData {
             
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "error de conexion con tabla vacuna");
+            JOptionPane.showMessageDialog(null, "error de conexion con tabla vacuna 3");
         }
     }
 
@@ -91,7 +91,7 @@ public class VacunaData {
             ps.close();
             
         } catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "error al acceder a la tabla Vacuna");
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla Vacuna 4");
         }
         return vacuna;
     }

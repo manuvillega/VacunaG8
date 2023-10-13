@@ -96,7 +96,7 @@ public class CiudadanoData {
     }
 
 
-    public  Ciudadano buscarPorDNI(int dni) {
+    public  Ciudadano buscarCiudadanoPorDNI(int dni) {
         String query = "SELECT * FROM ciudadano WHERE DNI = ?";
         Ciudadano ciudadano = null;
 

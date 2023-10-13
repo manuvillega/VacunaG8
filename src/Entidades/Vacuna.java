@@ -1,6 +1,6 @@
 package Entidades;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Vacuna {
     private int nroSerieDosis;
@@ -9,11 +9,22 @@ public class Vacuna {
     private Date fechaCaduca;
     private boolean colocada = false;
 
+    public Vacuna() {
+    }
+
     public Vacuna(int nroSerieDosis, String marca, double medida, Date fechaCaduca) {
         this.nroSerieDosis = nroSerieDosis;
         this.marca = marca;
         this.medida = medida;
         this.fechaCaduca = fechaCaduca;
+    }    
+       
+    public Vacuna(int nroSerieDosis, String marca, double medida, Date fechaCaduca, boolean colocada) {
+        this.nroSerieDosis = nroSerieDosis;
+        this.marca = marca;
+        this.medida = medida;
+        this.fechaCaduca = fechaCaduca;
+        this.colocada = colocada;
     }
 
     public int getNroSerieDosis() {
@@ -54,6 +65,11 @@ public class Vacuna {
 
     public void setColocada(boolean colocada) {
         this.colocada = colocada;
+    }
+
+    @Override
+    public String toString() {
+        return "Vacuna{" + "nroSerieDosis=" + nroSerieDosis + ", marca=" + marca + ", medida=" + medida + ", fechaCaduca=" + fechaCaduca + ", colocada=" + colocada + '}';
     }
     
     

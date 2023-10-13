@@ -1,10 +1,12 @@
 
-package vacunag8.accesoADatos;
+package accesoADatos;
 
+import accesoADatos.VacunaData;
 import Entidades.CentroVacunacion;
 import Entidades.Ciudadano;
 import Entidades.Vacuna;
 import Entidades.citaVacunacion;
+import accesoADatos.CiudadanoData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import vacunag8.accesoADatos.CentroVacunacionData;
 
 public class citaVacunacionData {
     private Connection conexion;
@@ -131,7 +134,7 @@ public class citaVacunacionData {
                citaVacunacion CitaVacunacion = new citaVacunacion();
                CitaVacunacion.setCodCita(rs.getInt("codigoCita"));
                int dni = rs.getInt("persona");
-               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDni(dni);           
+               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDNI(dni);           
                CitaVacunacion.setPersona(persona);
                CitaVacunacion.setFechaHoraCita(rs.getString("fechaHoraCita")); 
                int idCentro = rs.getInt("centroVacunacion");
@@ -165,7 +168,7 @@ public class citaVacunacionData {
                citaVacunacion CitaVacunacion = new citaVacunacion();
                CitaVacunacion.setCodCita(rs.getInt("codigoCita"));
                int dni = rs.getInt("persona");
-               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDni(dni);           
+               Ciudadano persona = ciudadanoData.buscarCiudadanoPorDNI(dni);           
                CitaVacunacion.setPersona(persona);
                CitaVacunacion.setFechaHoraCita(rs.getString("fechaHoraCita")); 
                int idCentro = rs.getInt("centroVacunacion");

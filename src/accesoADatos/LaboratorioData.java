@@ -6,7 +6,6 @@ package accesoADatos;
  */
 
 import Entidades.Laboratorio;
-import Utilidades.ValidarCUIT;
 import utilidades.ValidarCUIT;  //Mi paquete es este, No el de arriba 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
