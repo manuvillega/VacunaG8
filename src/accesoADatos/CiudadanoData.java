@@ -22,8 +22,8 @@ public class CiudadanoData {
     }
 
     public void insertarCiudadano(Ciudadano ciudadano) {
-        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo, ciudad) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
             preparedStatement.setInt(1, ciudadano.getDNI());
@@ -32,6 +32,7 @@ public class CiudadanoData {
             preparedStatement.setString(4, ciudadano.getCelular());
             preparedStatement.setString(5, ciudadano.getPatologia());
             preparedStatement.setString(6, ciudadano.getAmbitoLaboral());
+            preparedStatement.setString(7, ciudadano.getCiudad());
 
             preparedStatement.executeUpdate();
             System.out.println("ciudadano insertado correctamente.");
@@ -41,7 +42,7 @@ public class CiudadanoData {
         
     }    
     public void actualizarCiudadano(Ciudadano ciudadano) {
-        String sql = "UPDATE ciudadano SET nombreCompleto=?, email=?, celular=?, patologia=?, ambitoTrabajo=? WHERE DNI=?";
+        String sql = "UPDATE ciudadano SET nombreCompleto=?, email=?, celular=?, patologia=?, ambitoTrabajo=?, ciudad = ? WHERE DNI=?";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
             preparedStatement.setString(1, ciudadano.getNombreCompleto());
@@ -49,7 +50,8 @@ public class CiudadanoData {
             preparedStatement.setString(3, ciudadano.getCelular());
             preparedStatement.setString(4, ciudadano.getPatologia());
             preparedStatement.setString(5, ciudadano.getAmbitoLaboral());
-            preparedStatement.setInt(6, ciudadano.getDNI());
+            preparedStatement.setString(6, ciudadano.getCiudad());
+            preparedStatement.setInt(7, ciudadano.getDNI());
 
             preparedStatement.executeUpdate();
             System.out.println("ciudadano actualizado!.");
@@ -84,8 +86,9 @@ public class CiudadanoData {
                 String celular = resultSet.getString("celular");
                 String patologia = resultSet.getString("patologia");
                 String ambitoLaboral = resultSet.getString("ambitoTrabajo");
+                String ciudad = resultSet.getString("ciudad");
 
-                Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral);
+                Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, ciudad);
                 ciudadanos.add(ciudadano);
             }
         } catch (SQLException e) {
@@ -110,8 +113,9 @@ public class CiudadanoData {
                 String celular = resultSet.getString("celular");
                 String patologia = resultSet.getString("patologia");
                 String ambitoLaboral = resultSet.getString("ambitoLaboral");
+                String ciudad = resultSet.getString("ciudad");
 
-                ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral);
+                ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, ciudad);
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener ciudadano por DNI: " + e.getMessage());

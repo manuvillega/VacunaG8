@@ -12,22 +12,33 @@ public class Ciudadano {
         private String celular;
         private String patologia;
         private String ambitoLaboral;
+        private String ciudad;
 
-    public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String ambitoLaboral) {
+    public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String ambitoLaboral, String ciudad) {
         this.DNI = DNI;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.celular = celular;
         this.patologia=null;
         this.ambitoLaboral = ambitoLaboral;
+        this.ciudad = ciudad;
     }
-public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String patologia, String ambitoLaboral) {
+public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String patologia, String ambitoLaboral, String ciudad) {
         this.DNI = DNI;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.celular = celular;
         this.patologia=patologia;
         this.ambitoLaboral = ambitoLaboral;
+        this.ciudad = ciudad;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
     
     public int getDNI() {
