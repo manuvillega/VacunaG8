@@ -21,48 +21,7 @@ public class CiudadanoData {
         this.conexion = conexion;
     }
 
-    public void insertarCiudadano(Ciudadano ciudadano) {
-        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo,  provincia, localidad) "
-                + "VALUES (?, ?, ?, ?, ?, ?,?,?)";
-
-        try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
-            preparedStatement.setInt(1, ciudadano.getDNI());
-            preparedStatement.setString(2, ciudadano.getNombreCompleto());
-            preparedStatement.setString(3, ciudadano.getEmail());
-            preparedStatement.setString(4, ciudadano.getCelular());
-            preparedStatement.setString(5, ciudadano.getPatologia());
-            preparedStatement.setString(6, ciudadano.getAmbitoLaboral());
-            preparedStatement.setString(7, ciudadano.getProvincia());
-            preparedStatement.setString(8, ciudadano.getLocalidad());
-
-            preparedStatement.executeUpdate();
-            System.out.println("ciudadano insertado correctamente.");
-        } catch (SQLException e) {
-            System.err.println("Error al insertar ciudadano: " + e.getMessage());
-        }
-
-    }
-
-    public void actualizarCiudadano(Ciudadano ciudadano) {
-        String sql = "UPDATE ciudadano SET nombreCompleto=?, email=?, celular=?, patologia=?, ambitoTrabajo=?, provincia=?, localidad=?  WHERE DNI=?";
-
-        try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
-            preparedStatement.setString(1, ciudadano.getNombreCompleto());
-            preparedStatement.setString(2, ciudadano.getEmail());
-            preparedStatement.setString(3, ciudadano.getCelular());
-            preparedStatement.setString(4, ciudadano.getPatologia());
-            preparedStatement.setString(5, ciudadano.getAmbitoLaboral());
-            preparedStatement.setString(6, ciudadano.getProvincia());
-            preparedStatement.setString(7, ciudadano.getLocalidad());
-            preparedStatement.setInt(6, ciudadano.getDNI());
-
-            preparedStatement.executeUpdate();
-            System.out.println("ciudadano actualizado!.");
-        } catch (SQLException e) {
-            System.err.println("Error al actualizar ciudadano: " + e.getMessage());
-        }
-    }
-
+ 
     public void borrarCiudadano(Ciudadano ciudadano) {
         String sql = "DELETE FROM ciudadano WHERE DNI=? AND provincia=? AND localidad=?";
 
@@ -91,10 +50,16 @@ public class CiudadanoData {
                 String celular = resultSet.getString("celular");
                 String patologia = resultSet.getString("patologia");
                 String ambitoLaboral = resultSet.getString("ambitoTrabajo");
+<<<<<<< HEAD
                 String provincia = resultSet.getString("provincia");
                 String localidad = resultSet.getString("localidad");
 
                 Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, provincia, localidad);
+=======
+                String ciudad = resultSet.getString("ciudad");
+
+                Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, ciudad);
+>>>>>>> cd51e726df23703111b2662cb470ddaa70ed4617
                 ciudadanos.add(ciudadano);
             }
         } catch (SQLException e) {
@@ -118,11 +83,17 @@ public class CiudadanoData {
                 String celular = resultSet.getString("celular");
                 String patologia = resultSet.getString("patologia");
                 String ambitoLaboral = resultSet.getString("ambitoLaboral");
+<<<<<<< HEAD
                 String provincia = resultSet.getString("provincia");  // Agregar provincia
                 String localidad = resultSet.getString("localidad");  // Agregar localidad
 
                 // Utilizar el constructor adecuado de Ciudadano que incluye provincia y localidad
                 ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, provincia, localidad);
+=======
+                String ciudad = resultSet.getString("ciudad");
+
+                ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, ciudad);
+>>>>>>> cd51e726df23703111b2662cb470ddaa70ed4617
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener ciudadano por DNI: " + e.getMessage());

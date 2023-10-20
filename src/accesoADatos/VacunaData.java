@@ -17,6 +17,10 @@ public class VacunaData {
     public VacunaData(Connection conexion){
         this.conexion=conexion;
     }
+
+    public VacunaData() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public void cargarVacunas(Vacuna cargar){
         
         String sql = "INSERT INTO vacuna (nroSerieDosis, marca, medida, fechaCaduca, colocada) VALUES (?, ?, ?, ?, ?)";

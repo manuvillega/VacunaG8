@@ -16,6 +16,7 @@ public class Ciudadano {
         private String localidad;
 
     public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String ambitoLaboral, String provincia, String localidad) {
+
         this.DNI = DNI;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
@@ -26,6 +27,9 @@ public class Ciudadano {
         this.localidad = localidad;
     }
 public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String patologia, String ambitoLaboral, String provincia, String localidad) {
+        this.ciudad = ciudad;
+    }
+
         this.DNI = DNI;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
@@ -34,6 +38,15 @@ public Ciudadano(int DNI, String nombreCompleto, String email, String celular, S
         this.ambitoLaboral = ambitoLaboral;
         this.provincia = provincia;
         this.localidad = localidad;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+
     }
     
     public int getDNI() {
