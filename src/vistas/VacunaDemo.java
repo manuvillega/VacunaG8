@@ -11,7 +11,11 @@ import accesoADatos.VacunaData;
 import java.sql.Connection;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -30,7 +34,7 @@ public class VacunaDemo extends javax.swing.JPanel {
 
         initComponents();
         vacuna = new Vacuna();
-        vacunaData = new VacunaData();
+        
     }
 
     /**
@@ -42,7 +46,7 @@ public class VacunaDemo extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        vacuna = new javax.swing.JPanel();
+        JPvacuna = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -50,17 +54,18 @@ public class VacunaDemo extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTmarca = new javax.swing.JTextField();
         jTnumSerie = new javax.swing.JTextField();
-        jTmedida = new javax.swing.JTextField();
         jTaplicada = new javax.swing.JTextField();
-        jTvencimiento = new javax.swing.JTextField();
         jBagregar = new javax.swing.JButton();
         jBbuscar = new javax.swing.JButton();
         jBmodificar = new javax.swing.JButton();
         jBeliminar = new javax.swing.JButton();
+        jTvencimiento = new javax.swing.JTextField();
+        jBeliminar1 = new javax.swing.JButton();
+        jComboMarca = new javax.swing.JComboBox<>();
+        jComboDosis = new javax.swing.JComboBox<>();
 
-        vacuna.setBackground(new java.awt.Color(102, 102, 102));
+        JPvacuna.setBackground(new java.awt.Color(102, 102, 102));
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
@@ -83,18 +88,17 @@ public class VacunaDemo extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel6.setText("Aplicada");
 
-        jTmarca.setBackground(new java.awt.Color(102, 204, 255));
-
         jTnumSerie.setBackground(new java.awt.Color(102, 204, 255));
-
-        jTmedida.setBackground(new java.awt.Color(102, 204, 255));
 
         jTaplicada.setBackground(new java.awt.Color(102, 204, 255));
 
-        jTvencimiento.setBackground(new java.awt.Color(102, 204, 255));
-
         jBagregar.setBackground(new java.awt.Color(168, 206, 232));
         jBagregar.setText("Agregar");
+        jBagregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBagregarActionPerformed(evt);
+            }
+        });
 
         jBbuscar.setBackground(new java.awt.Color(168, 206, 232));
         jBbuscar.setText("Buscar");
@@ -110,73 +114,95 @@ public class VacunaDemo extends javax.swing.JPanel {
         jBeliminar.setBackground(new java.awt.Color(168, 206, 232));
         jBeliminar.setText("Eliminar");
 
-        javax.swing.GroupLayout vacunaLayout = new javax.swing.GroupLayout(vacuna);
-        vacuna.setLayout(vacunaLayout);
-        vacunaLayout.setHorizontalGroup(
-            vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(vacunaLayout.createSequentialGroup()
+        jTvencimiento.setBackground(new java.awt.Color(102, 204, 255));
+
+        jBeliminar1.setBackground(new java.awt.Color(168, 206, 232));
+        jBeliminar1.setText("StockDisponible");
+
+        jComboMarca.setBackground(new java.awt.Color(102, 204, 255));
+        jComboMarca.setForeground(new java.awt.Color(0, 0, 102));
+        jComboMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moderna", "Pfizer", "AstraZeneca", "Sinopharm", "Sputnik" }));
+        jComboMarca.setBorder(null);
+
+        jComboDosis.setBackground(new java.awt.Color(102, 204, 255));
+        jComboDosis.setForeground(new java.awt.Color(0, 0, 102));
+        jComboDosis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0.3 ml", "0.5 ml", "0.9 ml" }));
+        jComboDosis.setBorder(null);
+
+        javax.swing.GroupLayout JPvacunaLayout = new javax.swing.GroupLayout(JPvacuna);
+        JPvacuna.setLayout(JPvacunaLayout);
+        JPvacunaLayout.setHorizontalGroup(
+            JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPvacunaLayout.createSequentialGroup()
                 .addGap(292, 292, 292)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addGap(311, 311, 311))
             .addComponent(jSeparator1)
-            .addGroup(vacunaLayout.createSequentialGroup()
+            .addGroup(JPvacunaLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTmedida, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTaplicada, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTvencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTnumSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBmodificar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBeliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(94, 94, 94))
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTaplicada, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                    .addComponent(jTnumSerie, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                    .addComponent(jTvencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                    .addComponent(jComboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboDosis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(123, 123, 123)
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBeliminar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(JPvacunaLayout.createSequentialGroup()
+                        .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBeliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBmodificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBagregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBbuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(2, 2, 2)))
+                .addGap(92, 92, 92))
         );
-        vacunaLayout.setVerticalGroup(
-            vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(vacunaLayout.createSequentialGroup()
+        JPvacunaLayout.setVerticalGroup(
+            JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPvacunaLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTnumSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(JPvacunaLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jTnumSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jComboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTmedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBmodificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBmodificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboDosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTvencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBeliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBeliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTvencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(vacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(JPvacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTaplicada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(174, Short.MAX_VALUE))
+                    .addComponent(jBeliminar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTaplicada, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(174, 174, 174))
         );
 
-        jTabbedPane1.addTab("Vacuna", vacuna);
+        jTabbedPane1.addTab("Vacuna", JPvacuna);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -202,7 +228,6 @@ public class VacunaDemo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
-        // TODO add your handling code here:
 
         int numSerie = Integer.parseInt(jTnumSerie.getText());
 
@@ -210,8 +235,9 @@ public class VacunaDemo extends javax.swing.JPanel {
 
         if (vacunaEncontrada != null) {
             
-            jTmarca.setText(vacunaEncontrada.getMarca());
-            jTmedida.setText(Double.toString(vacunaEncontrada.getMedida()));            
+            String marca = jComboMarca.getSelectedItem().toString();     // referenciar comboMarca
+            
+            String medida = jComboDosis.getSelectedItem().toString();     // referenciar comboDosis                
             java.sql.Date fechaCaducidad = vacunaEncontrada.getFechaCaduca(); // Suponiendo que vacunaEncontrada.getFechaCaduca() devuelve un objeto java.sql.Date
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Crear un objeto SimpleDateFormat para formatear la fecha// Puedes usar el formato que desees
             String fechaComoString = sdf.format(fechaCaducidad); // Formatear la fecha como una cadena de texto
@@ -231,12 +257,59 @@ public class VacunaDemo extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jBbuscarActionPerformed
 
+    private void jBagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBagregarActionPerformed
+                
+        int numSerie;
+        try {
+            numSerie=Integer.parseInt(jTnumSerie.getText().trim()); // valida solo numeros       
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El n° de Serie debe contener solo números!.   ⚠", "", JOptionPane.ERROR_MESSAGE);
+            return;         
+            }
+        limpiarCampos();
+        
+        Vacuna vacunaEncontrada = vacunaData.obtenerVacunaPorNroSerie(numSerie);  // valida vacuna duplicada
+        
+        if (vacunaEncontrada !=null){
+            JOptionPane.showMessageDialog(this, "este n° de Serie ya existe!.  ⚠", "", JOptionPane.ERROR_MESSAGE);
+            limpiarCampos();
+           
+        String marca = jComboMarca.getSelectedItem().toString();     // referenciar comboMarca
+        String medida = jComboDosis.getSelectedItem().toString();
+        java.sql.Date fechaCaducidad = vacunaEncontrada.getFechaCaduca(); // Suponiendo que vacunaEncontrada.getFechaCaduca() devuelve un objeto java.sql.Date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Crear un objeto SimpleDateFormat para formatear la fecha// Puedes usar el formato que desees
+        String fechaComoString = sdf.format(fechaCaducidad); // Formatear la fecha como una cadena de texto
+        jTvencimiento.setText(fechaComoString); // Establecer la cadena de texto en tu componente jTvencimiento
+        jTaplicada.setText(Boolean.toString(vacunaEncontrada.isColocada()));
+            if (vacunaEncontrada.isColocada() == true) {
+                jTaplicada.setText("colocada");
+            } else {
+                jTaplicada.setText("NO colocada");
+            }    
+        } else {
+            JOptionPane.showMessageDialog(this, "vacuna no encontrada!.    ⚠", "", JOptionPane.ERROR_MESSAGE);
+            limpiarCampos();
+        }
+        
+        
+        
+  
+
+        
+        
+
+    }//GEN-LAST:event_jBagregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel JPvacuna;
     private javax.swing.JButton jBagregar;
     private javax.swing.JButton jBbuscar;
     private javax.swing.JButton jBeliminar;
+    private javax.swing.JButton jBeliminar1;
     private javax.swing.JButton jBmodificar;
+    private javax.swing.JComboBox<String> jComboDosis;
+    private javax.swing.JComboBox<String> jComboMarca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -247,14 +320,22 @@ public class VacunaDemo extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTaplicada;
-    private javax.swing.JTextField jTmarca;
-    private javax.swing.JTextField jTmedida;
     private javax.swing.JTextField jTnumSerie;
     private javax.swing.JTextField jTvencimiento;
-    private javax.swing.JPanel vacuna;
     // End of variables declaration//GEN-END:variables
 
-    private void limpiarCampos() {
+    private void limpiarCampos() {}
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Centro de Vacunación");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(900, 500);
 
+            VacunaDemo panelVacuna = new VacunaDemo();
+            frame.add(panelVacuna);
+
+            frame.setVisible(true);
+        });
     }
 }

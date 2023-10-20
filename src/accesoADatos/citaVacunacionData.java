@@ -70,7 +70,7 @@ public class citaVacunacionData {
         try(PreparedStatement preparedStatement = conexion.prepareStatement(sql)){
             Date nuevaDate = Date.valueOf(fecha.toLocalDate());
             preparedStatement.setDate(1, nuevaDate);
-            preparedStatement.setInt(2, cita.getDosis().getNroSerieDosis());
+            preparedStatement.setInt(2, cita.getMedida().getNroSerieDosis());
             preparedStatement.setInt(3, cita.getPersona().getDNI());
             int exito = preparedStatement.executeUpdate();
             if (exito == 1) {
@@ -145,7 +145,7 @@ public class citaVacunacionData {
                CitaVacunacion.setFechaHoraVacunacion(fechaHoraVacunacion);
                int cod = rs.getInt("vacuna");
                Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(cod);
-               CitaVacunacion.setDosis(vacuna);
+               CitaVacunacion.setMedida(vacuna);
                cita.add(CitaVacunacion);
             }
                       
@@ -179,7 +179,7 @@ public class citaVacunacionData {
                CitaVacunacion.setFechaHoraVacunacion(fechaHoraVacunacion);
                int cod = rs.getInt("vacuna");
                Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(cod);
-               CitaVacunacion.setDosis(vacuna);
+               CitaVacunacion.setMedida(vacuna);
                cita.add(CitaVacunacion);
             }
                       

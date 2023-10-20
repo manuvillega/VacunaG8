@@ -18,9 +18,7 @@ public class VacunaData {
         this.conexion=conexion;
     }
 
-    public VacunaData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     public void cargarVacunas(Vacuna cargar){
         
         String sql = "INSERT INTO vacuna (nroSerieDosis, marca, medida, fechaCaduca, colocada) VALUES (?, ?, ?, ?, ?)";
@@ -100,6 +98,29 @@ public class VacunaData {
         return vacuna;
     }
     
+//    public Vacuna obtenerVacunaPorMarca(String marca){
+//        Vacuna vacuna = null;
+//        try{
+//            String sql = "SELECT * FROM vacuna WHERE marca = ?";
+//            PreparedStatement ps = conexion.prepareStatement(sql);
+//            ps.setString(1, marca);
+//            ResultSet rs = ps.executeQuery();
+//            
+//            if(rs.next()){
+//                int nroSerieDosis = nroSerie;
+//                String marca = rs.getString("marca");
+//                double medida = rs.getDouble("medida");
+//                Date fechaCaduca = rs.getDate("fechaCaduca");
+//                boolean colocada = rs.getBoolean("colocada");
+//                vacuna = new Vacuna(nroSerieDosis, marca, medida, fechaCaduca);
+//            }
+//            ps.close();
+//            
+//        } catch(SQLException ex){
+//            JOptionPane.showMessageDialog(null, "error al acceder a la tabla Vacuna 4");
+//        }
+//        return vacuna;
+//    }
 }    
             
             
