@@ -28,24 +28,20 @@ public class PrincipalVG8 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        kGradientPanel1 = new keeptoo.KGradientPanel();
+        kGradientPanel1 = new org.netbeans.modules.form.InvalidComponent();
         jButton_alumno = new javax.swing.JButton();
         jButton_materia = new javax.swing.JButton();
         jButton_administracion = new javax.swing.JButton();
         jButton_consultas = new javax.swing.JButton();
         jButton_salir = new javax.swing.JButton();
         jButton_consultas1 = new javax.swing.JButton();
-        kGradientPanel3 = new keeptoo.KGradientPanel();
+        kGradientPanel3 = new org.netbeans.modules.form.InvalidComponent();
         jL_titulo_sist_ulp = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        kGradientPanel1.setBackground(new java.awt.Color(0, 0, 204));
-        kGradientPanel1.setkEndColor(new java.awt.Color(46, 16, 101));
-        kGradientPanel1.setkStartColor(new java.awt.Color(15, 23, 42));
 
         jButton_alumno.setBackground(new java.awt.Color(30, 41, 59));
         jButton_alumno.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
@@ -183,10 +179,6 @@ public class PrincipalVG8 extends javax.swing.JFrame {
 
         jPanel1.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 0, 210, 600));
 
-        kGradientPanel3.setkEndColor(new java.awt.Color(15, 23, 42));
-        kGradientPanel3.setkGradientFocus(800);
-        kGradientPanel3.setkStartColor(new java.awt.Color(30, 41, 59));
-
         jL_titulo_sist_ulp.setBackground(new java.awt.Color(51, 51, 51));
         jL_titulo_sist_ulp.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 36)); // NOI18N
         jL_titulo_sist_ulp.setForeground(new java.awt.Color(232, 242, 208));
@@ -253,40 +245,9 @@ public class PrincipalVG8 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_alumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_alumnoActionPerformed
-        //        // remuev el  panel que hay en jPanel_desktop
-        //        jPanel_desktop.removeAll();
-        //        // agreg0 el panel  alumno al jPanel desktop
-        //        jPanel_desktop.add(alumnoPanel, BorderLayout.CENTER);
-        //        alumnoPanel.setVisible(true);
-        //        // revalida y repinta el jPanel desktop para que se muestre el nuevo panel
-        //        jPanel_desktop.revalidate();
-        //        jPanel_desktop.repaint();
-    }//GEN-LAST:event_jButton_alumnoActionPerformed
-
-    private void jButton_materiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_materiaActionPerformed
-        //        jPanel_desktop.removeAll();
-        //        jPanel_desktop.add(materiaPanel, BorderLayout.CENTER);
-        //        materiaPanel.setVisible(true);
-        //        jPanel_desktop.revalidate();
-        //        jPanel_desktop.repaint();
-    }//GEN-LAST:event_jButton_materiaActionPerformed
-
-    private void jButton_administracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_administracionActionPerformed
-        //        jPanel_desktop.removeAll();
-        //        jPanel_desktop.add(administracionPanel, BorderLayout.CENTER);
-        //        administracionPanel.setVisible(true);
-        //        jPanel_desktop.revalidate();
-        //        jPanel_desktop.repaint();
-    }//GEN-LAST:event_jButton_administracionActionPerformed
-
-    private void jButton_consultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_consultasActionPerformed
-        //        jPanel_desktop.removeAll();
-        //        jPanel_desktop.add(consultasPanel, BorderLayout.CENTER);
-        //        consultasPanel.setVisible(true);
-        //        jPanel_desktop.revalidate();
-        //        jPanel_desktop.repaint();
-    }//GEN-LAST:event_jButton_consultasActionPerformed
+    private void jButton_consultas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_consultas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_consultas1ActionPerformed
 
     private void jButton_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salirActionPerformed
         //        int confirmacion = JOptionPane.showConfirmDialog(
@@ -303,9 +264,40 @@ public class PrincipalVG8 extends javax.swing.JFrame {
             //        }
     }//GEN-LAST:event_jButton_salirActionPerformed
 
-    private void jButton_consultas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_consultas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_consultas1ActionPerformed
+    private void jButton_consultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_consultasActionPerformed
+        //        jPanel_desktop.removeAll();
+        //        jPanel_desktop.add(consultasPanel, BorderLayout.CENTER);
+        //        consultasPanel.setVisible(true);
+        //        jPanel_desktop.revalidate();
+        //        jPanel_desktop.repaint();
+    }//GEN-LAST:event_jButton_consultasActionPerformed
+
+    private void jButton_administracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_administracionActionPerformed
+        //        jPanel_desktop.removeAll();
+        //        jPanel_desktop.add(administracionPanel, BorderLayout.CENTER);
+        //        administracionPanel.setVisible(true);
+        //        jPanel_desktop.revalidate();
+        //        jPanel_desktop.repaint();
+    }//GEN-LAST:event_jButton_administracionActionPerformed
+
+    private void jButton_materiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_materiaActionPerformed
+        //        jPanel_desktop.removeAll();
+        //        jPanel_desktop.add(materiaPanel, BorderLayout.CENTER);
+        //        materiaPanel.setVisible(true);
+        //        jPanel_desktop.revalidate();
+        //        jPanel_desktop.repaint();
+    }//GEN-LAST:event_jButton_materiaActionPerformed
+
+    private void jButton_alumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_alumnoActionPerformed
+        //        // remuev el  panel que hay en jPanel_desktop
+        //        jPanel_desktop.removeAll();
+        //        // agreg0 el panel  alumno al jPanel desktop
+        //        jPanel_desktop.add(alumnoPanel, BorderLayout.CENTER);
+        //        alumnoPanel.setVisible(true);
+        //        // revalida y repinta el jPanel desktop para que se muestre el nuevo panel
+        //        jPanel_desktop.revalidate();
+        //        jPanel_desktop.repaint();
+    }//GEN-LAST:event_jButton_alumnoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,16 +348,16 @@ public class PrincipalVG8 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton jButton_administracion;
-    public javax.swing.JButton jButton_alumno;
-    public javax.swing.JButton jButton_consultas;
-    public javax.swing.JButton jButton_consultas1;
-    public javax.swing.JButton jButton_materia;
-    public javax.swing.JButton jButton_salir;
+    private javax.swing.JButton jButton_administracion;
+    private javax.swing.JButton jButton_alumno;
+    private javax.swing.JButton jButton_consultas;
+    private javax.swing.JButton jButton_consultas1;
+    private javax.swing.JButton jButton_materia;
+    private javax.swing.JButton jButton_salir;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jL_titulo_sist_ulp;
     private javax.swing.JPanel jPanel1;
-    private keeptoo.KGradientPanel kGradientPanel1;
-    private keeptoo.KGradientPanel kGradientPanel3;
+    private org.netbeans.modules.form.InvalidComponent kGradientPanel1;
+    private org.netbeans.modules.form.InvalidComponent kGradientPanel3;
     // End of variables declaration//GEN-END:variables
 }
