@@ -1,10 +1,12 @@
-package vacunag8.accesoADatos;
+package accesoADatos;
 
 import Entidades.CentroVacunacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.DropMode.INSERT;
@@ -84,6 +86,33 @@ public class CentroVacunacionData {
         }
         return centroVacunacion;
     }
+    
+    //metodo para hospiales cercanos
+    public List<CentroVacunacion> obtenerHospitalesPorProvinciaYLocalidad(String provincia, String localidad) {
+    List<CentroVacunacion> hospitales = new ArrayList<>();
+    String sql = "SELECT * FROM centrovacunacion WHERE provincia=? AND localidad=?";
+
+    try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
+        preparedStatement.setString(1, provincia);
+        preparedStatement.setString(2, localidad);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            int IDcentro = resultSet.getInt("IDcentro");
+            String nombre = resultSet.getString("nombre");
+            String direccion = resultSet.getString("direccion");
+            // Obtén otros datos según tu estructura de la tabla CentroVacunacion
+
+            CentroVacunacion hospital = new CentroVacunacion(IDcentro, nombre, direccion, provincia, localidad);
+            hospitales.add(hospital);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "error al obtener datos!");
+    }
+
+    return hospitales;
+}
+
         
 }
     

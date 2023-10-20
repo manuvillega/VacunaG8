@@ -12,22 +12,28 @@ public class Ciudadano {
         private String celular;
         private String patologia;
         private String ambitoLaboral;
+        private String provincia;
+        private String localidad;
 
-    public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String ambitoLaboral) {
+    public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String ambitoLaboral, String provincia, String localidad) {
         this.DNI = DNI;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.celular = celular;
         this.patologia=null;
         this.ambitoLaboral = ambitoLaboral;
+        this.provincia = provincia;
+        this.localidad = localidad;
     }
-public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String patologia, String ambitoLaboral) {
+public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String patologia, String ambitoLaboral, String provincia, String localidad) {
         this.DNI = DNI;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.celular = celular;
         this.patologia=patologia;
         this.ambitoLaboral = ambitoLaboral;
+        this.provincia = provincia;
+        this.localidad = localidad;
     }
     
     public int getDNI() {
@@ -79,10 +85,27 @@ public Ciudadano(int DNI, String nombreCompleto, String email, String celular, S
         this.ambitoLaboral = ambitoLaboral;
     }
 
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
     @Override
     public String toString() {
-        return "Ciudadano:  \n" + "DNI: " + DNI + ", nombreCompleto: " + nombreCompleto + ", email: " + email + ", celular: " + celular + ", patologia: " + patologia + ", ambitoLaboral: " + ambitoLaboral;
+        return "Ciudadano: " + "DNI: " + DNI + ", nombreCompleto: " + nombreCompleto + ", email: " + email + ", celular: " + celular + ", patologia: " + patologia + ", ambitoLaboral: " + ambitoLaboral + ", provincia: " + provincia + ", localidad: " + localidad;
     }
+
+ }
         
         
-}

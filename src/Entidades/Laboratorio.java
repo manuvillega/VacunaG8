@@ -1,11 +1,12 @@
 package Entidades;
 
+import utilidades.ValidarCUIT;
+
 /**
  *
  * @author Gonz@_
  */
 
-import utilidades.ValidarCUIT;   //Este es mipaquete, No el de arriba!
 
 public class Laboratorio {
 

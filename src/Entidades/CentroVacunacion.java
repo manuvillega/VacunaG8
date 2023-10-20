@@ -4,6 +4,8 @@ public class CentroVacunacion {
         private int IDcentro;
         private String nombre;
         private String direccion;
+        private String provincia;
+        private String localidad;
 
     public CentroVacunacion(int IDcentro, String nombre, String direccion) {
         this.IDcentro = IDcentro;
@@ -11,6 +13,15 @@ public class CentroVacunacion {
         this.direccion = direccion;
     }
 
+    public CentroVacunacion(int IDcentro, String nombre, String direccion, String provincia, String localidad) {
+        this.IDcentro = IDcentro;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.provincia = provincia;
+        this.localidad = localidad;
+    }
+
+        
     public int getIDcentro() {
         return IDcentro;
     }
@@ -34,6 +45,27 @@ public class CentroVacunacion {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-        
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    @Override
+    public String toString() {
+        return "CentroVacunacion{" + "IDcentro=" + IDcentro + ", nombre=" + nombre + ", direccion=" + direccion + ", provincia=" + provincia + ", localidad=" + localidad + '}';
+    }
+       
         
 }

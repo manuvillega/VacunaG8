@@ -1,10 +1,9 @@
 package accesoADatos;
-            
+
 /**
  *
  * @author Gonz@_
  */
-
 import Entidades.Ciudadano;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,15 +14,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class CiudadanoData {
- private Connection conexion;
+
+    private Connection conexion;
 
     public CiudadanoData(Connection conexion) {
         this.conexion = conexion;
     }
 
     public void insertarCiudadano(Ciudadano ciudadano) {
-        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo,  provincia, localidad) "
+                + "VALUES (?, ?, ?, ?, ?, ?,?,?)";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
             preparedStatement.setInt(1, ciudadano.getDNI());
@@ -32,16 +32,19 @@ public class CiudadanoData {
             preparedStatement.setString(4, ciudadano.getCelular());
             preparedStatement.setString(5, ciudadano.getPatologia());
             preparedStatement.setString(6, ciudadano.getAmbitoLaboral());
+            preparedStatement.setString(7, ciudadano.getProvincia());
+            preparedStatement.setString(8, ciudadano.getLocalidad());
 
             preparedStatement.executeUpdate();
             System.out.println("ciudadano insertado correctamente.");
         } catch (SQLException e) {
             System.err.println("Error al insertar ciudadano: " + e.getMessage());
         }
-        
-    }    
+
+    }
+
     public void actualizarCiudadano(Ciudadano ciudadano) {
-        String sql = "UPDATE ciudadano SET nombreCompleto=?, email=?, celular=?, patologia=?, ambitoTrabajo=? WHERE DNI=?";
+        String sql = "UPDATE ciudadano SET nombreCompleto=?, email=?, celular=?, patologia=?, ambitoTrabajo=?, provincia=?, localidad=?  WHERE DNI=?";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
             preparedStatement.setString(1, ciudadano.getNombreCompleto());
@@ -49,6 +52,8 @@ public class CiudadanoData {
             preparedStatement.setString(3, ciudadano.getCelular());
             preparedStatement.setString(4, ciudadano.getPatologia());
             preparedStatement.setString(5, ciudadano.getAmbitoLaboral());
+            preparedStatement.setString(6, ciudadano.getProvincia());
+            preparedStatement.setString(7, ciudadano.getLocalidad());
             preparedStatement.setInt(6, ciudadano.getDNI());
 
             preparedStatement.executeUpdate();
@@ -59,12 +64,15 @@ public class CiudadanoData {
     }
 
     public void borrarCiudadano(Ciudadano ciudadano) {
-        String sql = "DELETE FROM ciudadano WHERE DNI=?";
+        String sql = "DELETE FROM ciudadano WHERE DNI=? AND provincia=? AND localidad=?";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
             preparedStatement.setInt(1, ciudadano.getDNI());
+            preparedStatement.setString(2, ciudadano.getProvincia());
+            preparedStatement.setString(3, ciudadano.getLocalidad());
+
             preparedStatement.executeUpdate();
-            System.out.println("Ciudadano eliminado!.");
+            System.out.println("Ciudadano eliminado.");
         } catch (SQLException e) {
             System.err.println("Error al eliminar ciudadano: " + e.getMessage());
         }
@@ -74,8 +82,7 @@ public class CiudadanoData {
         List<Ciudadano> ciudadanos = new ArrayList<>();
         String sql = "SELECT * FROM ciudadano";
 
-        try (PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-                ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement preparedStatement = conexion.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 int dni = resultSet.getInt("DNI");
@@ -84,8 +91,10 @@ public class CiudadanoData {
                 String celular = resultSet.getString("celular");
                 String patologia = resultSet.getString("patologia");
                 String ambitoLaboral = resultSet.getString("ambitoTrabajo");
+                String provincia = resultSet.getString("provincia");
+                String localidad = resultSet.getString("localidad");
 
-                Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral);
+                Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, provincia, localidad);
                 ciudadanos.add(ciudadano);
             }
         } catch (SQLException e) {
@@ -95,8 +104,7 @@ public class CiudadanoData {
         return ciudadanos;
     }
 
-
-    public  Ciudadano buscarCiudadanoPorDNI(int dni) {
+    public Ciudadano buscarCiudadanoPorDNI(int dni) {
         String query = "SELECT * FROM ciudadano WHERE DNI = ?";
         Ciudadano ciudadano = null;
 
@@ -110,8 +118,11 @@ public class CiudadanoData {
                 String celular = resultSet.getString("celular");
                 String patologia = resultSet.getString("patologia");
                 String ambitoLaboral = resultSet.getString("ambitoLaboral");
+                String provincia = resultSet.getString("provincia");  // Agregar provincia
+                String localidad = resultSet.getString("localidad");  // Agregar localidad
 
-                ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral);
+                // Utilizar el constructor adecuado de Ciudadano que incluye provincia y localidad
+                ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, provincia, localidad);
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener ciudadano por DNI: " + e.getMessage());
@@ -120,5 +131,3 @@ public class CiudadanoData {
         return ciudadano;
     }
 }
-        
- 
