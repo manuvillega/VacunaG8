@@ -1,31 +1,39 @@
-
 package vistas2;
 
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import desplazable.Desface;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
-
-
-        
 /**
  *
  * @author tian_
  */
 public class Principal extends javax.swing.JFrame {
+    //ATRIBUTOS MENUS
+    private Desface desplazar;
+    private boolean menuDesplegado = false;
+    //ATRIBUTOS CLASES PANELES
+    private CiudadanoVista CiudadanoVista;
+    private CitaVacunacionVista CitaVacunacionVista;
+    private CentroVacunacionVista CentroVacunacionVista;
+//    private LaboratorioVista LaboratorioVista;
+//    private VacinaVista VacinaVista;
 
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
-         setLocationRelativeTo(null);
-       // jPanel_botones_principal.setVisible(true);
+        setLocationRelativeTo(null);
+        // jPanel_botones_principal.setVisible(true);
         jPanel_Escritorio.setVisible(true);
+        desplazar = new Desface();
+        
+     
     }
 
     /**
@@ -39,10 +47,18 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         kGradientPanel1 = new keeptoo.KGradientPanel();
-        jPanel_Escritorio = new javax.swing.JPanel();
-        kGradientPanel3 = new keeptoo.KGradientPanel();
+        JP_titulo = new keeptoo.KGradientPanel();
         jLabel2 = new javax.swing.JLabel();
-        ImageIcon icon = new ImageIcon(getClass().getResource("/imgs/Ventana_Portada.png"));
+        btn_menu = new javax.swing.JButton();
+        JP_Botones = new keeptoo.KGradientPanel();
+        btn_ciudadano = new javax.swing.JButton();
+        btn_laboratorio = new javax.swing.JButton();
+        btn_centro_vacunacion = new javax.swing.JButton();
+        btn_vacuna = new javax.swing.JButton();
+        btn_cita_vacunacion = new javax.swing.JButton();
+        btn_salir = new javax.swing.JButton();
+        jPanel_Escritorio = new javax.swing.JPanel();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/imgs/escritorio_principal.jpg"));
         Image image = icon.getImage();
         jDesktopVacuna = new javax.swing.JDesktopPane(){
 
@@ -51,48 +67,171 @@ public class Principal extends javax.swing.JFrame {
             }
 
         };
+        JP_informacion = new keeptoo.KGradientPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setTitle("Sistema de Vacunación Grupo 8");
+        setBackground(new java.awt.Color(24, 24, 27));
+        setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        setForeground(new java.awt.Color(0, 0, 153));
 
         kGradientPanel1.setkEndColor(new java.awt.Color(17, 24, 39));
         kGradientPanel1.setkStartColor(new java.awt.Color(9, 9, 11));
 
-        javax.swing.GroupLayout jPanel_EscritorioLayout = new javax.swing.GroupLayout(jPanel_Escritorio);
-        jPanel_Escritorio.setLayout(jPanel_EscritorioLayout);
-        jPanel_EscritorioLayout.setHorizontalGroup(
-            jPanel_EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
-        );
-        jPanel_EscritorioLayout.setVerticalGroup(
-            jPanel_EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        kGradientPanel3.setkEndColor(new java.awt.Color(17, 24, 39));
-        kGradientPanel3.setkGradientFocus(800);
-        kGradientPanel3.setkStartColor(new java.awt.Color(24, 24, 27));
+        JP_titulo.setkEndColor(new java.awt.Color(30, 58, 138));
+        JP_titulo.setkGradientFocus(1500);
+        JP_titulo.setkStartColor(new java.awt.Color(24, 24, 27));
 
         jLabel2.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Sistema de Vacunacion");
+        jLabel2.setText("Sistema de Vacunación G8");
 
-        javax.swing.GroupLayout kGradientPanel3Layout = new javax.swing.GroupLayout(kGradientPanel3);
-        kGradientPanel3.setLayout(kGradientPanel3Layout);
-        kGradientPanel3Layout.setHorizontalGroup(
-            kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kGradientPanel3Layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+        btn_menu.setBackground(new java.awt.Color(23, 37, 84));
+        btn_menu.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_menu.setForeground(new java.awt.Color(204, 204, 204));
+        btn_menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/menú-ico.png"))); // NOI18N
+        btn_menu.setText("    Menú");
+        btn_menu.setActionCommand("Ciudadano");
+        btn_menu.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(13, 4, 248)));
+        btn_menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_menu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_menu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btn_menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_menuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout JP_tituloLayout = new javax.swing.GroupLayout(JP_titulo);
+        JP_titulo.setLayout(JP_tituloLayout);
+        JP_tituloLayout.setHorizontalGroup(
+            JP_tituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JP_tituloLayout.createSequentialGroup()
+                .addComponent(btn_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
                 .addGap(185, 185, 185))
         );
-        kGradientPanel3Layout.setVerticalGroup(
-            kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel3Layout.createSequentialGroup()
+        JP_tituloLayout.setVerticalGroup(
+            JP_tituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_tituloLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_tituloLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        JP_Botones.setkGradientFocus(1400);
+        JP_Botones.setkStartColor(new java.awt.Color(17, 24, 39));
+
+        btn_ciudadano.setBackground(new java.awt.Color(23, 37, 84));
+        btn_ciudadano.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btn_ciudadano.setForeground(new java.awt.Color(204, 204, 204));
+        btn_ciudadano.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ciudadano-ico.png"))); // NOI18N
+        btn_ciudadano.setText("    Ciudadano");
+        btn_ciudadano.setActionCommand("Ciudadano");
+        btn_ciudadano.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 2, new java.awt.Color(13, 4, 248)));
+        btn_ciudadano.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ciudadano.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_ciudadano.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        btn_laboratorio.setBackground(new java.awt.Color(23, 37, 84));
+        btn_laboratorio.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btn_laboratorio.setForeground(new java.awt.Color(204, 204, 204));
+        btn_laboratorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/laboratorio-ico.png"))); // NOI18N
+        btn_laboratorio.setText("    Laboratorio");
+        btn_laboratorio.setActionCommand("Ciudadano");
+        btn_laboratorio.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 2, new java.awt.Color(13, 4, 248)));
+        btn_laboratorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_laboratorio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_laboratorio.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        btn_centro_vacunacion.setBackground(new java.awt.Color(23, 37, 84));
+        btn_centro_vacunacion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btn_centro_vacunacion.setForeground(new java.awt.Color(204, 204, 204));
+        btn_centro_vacunacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/hospital-ico.png"))); // NOI18N
+        btn_centro_vacunacion.setText("    Centro de Vacunación");
+        btn_centro_vacunacion.setActionCommand("Ciudadano");
+        btn_centro_vacunacion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 2, new java.awt.Color(13, 4, 248)));
+        btn_centro_vacunacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_centro_vacunacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_centro_vacunacion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        btn_vacuna.setBackground(new java.awt.Color(23, 37, 84));
+        btn_vacuna.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btn_vacuna.setForeground(new java.awt.Color(204, 204, 204));
+        btn_vacuna.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/vacuna-ico.png"))); // NOI18N
+        btn_vacuna.setText("    Vacuna");
+        btn_vacuna.setActionCommand("Ciudadano");
+        btn_vacuna.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 2, new java.awt.Color(13, 4, 248)));
+        btn_vacuna.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_vacuna.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_vacuna.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        btn_cita_vacunacion.setBackground(new java.awt.Color(23, 37, 84));
+        btn_cita_vacunacion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btn_cita_vacunacion.setForeground(new java.awt.Color(204, 204, 204));
+        btn_cita_vacunacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/cita-vacun-ico.png"))); // NOI18N
+        btn_cita_vacunacion.setText("    Cita Vacunación");
+        btn_cita_vacunacion.setActionCommand("Ciudadano");
+        btn_cita_vacunacion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 2, new java.awt.Color(13, 4, 248)));
+        btn_cita_vacunacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_cita_vacunacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_cita_vacunacion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        btn_salir.setBackground(new java.awt.Color(23, 37, 84));
+        btn_salir.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btn_salir.setForeground(new java.awt.Color(204, 204, 204));
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/salir-ico.png"))); // NOI18N
+        btn_salir.setText("    Salir");
+        btn_salir.setActionCommand("Ciudadano");
+        btn_salir.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 2, new java.awt.Color(13, 4, 248)));
+        btn_salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_salir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_salir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout JP_BotonesLayout = new javax.swing.GroupLayout(JP_Botones);
+        JP_Botones.setLayout(JP_BotonesLayout);
+        JP_BotonesLayout.setHorizontalGroup(
+            JP_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btn_ciudadano, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_laboratorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_vacuna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_cita_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_centro_vacunacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+        );
+        JP_BotonesLayout.setVerticalGroup(
+            JP_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JP_BotonesLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(btn_ciudadano, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_laboratorio, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_vacuna, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_centro_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_cita_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
+                .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout jDesktopVacunaLayout = new javax.swing.GroupLayout(jDesktopVacuna);
@@ -103,38 +242,145 @@ public class Principal extends javax.swing.JFrame {
         );
         jDesktopVacunaLayout.setVerticalGroup(
             jDesktopVacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel_EscritorioLayout = new javax.swing.GroupLayout(jPanel_Escritorio);
+        jPanel_Escritorio.setLayout(jPanel_EscritorioLayout);
+        jPanel_EscritorioLayout.setHorizontalGroup(
+            jPanel_EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jDesktopVacuna, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        jPanel_EscritorioLayout.setVerticalGroup(
+            jPanel_EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jDesktopVacuna)
+        );
+
+        jPanel_Escritorio.add(jDesktopVacuna, java.awt.BorderLayout.CENTER);
+
+        JP_informacion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(13, 4, 248)), "Sobre nuestro Sistema", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 0, 10), new java.awt.Color(13, 4, 248))); // NOI18N
+        JP_informacion.setForeground(new java.awt.Color(13, 4, 248));
+        JP_informacion.setkEndColor(new java.awt.Color(30, 41, 59));
+        JP_informacion.setkGradientFocus(600);
+        JP_informacion.setkStartColor(new java.awt.Color(24, 24, 27));
+
+        jLabel1.setFont(new java.awt.Font("Calibri", 3, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("\"Sistema de Gestión de");
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 3, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel4.setText("Vacunación - Administración");
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 3, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("de citas y dosis de");
+
+        jLabel6.setFont(new java.awt.Font("Calibri", 3, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setText("vacunación para");
+
+        jLabel7.setFont(new java.awt.Font("Calibri", 3, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setText("vacunación para");
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icono_principal.png"))); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Arial Black", 2, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(13, 4, 248));
+        jLabel9.setText("G8");
+
+        javax.swing.GroupLayout JP_informacionLayout = new javax.swing.GroupLayout(JP_informacion);
+        JP_informacion.setLayout(JP_informacionLayout);
+        JP_informacionLayout.setHorizontalGroup(
+            JP_informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JP_informacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(JP_informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(JP_informacionLayout.createSequentialGroup()
+                        .addGroup(JP_informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(JP_informacionLayout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        JP_informacionLayout.setVerticalGroup(
+            JP_informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JP_informacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                .addGroup(JP_informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JP_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jDesktopVacuna)
+                        .addComponent(JP_Botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel_Escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(kGradientPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel_Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                    .addGap(24, 24, 24)
+                    .addComponent(JP_informacion, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(852, Short.MAX_VALUE)))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JP_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDesktopVacuna)
+                    .addComponent(JP_Botones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel_Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                    .addGap(97, 97, 97)
+                    .addComponent(JP_informacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(21, 21, 21)))
         );
 
-        jPanel_Escritorio.add(jDesktopVacuna, java.awt.BorderLayout.CENTER);
-
-        jPanel1.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,6 +399,26 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menuActionPerformed
+        if (menuDesplegado) {
+         int iconWidth = btn_ciudadano.getWidth();
+        desplazar.desplazarDerecha(JP_Botones, JP_Botones.getX(), JP_Botones.getX() + iconWidth , 10, 10);
+         btn_menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/menú-ico.png")));
+    } else {
+         int panelWidth = JP_Botones.getWidth();
+        desplazar.desplazarIzquierda(JP_Botones, JP_Botones.getX(), JP_Botones.getX() - panelWidth , 10, 10);
+         
+          btn_menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/flecha-icoo.png")));
+    }
+
+    menuDesplegado = !menuDesplegado; // Cambia el estado del menú
+
+    }//GEN-LAST:event_btn_menuActionPerformed
+
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_salirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,7 +453,6 @@ public class Principal extends javax.swing.JFrame {
 //                new Principal().setVisible(true);
 //            }
 //        });
-
         try {
             UIManager.setLookAndFeel(new McWinLookAndFeel());
         } catch (UnsupportedLookAndFeelException ex) {
@@ -195,17 +460,34 @@ public class Principal extends javax.swing.JFrame {
         }
         // crea e inicializa el  principal
         java.awt.EventQueue.invokeLater(() -> {
-         Principal principal = new Principal();  // misma intancia
-         principal.setVisible(true);
+            Principal principal = new Principal();  // misma intancia
+            principal.setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private keeptoo.KGradientPanel JP_Botones;
+    private keeptoo.KGradientPanel JP_informacion;
+    private keeptoo.KGradientPanel JP_titulo;
+    private javax.swing.JButton btn_centro_vacunacion;
+    private javax.swing.JButton btn_cita_vacunacion;
+    private javax.swing.JButton btn_ciudadano;
+    private javax.swing.JButton btn_laboratorio;
+    private javax.swing.JButton btn_menu;
+    private javax.swing.JButton btn_salir;
+    private javax.swing.JButton btn_vacuna;
     private javax.swing.JDesktopPane jDesktopVacuna;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_Escritorio;
     private keeptoo.KGradientPanel kGradientPanel1;
-    private keeptoo.KGradientPanel kGradientPanel3;
     // End of variables declaration//GEN-END:variables
+
 }
