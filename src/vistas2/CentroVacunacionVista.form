@@ -134,13 +134,13 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                              <Component id="jButton5" pref="100" max="32767" attributes="0"/>
+                              <Component id="jBBuscar" pref="99" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
-                              <Component id="jButton6" pref="100" max="32767" attributes="0"/>
+                              <Component id="jBModificar" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
-                              <Component id="jButton7" pref="100" max="32767" attributes="0"/>
+                              <Component id="jBEliminar" pref="99" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-                              <Component id="jButton8" pref="100" max="32767" attributes="0"/>
+                              <Component id="jBGuardar" pref="99" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -157,10 +157,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButton7" alignment="3" pref="30" max="32767" attributes="0"/>
-                                  <Component id="jButton8" alignment="3" max="32767" attributes="0"/>
-                                  <Component id="jButton6" alignment="3" max="32767" attributes="0"/>
-                                  <Component id="jButton5" alignment="3" max="32767" attributes="0"/>
+                                  <Component id="jBEliminar" alignment="3" pref="30" max="32767" attributes="0"/>
+                                  <Component id="jBGuardar" alignment="3" max="32767" attributes="0"/>
+                                  <Component id="jBModificar" alignment="3" max="32767" attributes="0"/>
+                                  <Component id="jBBuscar" alignment="3" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
@@ -175,7 +175,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="jButton5">
+                    <Component class="javax.swing.JButton" name="jBBuscar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -188,8 +188,11 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Buscar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBBuscarActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton6">
+                    <Component class="javax.swing.JButton" name="jBModificar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -200,10 +203,13 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f8" green="f7" red="f6" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Buscar"/>
+                        <Property name="text" type="java.lang.String" value="Modificar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBModificarActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton7">
+                    <Component class="javax.swing.JButton" name="jBEliminar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -214,10 +220,13 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f8" green="f7" red="f6" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Buscar"/>
+                        <Property name="text" type="java.lang.String" value="Eliminar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBEliminarActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton8">
+                    <Component class="javax.swing.JButton" name="jBGuardar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -228,8 +237,11 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f8" green="f7" red="f6" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Buscar"/>
+                        <Property name="text" type="java.lang.String" value="Guardar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBGuardarActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JSeparator" name="jSeparator6">
                       <Properties>
@@ -324,9 +336,9 @@
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="jCB_CentroVacunacion_Ciudades" max="32767" attributes="0"/>
                                   <Component id="jCB_CentroVacunacion_Provincias" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextField6" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextField4" max="32767" attributes="0"/>
+                                  <Component id="jTDireccion" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTID" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTNombre" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -336,11 +348,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField1" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="jTID" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField4" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="jTNombre" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField6" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="jTDireccion" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                               <Component id="jCB_CentroVacunacion_Provincias" min="-2" pref="53" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
@@ -351,7 +363,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="jTextField1">
+                    <Component class="javax.swing.JTextField" name="jTID">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>
@@ -447,7 +459,7 @@
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField4">
+                    <Component class="javax.swing.JTextField" name="jTNombre">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>
@@ -472,7 +484,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField6">
+                    <Component class="javax.swing.JTextField" name="jTDireccion">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>

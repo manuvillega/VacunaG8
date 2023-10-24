@@ -1,5 +1,7 @@
 package vistas2;
 
+import Entidades.CentroVacunacion;
+import AccesoADatos.Conexion;
 import java.awt.BorderLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -8,7 +10,9 @@ import javafx.embed.swing.JFXPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import utilidades.ProvinciasCiudades;
+import AccesoADatos.CentroVacunacionData;
 
 
 /**
@@ -18,13 +22,13 @@ import utilidades.ProvinciasCiudades;
 public class CentroVacunacionVista extends javax.swing.JPanel {
     private JFXPanel jfxPanel;
     private GoogleMapPanel googleMapPanel;
-        
+    private CentroVacunacionData centroVacunacionData;
 
     public CentroVacunacionVista() {
         initComponents();
         cargarProvincias();
          initFX();
-       
+       centroVacunacionData = new CentroVacunacionData(Conexion.getConexion());
    
     }
 
@@ -37,20 +41,20 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel_googleMap = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        jBBuscar = new javax.swing.JButton();
+        jBModificar = new javax.swing.JButton();
+        jBEliminar = new javax.swing.JButton();
+        jBGuardar = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
         jPanel11 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator10 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jTID = new javax.swing.JTextField();
         jCB_CentroVacunacion_Provincias = new javax.swing.JComboBox<>();
         jCB_CentroVacunacion_Ciudades = new javax.swing.JComboBox<>();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        jTNombre = new javax.swing.JTextField();
+        jTDireccion = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(137, 161, 209));
 
@@ -74,25 +78,45 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
 
         jPanel9.setBackground(new java.awt.Color(108, 132, 197));
 
-        jButton5.setBackground(new java.awt.Color(59, 66, 109));
-        jButton5.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(246, 247, 248));
-        jButton5.setText("Buscar");
+        jBBuscar.setBackground(new java.awt.Color(59, 66, 109));
+        jBBuscar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBBuscar.setForeground(new java.awt.Color(246, 247, 248));
+        jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
 
-        jButton6.setBackground(new java.awt.Color(59, 66, 109));
-        jButton6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(246, 247, 248));
-        jButton6.setText("Buscar");
+        jBModificar.setBackground(new java.awt.Color(59, 66, 109));
+        jBModificar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBModificar.setForeground(new java.awt.Color(246, 247, 248));
+        jBModificar.setText("Modificar");
+        jBModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBModificarActionPerformed(evt);
+            }
+        });
 
-        jButton7.setBackground(new java.awt.Color(59, 66, 109));
-        jButton7.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(246, 247, 248));
-        jButton7.setText("Buscar");
+        jBEliminar.setBackground(new java.awt.Color(59, 66, 109));
+        jBEliminar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBEliminar.setForeground(new java.awt.Color(246, 247, 248));
+        jBEliminar.setText("Eliminar");
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
-        jButton8.setBackground(new java.awt.Color(59, 66, 109));
-        jButton8.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(246, 247, 248));
-        jButton8.setText("Buscar");
+        jBGuardar.setBackground(new java.awt.Color(59, 66, 109));
+        jBGuardar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBGuardar.setForeground(new java.awt.Color(246, 247, 248));
+        jBGuardar.setText("Guardar");
+        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGuardarActionPerformed(evt);
+            }
+        });
 
         jSeparator6.setBackground(new java.awt.Color(48, 52, 59));
         jSeparator6.setForeground(new java.awt.Color(48, 52, 59));
@@ -103,13 +127,13 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jBBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                 .addGap(122, 122, 122)
-                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jBModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(129, 129, 129)
-                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jBEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                 .addGap(118, 118, 118)
-                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addComponent(jBGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                 .addGap(66, 66, 66))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -122,10 +146,10 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jBEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jBGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -174,10 +198,10 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(59, 66, 109));
 
-        jTextField1.setBackground(new java.awt.Color(137, 161, 209));
-        jTextField1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(59, 66, 109));
-        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(24, 35, 57)), "ID Centro Vacunación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
+        jTID.setBackground(new java.awt.Color(137, 161, 209));
+        jTID.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTID.setForeground(new java.awt.Color(59, 66, 109));
+        jTID.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(24, 35, 57)), "ID Centro Vacunación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
 
         jCB_CentroVacunacion_Provincias.setBackground(new java.awt.Color(137, 161, 209));
         jCB_CentroVacunacion_Provincias.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
@@ -200,15 +224,15 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(137, 161, 209));
-        jTextField4.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(59, 66, 109));
-        jTextField4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(24, 35, 57)), "Nombre", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
+        jTNombre.setBackground(new java.awt.Color(137, 161, 209));
+        jTNombre.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTNombre.setForeground(new java.awt.Color(59, 66, 109));
+        jTNombre.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(24, 35, 57)), "Nombre", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
 
-        jTextField6.setBackground(new java.awt.Color(137, 161, 209));
-        jTextField6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(59, 66, 109));
-        jTextField6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(24, 35, 57)), "Dirección", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
+        jTDireccion.setBackground(new java.awt.Color(137, 161, 209));
+        jTDireccion.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTDireccion.setForeground(new java.awt.Color(59, 66, 109));
+        jTDireccion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(24, 35, 57)), "Dirección", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -219,20 +243,20 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jCB_CentroVacunacion_Ciudades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jCB_CentroVacunacion_Provincias, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4))
+                    .addComponent(jTDireccion, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTID, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTNombre))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCB_CentroVacunacion_Provincias, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -292,8 +316,8 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
 
     private void jCB_CentroVacunacion_CiudadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_CentroVacunacion_CiudadesActionPerformed
         String ciudadSelecionada = jCB_CentroVacunacion_Ciudades.getSelectedItem().toString();
-        googleMapPanel.showMapForCity(ciudadSelecionada);
-        jPanel_googleMap.add(jCB_CentroVacunacion_Ciudades);
+        //googleMapPanel.showMapForCity(ciudadSelecionada);
+        //jPanel_googleMap.add(jCB_CentroVacunacion_Ciudades);
     }//GEN-LAST:event_jCB_CentroVacunacion_CiudadesActionPerformed
 
     private void jCB_CentroVacunacion_ProvinciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_CentroVacunacion_ProvinciasActionPerformed
@@ -304,12 +328,95 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jCB_CentroVacunacion_ProvinciasActionPerformed
 
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+         int id = Integer.parseInt(jTID.getText());
+         if(id != 0){
+          CentroVacunacion centroVacunacion =  centroVacunacionData.obtenerCentroVacunacionPorId(id);
+          if(centroVacunacion != null){
+          jTNombre.setText(centroVacunacion.getNombre());
+          jTDireccion.setText(centroVacunacion.getDireccion());
+          for (int i = 0; i < jCB_CentroVacunacion_Provincias.getItemCount(); i++) {
+            if (centroVacunacion.getProvincia().equals(jCB_CentroVacunacion_Provincias.getItemAt(i).toString())) {
+                jCB_CentroVacunacion_Provincias.setSelectedIndex(i);
+                break;
+            }
+          jCB_CentroVacunacion_Provincias.setSelectedIndex(id);
+         }
+           for (int i = 0; i < jCB_CentroVacunacion_Ciudades.getItemCount(); i++) {
+            if (centroVacunacion.getCiudad().equals(jCB_CentroVacunacion_Ciudades.getItemAt(i).toString())) {
+                jCB_CentroVacunacion_Ciudades.setSelectedIndex(i);
+                break;
+            }
+          jCB_CentroVacunacion_Ciudades.setSelectedIndex(id);
+         }
+          
+          
+         } else{
+             JOptionPane.showMessageDialog(this, "No existe un centro de vacunacion con ese ID, por favor pruebe nuevamente con otro ID");
+         }
+         } else{
+             JOptionPane.showMessageDialog(this, "El ID no puede ser 0 o un numero negativo");
+         }
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
+        int id = Integer.parseInt(jTID.getText());
+        if(id != 0){
+            CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(id);
+            if(centroVacunacion != null){
+                String nombre = jTNombre.getText();
+                String direccion = jTDireccion.getText();
+                String provincia = jCB_CentroVacunacion_Provincias.getSelectedItem().toString();
+                String ciudad = jCB_CentroVacunacion_Ciudades.getSelectedItem().toString();
+                centroVacunacion = new CentroVacunacion(id, nombre, direccion, provincia, ciudad);
+                centroVacunacionData.modificarCentro(centroVacunacion);
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe un centro de vacunacion con ese ID, por favor pruebe nuevamente con otro ID");
+            }
+        } else{
+             JOptionPane.showMessageDialog(this, "El ID no puede ser 0 o un numero negativo");
+        }
+             
+    }//GEN-LAST:event_jBModificarActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        int id = Integer.parseInt(jTID.getText());
+        if(id != 0){
+            CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(id);
+            if(centroVacunacion != null){
+                centroVacunacionData.borrarCentro(id);
+            } else{
+                JOptionPane.showMessageDialog(this, "No existe un centro de vacunacion con ese ID, por favor pruebe nuevamente con otro ID");
+            }
+        } else{
+            JOptionPane.showMessageDialog(this, "El ID no puede ser 0 o un numero negativo");
+        }       
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+            try{
+            int id = Integer.parseInt(jTID.getText());
+            if(id > 0){
+                JOptionPane.showMessageDialog(this, "Por favor para crear un centro de vacunacion nuevo, deje el campo ID vacio");
+            }
+            } catch(NumberFormatException ex){
+                
+            }
+            int idN = 0;
+            String nombre = jTNombre.getText(); 
+            String direccion = jTDireccion.getText();
+            String provincia = jCB_CentroVacunacion_Provincias.getSelectedItem().toString();
+            String ciudad = jCB_CentroVacunacion_Ciudades.getSelectedItem().toString();
+            CentroVacunacion centroVacunacion = new CentroVacunacion(idN, nombre, direccion, provincia, ciudad);
+            centroVacunacionData.crearCentro(centroVacunacion);
+    }//GEN-LAST:event_jBGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jBBuscar;
+    private javax.swing.JButton jBEliminar;
+    private javax.swing.JButton jBGuardar;
+    private javax.swing.JButton jBModificar;
     private javax.swing.JComboBox<String> jCB_CentroVacunacion_Ciudades;
     private javax.swing.JComboBox<String> jCB_CentroVacunacion_Provincias;
     private javax.swing.JLabel jLabel9;
@@ -321,10 +428,10 @@ public class CentroVacunacionVista extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel_googleMap;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JTextField jTDireccion;
+    private javax.swing.JTextField jTID;
+    private javax.swing.JTextField jTNombre;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 
     private void cargarProvincias() {

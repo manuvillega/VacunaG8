@@ -1,6 +1,7 @@
-package vacunag8.accesoADatos;
+package AccesoADatos;
 
 import Entidades.CentroVacunacion;
+import AccesoADatos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,18 +14,20 @@ import javax.swing.JOptionPane;
 
 public class CentroVacunacionData {
 
-    private Connection conexion;
+    private Connection conexion = null;
     public CentroVacunacionData(Connection conexion){
         this.conexion = conexion;
     }
     
     public void crearCentro(CentroVacunacion centro){
         
-        String sql = "INSERT INTO centrovacunacion(nombre, direccion) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO centrovacunacion(nombre, direccion, provincia, ciudad, estado) VALUES (?, ?, ?, ?, 1)";
         
         try {PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setString(1, centro.getNombre());
-            ps.setString(2, centro.getDireccion()); 
+            ps.setString(2, centro.getDireccion());
+            ps.setString(3, centro.getProvincia());
+            ps.setString(4, centro.getCiudad());
             ps.executeUpdate();
             System.out.println("Se ha creado un Centro de Vacunacion");
             
@@ -35,28 +38,30 @@ public class CentroVacunacionData {
     
     public void modificarCentro(CentroVacunacion centro){
         
-        String sql = "UPDATE centrovacunacion SET nombre='?', direccion='?'"; 
+        String sql = "UPDATE `centrovacunacion` SET `nombre`=?,`direccion`=?,`provincia`=?,`ciudad`=? WHERE IDcentro = ?"; 
         
         try {PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setString(1, centro.getNombre());
-            ps.setString(2, centro.getDireccion()); 
+            ps.setString(2, centro.getDireccion());
+            ps.setString(3, centro.getProvincia());
+            ps.setString(4, centro.getCiudad());
+            ps.setInt(5, centro.getIDcentro());
             ps.executeUpdate();
-            System.out.println("Se ha modificado Centro de Vacunacion");
+           JOptionPane.showMessageDialog(null, "Se ha modificado Centro de Vacunacion");
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "no fue posible conectar para crear Centro");
         }        
     }
     
-    public void borrarCentro(CentroVacunacion centro){
+    public void borrarCentro(int id){
         
-        String sql = "DELETE FROM centrovacunacion WHERE nombre=?, direccion=?";
+        String sql = "UPDATE centrovacunacion SET estado = 0 WHERE IDcentro = ?";
         
         try {PreparedStatement ps = conexion.prepareStatement(sql);
-            ps.setString(1, centro.getNombre());
-            ps.setString(2, centro.getDireccion());
+            ps.setInt(1, id);
             ps.executeUpdate();
-            System.out.println("Se ha Eliminado Centro de Vacunacion");          
+            JOptionPane.showMessageDialog(null, "Se ha Eliminado Centro de Vacunacion");          
                    
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "no fue posible conectar para crear Centro");
@@ -66,7 +71,7 @@ public class CentroVacunacionData {
     public CentroVacunacion obtenerCentroVacunacionPorId(int id){
         CentroVacunacion centroVacunacion = null;
         try{
-            String sql = "SELECT * FROM centrovacunacion WHERE IDcentro = ?";
+            String sql = "SELECT * FROM centrovacunacion WHERE IDcentro = ? AND estado = 1";
             PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -75,7 +80,9 @@ public class CentroVacunacionData {
                 int IDcentro = id;
                 String nombre = rs.getString("nombre");
                 String direccion = rs.getString("direccion");
-                centroVacunacion = new CentroVacunacion(IDcentro, nombre, direccion);            
+                String provincia = rs.getString("provincia");
+                String ciudad = rs.getString("ciudad");
+                centroVacunacion = new CentroVacunacion(IDcentro, nombre, direccion, provincia, ciudad);            
             }
             ps.close();
             
