@@ -5,12 +5,12 @@ package vacunag8;
  * @author Gonz@_
  */
 
+import accesoADatos.Conexion;
 import Entidades.Laboratorio;
 import Entidades.Vacuna;
 import utilidades.ValidarCUIT;
 import java.sql.Connection;
 import java.util.List;
-import accesoADatos.Conexion;
 import accesoADatos.LaboratorioData;
 import java.sql.Date;
 import java.time.LocalDate;

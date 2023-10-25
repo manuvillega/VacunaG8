@@ -1,9 +1,8 @@
-package AccesoADatos;
+package accesoADatos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import static java.util.jar.Pack200.Packer.PASS;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;

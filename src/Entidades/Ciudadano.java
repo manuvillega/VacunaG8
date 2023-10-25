@@ -1,5 +1,7 @@
 package Entidades;
 
+import java.sql.Connection;
+
 /**
  *
  * @author Gonz@_
@@ -34,6 +36,10 @@ public Ciudadano(int DNI, String nombreCompleto, String email, String celular, S
         this.ambitoLaboral = ambitoLaboral;
         this.provincia = provincia;
         this.localidad = localidad;
+    }
+
+    public Ciudadano(Connection con) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     public int getDNI() {

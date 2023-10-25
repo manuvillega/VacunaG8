@@ -1,7 +1,7 @@
 package vistas2;
 
 import Entidades.CentroVacunacion;
-import AccesoADatos.Conexion;
+import accesoADatos.Conexion;
 import java.awt.BorderLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import utilidades.ProvinciasCiudades;
-import AccesoADatos.CentroVacunacionData;
+import accesoADatos.CentroVacunacionData;
 
 
 /**

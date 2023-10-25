@@ -1,7 +1,6 @@
-package AccesoADatos;
+package accesoADatos;
 
 import Entidades.CentroVacunacion;
-import AccesoADatos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
