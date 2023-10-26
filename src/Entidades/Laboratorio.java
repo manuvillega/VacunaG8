@@ -5,6 +5,7 @@ package Entidades;
  * @author Gonz@_
  */
 
+import java.sql.Connection;
 import utilidades.ValidarCUIT;   //Este es mipaquete, No el de arriba!
 
 public class Laboratorio {
@@ -29,6 +30,10 @@ public class Laboratorio {
         this.pais = pais;
         this.domComercial = domComercial;
         //setCuit(cuit);  
+    }
+
+    public Laboratorio(Connection con) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getIdLaboratorio() {
