@@ -5,6 +5,9 @@ import desplazable.Desface;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -35,9 +38,13 @@ public class Principal extends javax.swing.JFrame {
         // jPanel_botones_principal.setVisible(true);
         jDesktopVacuna.setVisible(true);
         desplazar = new Desface();
+        conifgDate();
 
         ciudadanoVista = new CiudadanoVista(this);
         laboratorioVista = new LaboratorioVista();
+        
+       
+        
 
     }
 
@@ -69,6 +76,7 @@ public class Principal extends javax.swing.JFrame {
         btn_vacuna = new javax.swing.JButton();
         btn_cita_vacunacion = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
+        jL_fechaHora = new javax.swing.JLabel();
         JP_informacion = new keeptoo.KGradientPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -140,7 +148,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(JP_tituloLayout.createSequentialGroup()
                 .addComponent(btn_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(185, 185, 185))
         );
         JP_tituloLayout.setVerticalGroup(
@@ -238,6 +246,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jL_fechaHora.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jL_fechaHora.setForeground(new java.awt.Color(153, 153, 255));
+        jL_fechaHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL_fechaHora.setText("{dayname} {day} de {month} de {year}");
+        jL_fechaHora.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(13, 4, 248)));
+        jL_fechaHora.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout JP_BotonesLayout = new javax.swing.GroupLayout(JP_Botones);
         JP_Botones.setLayout(JP_BotonesLayout);
         JP_BotonesLayout.setHorizontalGroup(
@@ -248,22 +263,28 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(btn_cita_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_centro_vacunacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_BotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jL_fechaHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         JP_BotonesLayout.setVerticalGroup(
             JP_BotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JP_BotonesLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(btn_ciudadano, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jL_fechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_ciudadano, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_laboratorio, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                .addComponent(btn_laboratorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_vacuna, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                .addComponent(btn_vacuna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_centro_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                .addComponent(btn_centro_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_cita_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                .addComponent(btn_cita_vacunacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(55, 55, 55)
-                .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(24, 24, 24))
         );
 
@@ -440,11 +461,11 @@ public class Principal extends javax.swing.JFrame {
         jDesktopVacuna.setLayout(jDesktopVacunaLayout);
         jDesktopVacunaLayout.setHorizontalGroup(
             jDesktopVacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 812, Short.MAX_VALUE)
         );
         jDesktopVacunaLayout.setVerticalGroup(
             jDesktopVacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 550, Short.MAX_VALUE)
         );
 
         jPanel_Escritorio.add(jDesktopVacuna, java.awt.BorderLayout.CENTER);
@@ -535,6 +556,12 @@ public class Principal extends javax.swing.JFrame {
         mostrarLaboratorio();
     }//GEN-LAST:event_btn_laboratorioActionPerformed
 
+     private void conifgDate() {
+        LocalDate now = LocalDate.now();
+        Locale spanishLocale = new Locale("es", "ES");
+        jL_fechaHora.setText(now.format(DateTimeFormatter.ofPattern("EEEE dd 'de' MMMM 'de' yyyy", spanishLocale)));
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -592,6 +619,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_salir;
     private javax.swing.JButton btn_vacuna;
     private javax.swing.JDesktopPane jDesktopVacuna;
+    private javax.swing.JLabel jL_fechaHora;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -1,5 +1,7 @@
 package vistas2;
 
+import Entidades.*;
+import accesoADatos.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -9,6 +11,7 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.sql.Connection;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -18,12 +21,21 @@ import javax.swing.JPanel;
  * @author tian_
  */
 public class CiudadanoVista extends javax.swing.JPanel {
-
+    private Connection con = null;
+    private Ciudadano ciudadano;
+    private CiudadanoData ciudadanoData;
+    private final Principal principal;
     /**
      * Creates new form CiudadanoVista
      */
-    public CiudadanoVista() {
+    public CiudadanoVista(Principal principal) {
+//       con = Conexion.getConexion();
+        this.principal = principal;
         initComponents();
+
+//        ciudadanoData = new CiudadanoData( con);
+//        ciudadano = new Ciudadano(con);
+
 
         cargarProvincias();
 
@@ -489,23 +501,23 @@ public class CiudadanoVista extends javax.swing.JPanel {
 //
 //        jCB_Ciudadano_Ciudades.setModel(new DefaultComboBoxModel<>(ciudades));
 //    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Crea el JFrame para mostrar el JPanel
-                JFrame frame = new JFrame("Carga de Provincias");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(900, 500);
-
-                // Crea y agrega el panel al frame
-                CiudadanoVista ciudadanoPanel = new CiudadanoVista();
-                frame.add(ciudadanoPanel);
-
-                // Haz visible el frame
-                frame.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                // Crea el JFrame para mostrar el JPanel
+//                JFrame frame = new JFrame("Carga de Provincias");
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setSize(900, 500);
+//
+//                // Crea y agrega el panel al frame
+//                CiudadanoVista ciudadanoPanel = new CiudadanoVista();
+//                frame.add(ciudadanoPanel);
+//
+//                // Haz visible el frame
+//                frame.setVisible(true);
+//            }
+//        });
+//    }
 
 }

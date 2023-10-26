@@ -19,14 +19,15 @@ import javax.swing.JOptionPane;
 
 public class citaVacunacionData {
     private Connection conexion;
+    private  CiudadanoData ciudadanoData;
+    private  VacunaData vacunaData;
+    private  CentroVacunacionData centroVacunacionData;        
 
     public citaVacunacionData(Connection conexion) {
         this.conexion = conexion;
         
     }
-     CiudadanoData ciudadanoData;
-     VacunaData vacunaData;
-     CentroVacunacionData centroVacunacionData;
+ 
     public void CrearCita(citaVacunacion cita){
         String sql = "INSERT INTO citavacunacion (persona, codRefuerzo, fechaHoraCita, centroVacunacion)"
                 + "VALUES(?, ?, ?, ?, ?)";
