@@ -17,6 +17,8 @@ public class Ciudadano {
         private String provincia;
         private String localidad;
 
+    public Ciudadano() {}       
+        
     public Ciudadano(int DNI, String nombreCompleto, String email, String celular, String ambitoLaboral, String provincia, String localidad) {
         this.DNI = DNI;
         this.nombreCompleto = nombreCompleto;
@@ -38,10 +40,7 @@ public Ciudadano(int DNI, String nombreCompleto, String email, String celular, S
         this.localidad = localidad;
     }
 
-    public Ciudadano(Connection con) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+
     public int getDNI() {
         return DNI;
     }

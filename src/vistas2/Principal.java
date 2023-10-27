@@ -1,10 +1,15 @@
 package vistas2;
 
+import Entidades.*;
+import accesoADatos.*;
 import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import controladores.CiudadanoControlador;
+import controladores.ConfiguracionControlador;
 import desplazable.Desface;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -12,10 +17,11 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author tian_
+ * @author Gonz@_
  */
 public class Principal extends javax.swing.JFrame {
 
@@ -23,29 +29,39 @@ public class Principal extends javax.swing.JFrame {
     private Desface desplazar;
     private boolean menuDesplegado = false;
     //ATRIBUTOS CLASES PANELES
-    private CiudadanoVista ciudadanoVista;
+    private CiudadanoVista_2 ciudadanoVista;
     private CitaVacunacionVista citaVacunacionVista;
     private CentroVacunacionVista centroVacunacionVista;
     private LaboratorioVista laboratorioVista;
 //    private VacinaVista VacinaVista;
-
-    /**
-     * Creates new form Principal
-     */
+    private Ciudadano ciudadano;
+    private CiudadanoData ciudadanoData ;
+    
     public Principal() {
         initComponents();
+        setSize(1200, 650);
         setLocationRelativeTo(null);
         // jPanel_botones_principal.setVisible(true);
         jDesktopVacuna.setVisible(true);
         desplazar = new Desface();
         conifgDate();
+        Connection conexion = Conexion.getConexion();
 
-        ciudadanoVista = new CiudadanoVista(this);
+    
+         ciudadanoVista = new CiudadanoVista_2(this);
+        ciudadano = new Ciudadano();
+        ciudadanoData = new CiudadanoData(conexion);
         laboratorioVista = new LaboratorioVista();
-        
-       
-        
 
+        
+        //CONFIGS CONTROLADOR
+       ConfiguracionControlador controladorconfig = new ConfiguracionControlador(this);
+        // CIUDADANO CONTTROLADOR
+        CiudadanoControlador controladorCiudadano = new CiudadanoControlador(ciudadano, ciudadanoData, ciudadanoVista);
+        controladorCiudadano.listarTodosLosCiudadanos();
+         
+     
+       this.repaint(); //al final siempre
     }
 
     public void mostrarLaboratorio() {
@@ -69,6 +85,7 @@ public class Principal extends javax.swing.JFrame {
         JP_titulo = new keeptoo.KGradientPanel();
         jLabel2 = new javax.swing.JLabel();
         btn_menu = new javax.swing.JButton();
+        jL_logo_ulp = new javax.swing.JLabel();
         JP_Botones = new keeptoo.KGradientPanel();
         btn_ciudadano = new javax.swing.JButton();
         btn_laboratorio = new javax.swing.JButton();
@@ -141,6 +158,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jL_logo_ulp.setBackground(new java.awt.Color(0, 0, 255));
+        jL_logo_ulp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/logo-ulp.png"))); // NOI18N
+        jL_logo_ulp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jL_logo_ulpMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout JP_tituloLayout = new javax.swing.GroupLayout(JP_titulo);
         JP_titulo.setLayout(JP_tituloLayout);
         JP_tituloLayout.setHorizontalGroup(
@@ -149,17 +174,23 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(185, 185, 185))
+                .addGap(107, 107, 107)
+                .addComponent(jL_logo_ulp, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         JP_tituloLayout.setVerticalGroup(
             JP_tituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_tituloLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_tituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_tituloLayout.createSequentialGroup()
+                .addGap(0, 10, Short.MAX_VALUE)
+                .addGroup(JP_tituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JP_tituloLayout.createSequentialGroup()
+                        .addComponent(jL_logo_ulp, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         JP_Botones.setkGradientFocus(1400);
@@ -465,7 +496,7 @@ public class Principal extends javax.swing.JFrame {
         );
         jDesktopVacunaLayout.setVerticalGroup(
             jDesktopVacunaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         jPanel_Escritorio.add(jDesktopVacuna, java.awt.BorderLayout.CENTER);
@@ -539,23 +570,64 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_menuActionPerformed
 
+    
+        //BOTON SALIR
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        // TODO add your handling code here:
+               int confirmacion = JOptionPane.showConfirmDialog(
+                this, "¿Seguro que deseas salir?", "Salida", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            jPanel_Escritorio.removeAll();
+            jPanel_Escritorio.add(jDesktopVacuna, BorderLayout.CENTER);
+            jPanel_Escritorio.setVisible(true);
+
+            this.dispose(); // cierra la ventana en la que estamos
+            //nos vemos en disny!
+            System.exit(0);
+        }
     }//GEN-LAST:event_btn_salirActionPerformed
 
+            //BOTON CIUDADANO
     private void btn_ciudadanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ciudadanoActionPerformed
-        // BOTON CIUDADANO
-        jPanel_Escritorio.removeAll();
+         jPanel_Escritorio.removeAll();
         jPanel_Escritorio.add(ciudadanoVista, BorderLayout.CENTER);
         ciudadanoVista.setVisible(true);
         jPanel_Escritorio.revalidate();
         jPanel_Escritorio.repaint();
     }//GEN-LAST:event_btn_ciudadanoActionPerformed
 
+        //BOTON LABORATORIO
     private void btn_laboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laboratorioActionPerformed
         mostrarLaboratorio();
     }//GEN-LAST:event_btn_laboratorioActionPerformed
 
+    private void jL_logo_ulpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jL_logo_ulpMouseClicked
+        // en vez boton volver al escritotio usaremos el logo para mostrar el escritorio
+        mostrarEscritorio();
+    }//GEN-LAST:event_jL_logo_ulpMouseClicked
+
+                //VUELVE A MOSTRAR EL ESCRITORIO AL CLICKEAR LOGO ULP (funcion escondida -_º)...
+        private void mostrarEscritorio() {
+        jPanel_Escritorio.removeAll();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/imgs/escritorio_principal.jpg"));
+        Image image = icon.getImage();
+        jDesktopVacuna = new JDesktopPane() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        jPanel_Escritorio.setSize(jPanel_Escritorio.getWidth(), jDesktopVacuna.getHeight());
+        jPanel_Escritorio.setVisible(true);
+        jPanel_Escritorio.add(jDesktopVacuna);
+        //  jD_desktop   activo en el jPanel_desktop
+        jPanel_Escritorio.setComponentZOrder(jDesktopVacuna, 0);
+        jPanel_Escritorio.revalidate();
+        jPanel_Escritorio.repaint();
+    }
+
+       
      private void conifgDate() {
         LocalDate now = LocalDate.now();
         Locale spanishLocale = new Locale("es", "ES");
@@ -608,18 +680,19 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private keeptoo.KGradientPanel JP_Botones;
+    public keeptoo.KGradientPanel JP_Botones;
     private keeptoo.KGradientPanel JP_informacion;
-    private keeptoo.KGradientPanel JP_titulo;
-    private javax.swing.JButton btn_centro_vacunacion;
-    private javax.swing.JButton btn_cita_vacunacion;
-    private javax.swing.JButton btn_ciudadano;
-    private javax.swing.JButton btn_laboratorio;
+    public keeptoo.KGradientPanel JP_titulo;
+    public javax.swing.JButton btn_centro_vacunacion;
+    public javax.swing.JButton btn_cita_vacunacion;
+    public javax.swing.JButton btn_ciudadano;
+    public javax.swing.JButton btn_laboratorio;
     private javax.swing.JButton btn_menu;
-    private javax.swing.JButton btn_salir;
-    private javax.swing.JButton btn_vacuna;
+    public javax.swing.JButton btn_salir;
+    public javax.swing.JButton btn_vacuna;
     private javax.swing.JDesktopPane jDesktopVacuna;
     private javax.swing.JLabel jL_fechaHora;
+    public javax.swing.JLabel jL_logo_ulp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

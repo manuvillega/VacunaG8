@@ -11,8 +11,8 @@ public class Conexion {
 
     private static final String URL = "jdbc:mariadb://localhost/";
     private static final String DB = "vacuna23";
-    private static final String USUARIO = "root";
-    private static final String PASSWORD = "";
+    private static final String USUARIO = "gonza";
+    private static final String PASSWORD = "Metallica.1";
     private static Connection connection;
 
     private Conexion() {

@@ -24,13 +24,13 @@ public class CiudadanoVista extends javax.swing.JPanel {
     private Connection con = null;
     private Ciudadano ciudadano;
     private CiudadanoData ciudadanoData;
-    private final Principal principal;
+    //private final Principal principal;
     /**
      * Creates new form CiudadanoVista
      */
     public CiudadanoVista(Principal principal) {
 //       con = Conexion.getConexion();
-        this.principal = principal;
+       // this.principal = principal;
         initComponents();
 
 //        ciudadanoData = new CiudadanoData( con);

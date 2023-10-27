@@ -21,9 +21,9 @@ public class CiudadanoData {
         this.conexion = conexion;
     }
 
-    public void insertarCiudadano(Ciudadano ciudadano) {
-        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo,  provincia, localidad) "
-                + "VALUES (?, ?, ?, ?, ?, ?,?,?)";
+    public boolean insertarCiudadano(Ciudadano ciudadano) {
+        String sql = "INSERT INTO ciudadano (DNI, nombreCompleto, email, celular, patologia, ambitoTrabajo, provincia, localidad) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
             preparedStatement.setInt(1, ciudadano.getDNI());
@@ -35,12 +35,14 @@ public class CiudadanoData {
             preparedStatement.setString(7, ciudadano.getProvincia());
             preparedStatement.setString(8, ciudadano.getLocalidad());
 
-            preparedStatement.executeUpdate();
+            int rowCount = preparedStatement.executeUpdate();
             System.out.println("ciudadano insertado correctamente.");
+
+            return rowCount > 0; // devuelve veradader si se insertó al menos una fila, sino falsso
         } catch (SQLException e) {
             System.err.println("Error al insertar ciudadano: " + e.getMessage());
+            return false; // en caso de error, devuelve falso.
         }
-
     }
 
     public void actualizarCiudadano(Ciudadano ciudadano) {
@@ -78,27 +80,56 @@ public class CiudadanoData {
         }
     }
 
-    public List<Ciudadano> listarCiudadanos() {
+    public List<Ciudadano> listarCiudadanos(String valor) {
         List<Ciudadano> ciudadanos = new ArrayList<>();
         String sql = "SELECT * FROM ciudadano";
+        String sql_buscarCiudadano = "SELECT * FROM ciudadano WHERE DNI LIKE ?";
 
-        try (PreparedStatement preparedStatement = conexion.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
+        try {
+            if (valor != null && !valor.isEmpty()) {
+                try (PreparedStatement preparedStatement = conexion.prepareStatement(sql_buscarCiudadano)) {
+                    preparedStatement.setString(1, "%" + valor + "%");
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            int dni = resultSet.getInt("DNI");
+                            String nombreCompleto = resultSet.getString("nombreCompleto");
+                            String email = resultSet.getString("email");
+                            String celular = resultSet.getString("celular");
+                            String patologia = resultSet.getString("patologia");
+                            String ambitoLaboral = resultSet.getString("ambitoTrabajo");
+                            String provincia = resultSet.getString("provincia");
+                            String localidad = resultSet.getString("localidad");
 
-            while (resultSet.next()) {
-                int dni = resultSet.getInt("DNI");
-                String nombreCompleto = resultSet.getString("nombreCompleto");
-                String email = resultSet.getString("email");
-                String celular = resultSet.getString("celular");
-                String patologia = resultSet.getString("patologia");
-                String ambitoLaboral = resultSet.getString("ambitoTrabajo");
-                String provincia = resultSet.getString("provincia");
-                String localidad = resultSet.getString("localidad");
+                            Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, provincia, localidad);
+                            ciudadanos.add(ciudadano);
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new SQLException("Error al buscar ciudadanos: " + e.getMessage());
+                }
+            } else {
+                try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            int dni = resultSet.getInt("DNI");
+                            String nombreCompleto = resultSet.getString("nombreCompleto");
+                            String email = resultSet.getString("email");
+                            String celular = resultSet.getString("celular");
+                            String patologia = resultSet.getString("patologia");
+                            String ambitoLaboral = resultSet.getString("ambitoTrabajo");
+                            String provincia = resultSet.getString("provincia");
+                            String localidad = resultSet.getString("localidad");
 
-                Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, provincia, localidad);
-                ciudadanos.add(ciudadano);
+                            Ciudadano ciudadano = new Ciudadano(dni, nombreCompleto, email, celular, patologia, ambitoLaboral, provincia, localidad);
+                            ciudadanos.add(ciudadano);
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new SQLException("Error al obtener ciudadanos: " + e.getMessage());
+                }
             }
         } catch (SQLException e) {
-            System.err.println("Error al obtener ciudadanos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         return ciudadanos;

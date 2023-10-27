@@ -125,7 +125,7 @@ public class ProvinciasCiudades {
 
                 return new String[]{"Aguirre", "Alberdi", "Atamisqui", "Avellaneda", "Banda", "Belgrano", "Choya", "Copo", "Figueroa", "General Taboada",
                     "Guasayán", "Jiménez", "Juan Felipe Ibarra", "Juan Francisco Borges", "Loreto", "Mitre", "Moreno", "Ojo de Agua", "Pellegrini", "Quebrachos",
-                    "Río Hondo", "Rivadavia", "Robles", "Salavina", "San Martín", "Sarmiento", "Silípica"};
+                    "Río Hondo", "Rivadavia", "Robles", "Salavina","Santiago del Estero, Capital", "San Martín", "Sarmiento", "Silípica"};
 
             case "Tierra del Fuego, Antártida e Islas del Atlántico Sur":
 

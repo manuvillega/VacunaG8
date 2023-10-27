@@ -5,24 +5,24 @@ package vacunag8;
  * @author Gonz@_
  */
 
-import accesoADatos.Conexion;
-import Entidades.Laboratorio;
-import Entidades.Vacuna;
-import utilidades.ValidarCUIT;
-import java.sql.Connection;
-import java.util.List;
-import accesoADatos.LaboratorioData;
-import java.sql.Date;
-import java.time.LocalDate;
-import javax.swing.JOptionPane;
-import utilidades.ValidarCUIT;
-import accesoADatos.VacunaData;
+//import accesoADatos.Conexion;
+//import Entidades.Laboratorio;
+//import Entidades.Vacuna;
+//import utilidades.ValidarCUIT;
+//import java.sql.Connection;
+//import java.util.List;
+//import accesoADatos.LaboratorioData;
+//import java.sql.Date;
+//import java.time.LocalDate;
+//import javax.swing.JOptionPane;
+//import utilidades.ValidarCUIT;
+//import accesoADatos.VacunaData;
 
 public class VacunaG8 {
 
     public static void main(String[] args) {
 
-        Connection conexion = Conexion.getConexion();
+//        Connection conexion = Conexion.getConexion();
 
         /* ##################################################################################
                 //##CIUDADANO##
@@ -117,22 +117,22 @@ public class VacunaG8 {
 //    ###################################################################################*/
                 
                 //##VACUNA##
-    
-     VacunaData vacunaData = new VacunaData(conexion);
-
-        // pide y obtiene los datos ingresados para crear el Laboratorio /despiues se reutilizaràn en la GUI
-        int nroSerie = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nroSerieVacuna correcto"));
-        String marca = JOptionPane.showInputDialog("Ingrese la marca de la Vacuna:");
-        double medida = Double.valueOf(JOptionPane.showInputDialog("Ingrese medida correcta de la Vacuna:"));
-        Date fechaCaduca = Date.valueOf(JOptionPane.showInputDialog("Ingrese la fecha de vencimiento:"));
-        boolean colocada = Boolean.getBoolean(JOptionPane.showInputDialog("¿la vacuna esta colocada?"));
-
-
-        
-
-        // inserta-crear un nuevo laboratorio
-        Vacuna vacuna = new Vacuna(nroSerie, marca, medida, fechaCaduca, colocada);
-        vacunaData.cargarVacunas(vacuna);
+//    
+//     VacunaData vacunaData = new VacunaData(conexion);
+//
+//        // pide y obtiene los datos ingresados para crear el Laboratorio /despiues se reutilizaràn en la GUI
+//        int nroSerie = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nroSerieVacuna correcto"));
+//        String marca = JOptionPane.showInputDialog("Ingrese la marca de la Vacuna:");
+//        double medida = Double.valueOf(JOptionPane.showInputDialog("Ingrese medida correcta de la Vacuna:"));
+//        Date fechaCaduca = Date.valueOf(JOptionPane.showInputDialog("Ingrese la fecha de vencimiento:"));
+//        boolean colocada = Boolean.getBoolean(JOptionPane.showInputDialog("¿la vacuna esta colocada?"));
+//
+//
+//        
+//
+//        // inserta-crear un nuevo laboratorio
+//        Vacuna vacuna = new Vacuna(nroSerie, marca, medida, fechaCaduca, colocada);
+//        vacunaData.cargarVacunas(vacuna);
 //
 //        // obtiene un laboratorio por CUIT
 //        Laboratorio laboratorioObtenido = laboratorioData.obtenerLaboratorioPorCUIT(cuitCompleto);
@@ -150,6 +150,7 @@ public class VacunaG8 {
 //        System.out.println("Lista de laboratorios: " + laboratorios);
 //
 //        // cerrar la conexión al finalizar
-        Conexion.desconectar();
+//        Conexion.desconectar();
     }
 }
+    
