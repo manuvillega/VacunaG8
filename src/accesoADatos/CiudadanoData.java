@@ -56,7 +56,7 @@ public class CiudadanoData {
             preparedStatement.setString(5, ciudadano.getAmbitoLaboral());
             preparedStatement.setString(6, ciudadano.getProvincia());
             preparedStatement.setString(7, ciudadano.getLocalidad());
-            preparedStatement.setInt(6, ciudadano.getDNI());
+            preparedStatement.setInt(8, ciudadano.getDNI());
 
             preparedStatement.executeUpdate();
             System.out.println("ciudadano actualizado!.");
@@ -66,13 +66,10 @@ public class CiudadanoData {
     }
 
     public void borrarCiudadano(Ciudadano ciudadano) {
-        String sql = "DELETE FROM ciudadano WHERE DNI=? AND provincia=? AND localidad=?";
+        String sql = "DELETE FROM ciudadano WHERE DNI=?";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
             preparedStatement.setInt(1, ciudadano.getDNI());
-            preparedStatement.setString(2, ciudadano.getProvincia());
-            preparedStatement.setString(3, ciudadano.getLocalidad());
-
             preparedStatement.executeUpdate();
             System.out.println("Ciudadano eliminado.");
         } catch (SQLException e) {
@@ -148,7 +145,7 @@ public class CiudadanoData {
                 String email = resultSet.getString("email");
                 String celular = resultSet.getString("celular");
                 String patologia = resultSet.getString("patologia");
-                String ambitoLaboral = resultSet.getString("ambitoLaboral");
+                String ambitoLaboral = resultSet.getString("ambitoTrabajo");
                 String provincia = resultSet.getString("provincia");  // Agregar provincia
                 String localidad = resultSet.getString("localidad");  // Agregar localidad
 

@@ -6,8 +6,10 @@ package vistas2;
 
 import Entidades.Ciudadano;
 import accesoADatos.CiudadanoData;
+import controladores.CiudadanoControlador;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import utilidades.ProvinciasCiudades;
 
@@ -19,6 +21,8 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
 
     private boolean esPrioritario = false; // Validar despues
     private final Principal principal;
+    private CiudadanoData ciudadanoData;
+    private CiudadanoControlador ciudadanoControlador;
 
     /**
      * Creates new form CiudadanoVista_2
@@ -271,12 +275,22 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         btn_ciudadano_modificar.setForeground(new java.awt.Color(246, 247, 248));
         btn_ciudadano_modificar.setText("Modificar");
         btn_ciudadano_modificar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_ciudadano_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ciudadano_modificarActionPerformed(evt);
+            }
+        });
 
         btn_ciudadano_eliminar.setBackground(new java.awt.Color(59, 66, 109));
         btn_ciudadano_eliminar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btn_ciudadano_eliminar.setForeground(new java.awt.Color(246, 247, 248));
         btn_ciudadano_eliminar.setText("Eliminar");
         btn_ciudadano_eliminar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_ciudadano_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ciudadano_eliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -512,6 +526,7 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_ciudadano_patologiaActionPerformed
 
+                //SELECCION PROVINCIA COMBOBOX
     private void jCB_Ciudadano_Provincias1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_Ciudadano_Provincias1ActionPerformed
          if (jCB_Ciudadano_Provincias1.getSelectedItem() != null) {
             String provinciaSeleccionada = jCB_Ciudadano_Provincias1.getSelectedItem().toString();
@@ -543,6 +558,34 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
     private void jCB_Ciudadano_Ciudades1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_Ciudadano_Ciudades1ActionPerformed
 
     }//GEN-LAST:event_jCB_Ciudadano_Ciudades1ActionPerformed
+
+    private void btn_ciudadano_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ciudadano_modificarActionPerformed
+        
+    }//GEN-LAST:event_btn_ciudadano_modificarActionPerformed
+
+    private void btn_ciudadano_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ciudadano_eliminarActionPerformed
+               int DNI;
+        try{
+        DNI = Integer.parseInt(txt_ciudadano_dni.getText());
+        }catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El documento debe ser solo números!.");
+            return;
+        }
+        if(DNI != 0 || txt_ciudadano_dni.getText().length() != 8){
+            Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNI);
+            
+            if(ciudadano != null){
+                ciudadanoData.borrarCiudadano(ciudadano);
+                JOptionPane.showMessageDialog(this, "Ciudadano eliminado");
+                ciudadanoControlador.limpiarCampos();
+            } else{
+                JOptionPane.showMessageDialog(this, "No existe ciudadano con ese dni");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido");
+        }
+    
+    }//GEN-LAST:event_btn_ciudadano_eliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
