@@ -16,29 +16,35 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author tian_
  */
 public class CitaVacunacionVista extends javax.swing.JPanel {
-
+    private DefaultTableModel modelo;
     private CiudadanoData ciudadanoData;
     private CentroVacunacionData centroVacunacionData;
     private VacunaData vacunaData;
     private citaVacunacionData citaData;
     public CitaVacunacionVista() {
         initComponents();
+        modelo=(DefaultTableModel)jTable1.getModel();
         ciudadanoData = new CiudadanoData(Conexion.getConexion());
         centroVacunacionData = new CentroVacunacionData(Conexion.getConexion());
         vacunaData = new VacunaData(Conexion.getConexion());
         citaData = new citaVacunacionData(Conexion.getConexion());
+        cabecera();
+        cargarTabla();
     }
 
     /**
@@ -77,6 +83,14 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         jTDosis = new javax.swing.JTextField();
         jTCentroVac = new javax.swing.JTextField();
         jDCFechaHoraCita = new com.toedter.calendar.JDateChooser();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jBPostergarCitas = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(137, 161, 209));
 
@@ -267,7 +281,7 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
                     .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(0, 33, Short.MAX_VALUE)
@@ -367,6 +381,82 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
 
         jTabbedPane2.addTab("Cita Vacunación", jPanel2);
 
+        jInternalFrame1.setVisible(true);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jTable1.setToolTipText("");
+        jScrollPane1.setViewportView(jTable1);
+
+        jBPostergarCitas.setText("Postergar citas 2 semanas");
+        jBPostergarCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBPostergarCitasActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Vacuna aplicada");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("jButton3");
+
+        jButton4.setText("jButton4");
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3)
+                                    .addComponent(jButton4)))
+                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(jBPostergarCitas)))
+                        .addGap(0, 60, Short.MAX_VALUE))
+                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jBPostergarCitas)
+                .addGap(55, 55, 55)
+                .addComponent(jButton2)
+                .addGap(61, 61, 61)
+                .addComponent(jButton3)
+                .addGap(70, 70, 70)
+                .addComponent(jButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("", jInternalFrame1);
+
+        jTabbedPane2.addTab("Citas", jTabbedPane1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -390,126 +480,150 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
-       String codCita = jTCodCita.getText();
-       LocalDateTime localDateTime = null;
-       if(!codCita.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Para agregar una cita nueva por favor deje el codigo de cita vacio");
-       } else if(codCita.isEmpty()){
-           int DNIc = Integer.parseInt(jTCiudadano.getText());
-          Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
-           if (ciudadano == null){
-              JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
-           } else{
-               String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
-               int IDcentro = Integer.parseInt(jTCentroVac.getText());
-               CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
-               if (centroVacunacion == null){
-                   JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
-               } else{
-                   try{
-                   Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
-                   Instant instant = fechaHoraColoca.toInstant();
-                    localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-                   } catch(NullPointerException ex){
-                   }                         
-                   int nroDosis = Integer.parseInt(jTDosis.getText());
-                   Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
-                   if(vacuna == null){
-                       JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
-                   } else{
-                       int codCita2 = 0;
-                       citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
-                       citaData.CrearCita(cita);
-                   }                         
-               }
-           }
-       }
-    }//GEN-LAST:event_jBAgregarActionPerformed
-
     private void jTCodCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTCodCitaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTCodCitaActionPerformed
 
-    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
-       String codCita = jTCodCita.getText();
-       LocalDateTime localDateTime = null;
-       if(!codCita.isEmpty()){
-          int cod = Integer.parseInt(codCita);
-          citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
-          if(citaVac != null){
-          int DNIc = Integer.parseInt(jTCiudadano.getText());
-          Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
-           if (ciudadano == null){
-              JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
-           } else{
-               String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
-               int IDcentro = Integer.parseInt(jTCentroVac.getText());
-               CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
-               if (centroVacunacion == null){
-                   JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
-               } else{
-                   try{
-                   Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
-                   Instant instant = fechaHoraColoca.toInstant();
-                    localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-                   } catch(NullPointerException ex){
-                   }                         
-                   int nroDosis = Integer.parseInt(jTDosis.getText());
-                   Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
-                   if(vacuna == null){
-                       JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
-                   } else{
-                       int codCita2 = 0;
-                       citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
-                       citaData.ModificarCita(cita);
-                   }                         
-               }
-           }
-          } else{
-              JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
-          }
-       } else if(codCita.isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para modificar una cita por favor escriba un id de cita");
-       }
-    }//GEN-LAST:event_jBModificarActionPerformed
-
-    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-       String codCita = jTCodCita.getText();
+    private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
+        String codCita = jTCodCita.getText();
+        LocalDateTime localDateTime = null;
         if(!codCita.isEmpty()){
-          int cod = Integer.parseInt(codCita);
-          citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
-          if(citaVac != null){
-              jTCiudadano.setText(Integer.toString(citaVac.getPersona().getDNI()));
-              SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-              try {
-                  jDCFechaHoraCita.setDate(formato.parse(citaVac.getFechaHoraCita()));
-              } catch (ParseException ex) {
-                  Logger.getLogger(CitaVacunacionVista.class.getName()).log(Level.SEVERE, null, ex);
-              }
-              jTCentroVac.setText(Integer.toString(citaVac.getCentroVacunacion().getIDcentro()));
-              try{
-              Date date = (Date) Date.from(citaVac.getFechaHoraVacunacion().atZone(ZoneId.systemDefault()).toInstant());
-              jDCFechaHoraVac.setDate(date);
-              jTDosis.setText(Integer.toString(citaVac.getMedida().getNroSerieDosis()));
-              } catch(NullPointerException ex){                  
-              }
-          } else{
-              JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
-          }
-        }else if(codCita.isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
-       }
-    }//GEN-LAST:event_jBBuscarActionPerformed
+            JOptionPane.showMessageDialog(this, "Para agregar una cita nueva por favor deje el codigo de cita vacio");
+        } else if(codCita.isEmpty()){
+            int DNIc = Integer.parseInt(jTCiudadano.getText());
+            Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
+            if (ciudadano == null){
+                JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
+            } else{
+                String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
+                int IDcentro = Integer.parseInt(jTCentroVac.getText());
+                CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
+                if (centroVacunacion == null){
+                    JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
+                } else{
+                    try{
+                        Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
+                        Instant instant = fechaHoraColoca.toInstant();
+                        localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                    } catch(NullPointerException ex){
+                    }
+                    int nroDosis = Integer.parseInt(jTDosis.getText());
+                    Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
+                    if(vacuna == null){
+                        JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
+                    } else{
+                        int codCita2 = 0;
+                        citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
+                        citaData.CrearCita(cita);
+                        limpiarCampos();
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jBAgregarActionPerformed
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         String codCita = jTCodCita.getText();
         if(!codCita.isEmpty()){
-            
+            int cod = Integer.parseInt(codCita);
+            citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+            if(citaVac != null){
+                citaData.EliminarCita(cod);
+                limpiarCampos();
+            }else{
+                JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
+            }
         }else if(codCita.isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
-       }
+            JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
+        }
     }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
+        String codCita = jTCodCita.getText();
+        LocalDateTime localDateTime = null;
+        if(!codCita.isEmpty()){
+            int cod = Integer.parseInt(codCita);
+            citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+            if(citaVac != null){
+                int DNIc = Integer.parseInt(jTCiudadano.getText());
+                Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
+                if (ciudadano == null){
+                    JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
+                } else{
+                    String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
+                    int IDcentro = Integer.parseInt(jTCentroVac.getText());
+                    CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
+                    if (centroVacunacion == null){
+                        JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
+                    } else{
+                        try{
+                            Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
+                            Instant instant = fechaHoraColoca.toInstant();
+                            localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                        } catch(NullPointerException ex){
+                        }
+                        int nroDosis = Integer.parseInt(jTDosis.getText());
+                        Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
+                        if(vacuna == null){
+                            JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
+                        } else{
+                            int codCita2 = 0;
+                            citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
+                            citaData.ModificarCita(cita);
+                            limpiarCampos();
+                        }
+                    }
+                }
+            } else{
+                JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
+            }
+        } else if(codCita.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Para modificar una cita por favor escriba un id de cita");
+        }
+    }//GEN-LAST:event_jBModificarActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        String codCita = jTCodCita.getText();
+        if(!codCita.isEmpty()){
+            int cod = Integer.parseInt(codCita);
+            citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+            if(citaVac != null){
+                jTCiudadano.setText(Integer.toString(citaVac.getPersona().getDNI()));
+                SimpleDateFormat formatoSinAnio = new SimpleDateFormat("EEE MMM dd HH:mm", Locale.ENGLISH);
+
+                try {
+                    java.util.Date fechaUtil = formatoSinAnio.parse(citaVac.getFechaHoraCita());
+                    java.sql.Date fechaSql = new java.sql.Date(fechaUtil.getTime());
+                    jDCFechaHoraCita.setDate(fechaSql);
+
+                    // Ahora establece un nuevo formato para mostrar la fecha sin el año
+                    SimpleDateFormat formatoVisualizacion = new SimpleDateFormat("EEE dd MMM HH:mm", Locale.ENGLISH);
+                    jDCFechaHoraCita.setDateFormatString(formatoVisualizacion.toPattern());
+                } catch (ParseException ex) {
+                    Logger.getLogger(CitaVacunacionVista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                jTCentroVac.setText(Integer.toString(citaVac.getCentroVacunacion().getIDcentro()));
+                try{
+                    Date date = (Date) Date.from(citaVac.getFechaHoraVacunacion().atZone(ZoneId.systemDefault()).toInstant());
+                    jDCFechaHoraVac.setDate(date);
+                } catch(NullPointerException ex){
+                }
+                jTDosis.setText(Integer.toString(citaVac.getMedida().getNroSerieDosis()));
+            } else{
+                JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
+            }
+        }else if(codCita.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
+        }
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jBPostergarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPostergarCitasActionPerformed
+        citaData.postergarCita();
+    }//GEN-LAST:event_jBPostergarCitasActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+             
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -517,8 +631,13 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBModificar;
+    private javax.swing.JButton jBPostergarCitas;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private com.toedter.calendar.JDateChooser jDCFechaHoraCita;
     private com.toedter.calendar.JDateChooser jDCFechaHoraVac;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -532,6 +651,7 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -539,7 +659,9 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
     private javax.swing.JTextField jTCiudadano;
     private javax.swing.JTextField jTCodCita;
     private javax.swing.JTextField jTDosis;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
     public static void main(String[] args) {
@@ -554,5 +676,36 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
             frame.setVisible(true);
         });
     }
-
+    private void limpiarCampos() {
+        Date date = null;
+        jTCodCita.setText("");
+        jTDosis.setText("");
+        jTCiudadano.setText("");
+        jTCentroVac.setText("");
+        jDCFechaHoraCita.setDate(date);
+        jDCFechaHoraVac.setDate(date);        
+    }
+  private void cabecera(){
+     modelo.addColumn("Codigo cita");
+     modelo.addColumn("DNI ciudadano");
+     modelo.addColumn("Fecha y hora cita");
+     modelo.addColumn("ID centro vacunacion");
+     modelo.addColumn("fecha y hora vacunacion");
+     modelo.addColumn("Nro serie dosis");
+     jTable1.setModel(modelo);
+     
+ }
+  private void cargarTabla(){
+      List<citaVacunacion> citasVacunacion = citaData.listarCitasCumplidas();
+     for(citaVacunacion cit:citasVacunacion){
+      modelo.addRow(new Object[]{
+       cit.getCodCita(),
+       cit.getPersona().getDNI(),
+       cit.getFechaHoraCita(),
+       cit.getCentroVacunacion().getIDcentro(),
+       cit.getFechaHoraVacunacion(),
+       cit.getMedida().getNroSerieDosis(),
+      });        
+     }
+  }
 }
