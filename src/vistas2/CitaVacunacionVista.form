@@ -78,7 +78,7 @@
                       <Component id="jPanel3" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel4" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -181,15 +181,18 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel5" pref="190" max="32767" attributes="0"/>
-                                  <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel5" pref="0" max="32767" attributes="0"/>
                                   <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel3" max="32767" attributes="0"/>
                                   <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jLabel6" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -203,7 +206,7 @@
                               <Component id="jLabel2" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel4" min="-2" pref="30" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Component id="jLabel6" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" pref="30" max="-2" attributes="0"/>
@@ -223,7 +226,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Ciudadano"/>
+                        <Property name="text" type="java.lang.String" value="DNI Ciudadano"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -267,7 +270,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Centro de Vacunaci&#xf3;n:"/>
+                        <Property name="text" type="java.lang.String" value="ID Centro de Vacunaci&#xf3;n:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel8">
@@ -278,7 +281,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Dosis:"/>
+                        <Property name="text" type="java.lang.String" value="Nro Serie Dosis:"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -295,13 +298,13 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jBBuscar" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jBModificar" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton3" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jBEliminar" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
-                              <Component id="jButton4" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jBAgregar" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -325,10 +328,10 @@
                               <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButton3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jButton4" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jButton2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jButton1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jBEliminar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jBAgregar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jBModificar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jBBuscar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="14" max="32767" attributes="0"/>
                           </Group>
@@ -343,7 +346,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="jButton1">
+                    <Component class="javax.swing.JButton" name="jBBuscar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -356,8 +359,11 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Buscar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBBuscarActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton2">
+                    <Component class="javax.swing.JButton" name="jBModificar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -368,10 +374,13 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f8" green="f7" red="f6" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Buscar"/>
+                        <Property name="text" type="java.lang.String" value="Modificar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBModificarActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton3">
+                    <Component class="javax.swing.JButton" name="jBEliminar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -382,10 +391,13 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f8" green="f7" red="f6" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Buscar"/>
+                        <Property name="text" type="java.lang.String" value="Eliminar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBEliminarActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton4">
+                    <Component class="javax.swing.JButton" name="jBAgregar">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="6d" green="42" red="3b" type="rgb"/>
@@ -396,8 +408,11 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f8" green="f7" red="f6" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Buscar"/>
+                        <Property name="text" type="java.lang.String" value="Agregar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAgregarActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JSeparator" name="jSeparator2">
                       <Properties>
@@ -437,15 +452,12 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextField3" min="-2" pref="130" max="-2" attributes="0"/>
-                                  <Component id="jDateChooser1" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Component id="jTextField4" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Component id="jTextField6" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Component id="jDateChooser2" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jDateChooser3" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jTextField5" alignment="0" pref="220" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jTCodCita" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="jDCFechaHoraVac" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                                  <Component id="jTCiudadano" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                                  <Component id="jTCentroVac" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                                  <Component id="jDCFechaHoraCita" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                                  <Component id="jTDosis" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="138" max="32767" attributes="0"/>
                           </Group>
@@ -455,26 +467,24 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTCodCita" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jTextField4" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTCiudadano" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace pref="22" max="32767" attributes="0"/>
-                              <Component id="jDateChooser2" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jDCFechaHoraCita" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jTextField6" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTCentroVac" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jDateChooser1" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jDCFechaHoraVac" min="-2" pref="30" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jTextField5" min="-2" pref="30" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jDateChooser3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="jTDosis" min="-2" pref="30" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+                    <Component class="com.toedter.calendar.JDateChooser" name="jDCFechaHoraVac">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>
@@ -487,7 +497,23 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField3">
+                    <Component class="javax.swing.JTextField" name="jTCodCita">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="d1" green="a1" red="89" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Arial Black" size="12" style="1"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="6d" green="42" red="3b" type="rgb"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTCodCitaActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="jTCiudadano">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>
@@ -500,7 +526,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField4">
+                    <Component class="javax.swing.JTextField" name="jTDosis">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>
@@ -513,7 +539,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField5">
+                    <Component class="javax.swing.JTextField" name="jTCentroVac">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>
@@ -526,20 +552,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField6">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="d1" green="a1" red="89" type="rgb"/>
-                        </Property>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial Black" size="12" style="1"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="6d" green="42" red="3b" type="rgb"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+                    <Component class="com.toedter.calendar.JDateChooser" name="jDCFechaHoraCita">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d1" green="a1" red="89" type="rgb"/>
@@ -551,8 +564,6 @@
                           <Font name="Arial Black" size="12" style="1"/>
                         </Property>
                       </Properties>
-                    </Component>
-                    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser3">
                     </Component>
                   </SubComponents>
                 </Container>
