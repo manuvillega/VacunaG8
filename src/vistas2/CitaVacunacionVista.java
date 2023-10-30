@@ -1,8 +1,26 @@
 package vistas2;
 
+import Entidades.CentroVacunacion;
+import Entidades.Ciudadano;
+import Entidades.Vacuna;
+import Entidades.citaVacunacion;
+import accesoADatos.CentroVacunacionData;
+import accesoADatos.CiudadanoData;
+import accesoADatos.Conexion;
+import accesoADatos.VacunaData;
+import accesoADatos.citaVacunacionData;
 import java.awt.Image;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -11,12 +29,16 @@ import javax.swing.SwingUtilities;
  */
 public class CitaVacunacionVista extends javax.swing.JPanel {
 
-    /**
-     * Creates new form CitaVacunacionVista
-     */
+    private CiudadanoData ciudadanoData;
+    private CentroVacunacionData centroVacunacionData;
+    private VacunaData vacunaData;
+    private citaVacunacionData citaData;
     public CitaVacunacionVista() {
         initComponents();
-   
+        ciudadanoData = new CiudadanoData(Conexion.getConexion());
+        centroVacunacionData = new CentroVacunacionData(Conexion.getConexion());
+        vacunaData = new VacunaData(Conexion.getConexion());
+        citaData = new citaVacunacionData(Conexion.getConexion());
     }
 
     /**
@@ -42,20 +64,19 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jBBuscar = new javax.swing.JButton();
+        jBModificar = new javax.swing.JButton();
+        jBEliminar = new javax.swing.JButton();
+        jBAgregar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jPanel6 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jDCFechaHoraVac = new com.toedter.calendar.JDateChooser();
+        jTCodCita = new javax.swing.JTextField();
+        jTCiudadano = new javax.swing.JTextField();
+        jTDosis = new javax.swing.JTextField();
+        jTCentroVac = new javax.swing.JTextField();
+        jDCFechaHoraCita = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(new java.awt.Color(137, 161, 209));
 
@@ -107,7 +128,7 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(59, 66, 109));
-        jLabel2.setText("Ciudadano");
+        jLabel2.setText("DNI Ciudadano");
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(59, 66, 109));
@@ -123,11 +144,11 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(59, 66, 109));
-        jLabel6.setText("Centro de Vacunación:");
+        jLabel6.setText("ID Centro de Vacunación:");
 
         jLabel8.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(59, 66, 109));
-        jLabel8.setText("Dosis:");
+        jLabel8.setText("Nro Serie Dosis:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -136,12 +157,14 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,25 +186,45 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(108, 132, 197));
 
-        jButton1.setBackground(new java.awt.Color(59, 66, 109));
-        jButton1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(246, 247, 248));
-        jButton1.setText("Buscar");
+        jBBuscar.setBackground(new java.awt.Color(59, 66, 109));
+        jBBuscar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBBuscar.setForeground(new java.awt.Color(246, 247, 248));
+        jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(59, 66, 109));
-        jButton2.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(246, 247, 248));
-        jButton2.setText("Buscar");
+        jBModificar.setBackground(new java.awt.Color(59, 66, 109));
+        jBModificar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBModificar.setForeground(new java.awt.Color(246, 247, 248));
+        jBModificar.setText("Modificar");
+        jBModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBModificarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(59, 66, 109));
-        jButton3.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(246, 247, 248));
-        jButton3.setText("Buscar");
+        jBEliminar.setBackground(new java.awt.Color(59, 66, 109));
+        jBEliminar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBEliminar.setForeground(new java.awt.Color(246, 247, 248));
+        jBEliminar.setText("Eliminar");
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setBackground(new java.awt.Color(59, 66, 109));
-        jButton4.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(246, 247, 248));
-        jButton4.setText("Buscar");
+        jBAgregar.setBackground(new java.awt.Color(59, 66, 109));
+        jBAgregar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBAgregar.setForeground(new java.awt.Color(246, 247, 248));
+        jBAgregar.setText("Agregar");
+        jBAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarActionPerformed(evt);
+            }
+        });
 
         jSeparator2.setBackground(new java.awt.Color(48, 52, 59));
         jSeparator2.setForeground(new java.awt.Color(48, 52, 59));
@@ -195,13 +238,13 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(149, 149, 149)
@@ -220,10 +263,10 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
@@ -235,29 +278,34 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         jPanel6.setBackground(new java.awt.Color(191, 200, 209));
         jPanel6.setForeground(new java.awt.Color(207, 214, 221));
 
-        jDateChooser1.setBackground(new java.awt.Color(137, 161, 209));
-        jDateChooser1.setForeground(new java.awt.Color(59, 66, 109));
-        jDateChooser1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jDCFechaHoraVac.setBackground(new java.awt.Color(137, 161, 209));
+        jDCFechaHoraVac.setForeground(new java.awt.Color(59, 66, 109));
+        jDCFechaHoraVac.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
 
-        jTextField3.setBackground(new java.awt.Color(137, 161, 209));
-        jTextField3.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(59, 66, 109));
+        jTCodCita.setBackground(new java.awt.Color(137, 161, 209));
+        jTCodCita.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTCodCita.setForeground(new java.awt.Color(59, 66, 109));
+        jTCodCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTCodCitaActionPerformed(evt);
+            }
+        });
 
-        jTextField4.setBackground(new java.awt.Color(137, 161, 209));
-        jTextField4.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(59, 66, 109));
+        jTCiudadano.setBackground(new java.awt.Color(137, 161, 209));
+        jTCiudadano.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTCiudadano.setForeground(new java.awt.Color(59, 66, 109));
 
-        jTextField5.setBackground(new java.awt.Color(137, 161, 209));
-        jTextField5.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(59, 66, 109));
+        jTDosis.setBackground(new java.awt.Color(137, 161, 209));
+        jTDosis.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTDosis.setForeground(new java.awt.Color(59, 66, 109));
 
-        jTextField6.setBackground(new java.awt.Color(137, 161, 209));
-        jTextField6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(59, 66, 109));
+        jTCentroVac.setBackground(new java.awt.Color(137, 161, 209));
+        jTCentroVac.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTCentroVac.setForeground(new java.awt.Color(59, 66, 109));
 
-        jDateChooser2.setBackground(new java.awt.Color(137, 161, 209));
-        jDateChooser2.setForeground(new java.awt.Color(59, 66, 109));
-        jDateChooser2.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jDCFechaHoraCita.setBackground(new java.awt.Color(137, 161, 209));
+        jDCFechaHoraCita.setForeground(new java.awt.Color(59, 66, 109));
+        jDCFechaHoraCita.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -266,34 +314,30 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jDateChooser3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
+                    .addComponent(jTCodCita, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDCFechaHoraVac, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTCiudadano, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTCentroVac, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDCFechaHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(138, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTCodCita, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTCiudadano, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDCFechaHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTCentroVac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDCFechaHoraVac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addComponent(jTDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -303,7 +347,7 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -346,15 +390,135 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
+       String codCita = jTCodCita.getText();
+       LocalDateTime localDateTime = null;
+       if(!codCita.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Para agregar una cita nueva por favor deje el codigo de cita vacio");
+       } else if(codCita.isEmpty()){
+           int DNIc = Integer.parseInt(jTCiudadano.getText());
+          Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
+           if (ciudadano == null){
+              JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
+           } else{
+               String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
+               int IDcentro = Integer.parseInt(jTCentroVac.getText());
+               CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
+               if (centroVacunacion == null){
+                   JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
+               } else{
+                   try{
+                   Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
+                   Instant instant = fechaHoraColoca.toInstant();
+                    localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                   } catch(NullPointerException ex){
+                   }                         
+                   int nroDosis = Integer.parseInt(jTDosis.getText());
+                   Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
+                   if(vacuna == null){
+                       JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
+                   } else{
+                       int codCita2 = 0;
+                       citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
+                       citaData.CrearCita(cita);
+                   }                         
+               }
+           }
+       }
+    }//GEN-LAST:event_jBAgregarActionPerformed
+
+    private void jTCodCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTCodCitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTCodCitaActionPerformed
+
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
+       String codCita = jTCodCita.getText();
+       LocalDateTime localDateTime = null;
+       if(!codCita.isEmpty()){
+          int cod = Integer.parseInt(codCita);
+          citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+          if(citaVac != null){
+          int DNIc = Integer.parseInt(jTCiudadano.getText());
+          Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
+           if (ciudadano == null){
+              JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
+           } else{
+               String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
+               int IDcentro = Integer.parseInt(jTCentroVac.getText());
+               CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
+               if (centroVacunacion == null){
+                   JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
+               } else{
+                   try{
+                   Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
+                   Instant instant = fechaHoraColoca.toInstant();
+                    localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+                   } catch(NullPointerException ex){
+                   }                         
+                   int nroDosis = Integer.parseInt(jTDosis.getText());
+                   Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
+                   if(vacuna == null){
+                       JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
+                   } else{
+                       int codCita2 = 0;
+                       citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
+                       citaData.ModificarCita(cita);
+                   }                         
+               }
+           }
+          } else{
+              JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
+          }
+       } else if(codCita.isEmpty()){
+           JOptionPane.showMessageDialog(this, "Para modificar una cita por favor escriba un id de cita");
+       }
+    }//GEN-LAST:event_jBModificarActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+       String codCita = jTCodCita.getText();
+        if(!codCita.isEmpty()){
+          int cod = Integer.parseInt(codCita);
+          citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+          if(citaVac != null){
+              jTCiudadano.setText(Integer.toString(citaVac.getPersona().getDNI()));
+              SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+              try {
+                  jDCFechaHoraCita.setDate(formato.parse(citaVac.getFechaHoraCita()));
+              } catch (ParseException ex) {
+                  Logger.getLogger(CitaVacunacionVista.class.getName()).log(Level.SEVERE, null, ex);
+              }
+              jTCentroVac.setText(Integer.toString(citaVac.getCentroVacunacion().getIDcentro()));
+              try{
+              Date date = (Date) Date.from(citaVac.getFechaHoraVacunacion().atZone(ZoneId.systemDefault()).toInstant());
+              jDCFechaHoraVac.setDate(date);
+              jTDosis.setText(Integer.toString(citaVac.getMedida().getNroSerieDosis()));
+              } catch(NullPointerException ex){                  
+              }
+          } else{
+              JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
+          }
+        }else if(codCita.isEmpty()){
+           JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
+       }
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        String codCita = jTCodCita.getText();
+        if(!codCita.isEmpty()){
+            
+        }else if(codCita.isEmpty()){
+           JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
+       }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
+    private javax.swing.JButton jBAgregar;
+    private javax.swing.JButton jBBuscar;
+    private javax.swing.JButton jBEliminar;
+    private javax.swing.JButton jBModificar;
+    private com.toedter.calendar.JDateChooser jDCFechaHoraCita;
+    private com.toedter.calendar.JDateChooser jDCFechaHoraVac;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -371,11 +535,11 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTextField jTCentroVac;
+    private javax.swing.JTextField jTCiudadano;
+    private javax.swing.JTextField jTCodCita;
+    private javax.swing.JTextField jTDosis;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 
     public static void main(String[] args) {

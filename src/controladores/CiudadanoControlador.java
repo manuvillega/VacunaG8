@@ -27,13 +27,14 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
     DefaultTableModel model = new DefaultTableModel(); //tabla
 
     public CiudadanoControlador(Ciudadano ciudadano, CiudadanoData ciudadanoData, CiudadanoVista_2 ciudadanoVista) {
-        this.ciudadano = ciudadano;
+        this.ciudadano = ciudadano != null ? ciudadano : new Ciudadano();
         this.ciudadanoData = ciudadanoData;
         this.ciudadanoVista = ciudadanoVista;
 
         //BOTONES CIUDADANO
         this.ciudadanoVista.btn_ciudadano_agregar.addActionListener(this);//boton agregar ciudadano a la escucha
         this.ciudadanoVista.btn_ciudadano_modificar.addActionListener(this);//botom modificar 
+        this.ciudadanoVista.btn_ciudadano_eliminar.addActionListener(this);//boton eliminar
 
         //TABLA CIUDADANO
         this.ciudadanoVista.jTable_ciudadano_tabla.addMouseListener(this);//tabla ciudadano a la escucha de cuando se hace un click del moise en una fila con un ciudadano
@@ -46,101 +47,100 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
     //EVENTOS
     @Override
     public void actionPerformed(ActionEvent e) {
-        //SI CLIC BOTON AGREGAR/NUEVO CIUDADANO
         if (e.getSource() == ciudadanoVista.btn_ciudadano_agregar) {
-            // Verifica campos nulos o vacíos
-            if (ciudadanoVista.txt_ciudadano_dni.getText().isEmpty()
-                    || ciudadanoVista.txt_ciudadano_nombreCompleto.getText().isEmpty()
-                    || ciudadanoVista.txt_ciudadano_email.getText().isEmpty()
-                    || ciudadanoVista.txt_ciudadano_celular.getText().isEmpty()
-                    || ciudadanoVista.txt_ciudadano_ambito_laboral1.getText().isEmpty()
-                    || ciudadanoVista.jCB_Ciudadano_Provincias1.getSelectedItem() == null
-                    || ciudadanoVista.jCB_Ciudadano_Ciudades1.getSelectedItem() == null) {
+            String dni = ciudadanoVista.txt_ciudadano_dni.getText().trim();
+            String nombreCompleto = ciudadanoVista.txt_ciudadano_nombreCompleto.getText().trim();
+            String email = ciudadanoVista.txt_ciudadano_email.getText().trim();
+            String celular = ciudadanoVista.txt_ciudadano_celular.getText().trim();
+            String patologia = ciudadanoVista.txt_ciudadano_patologia.getText().trim();
+            String ambitoLaboral = ciudadanoVista.txt_ciudadano_ambito_laboral1.getText().trim();
 
-                // Verifica si el campo patologia no está vacío antes de asignarlo
-                String patologia = ciudadanoVista.txt_ciudadano_patologia.getText().trim();
-                if (!patologia.isEmpty()) {
-                    ciudadano.setPatologia(patologia);
-                }
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios. Por favor, complete todos los datos!.   ⚠", "", JOptionPane.ERROR_MESSAGE);
+            if (dni.isEmpty() || nombreCompleto.isEmpty() || email.isEmpty() || celular.isEmpty() || ambitoLaboral.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios. Por favor, complete todos los datos.", "", JOptionPane.ERROR_MESSAGE);
+            } else if (!dni.isEmpty() && !dni.matches("\\d{8}")) {
+                JOptionPane.showMessageDialog(null, "DNI no válido. Debe contener solo 8 dígitos.", "", JOptionPane.ERROR_MESSAGE);
+            } else if (!nombreCompleto.isEmpty() && !nombreCompleto.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]+$")) {
+                JOptionPane.showMessageDialog(null, "Nombre completo no válido. Debe contener solo letras y espacios.", "", JOptionPane.ERROR_MESSAGE);
+            } else if (!email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+                JOptionPane.showMessageDialog(null, "Dirección de correo electrónico no válida.", "", JOptionPane.ERROR_MESSAGE);
+            } else if (!celular.isEmpty() && !celular.matches("\\d{1,15}")) {
+                JOptionPane.showMessageDialog(null, "Número de celular no válido. Debe contener solo dígitos y tener entre 1 y 15 caracteres.", "", JOptionPane.ERROR_MESSAGE);
+            } else if (!ambitoLaboral.isEmpty() && !ambitoLaboral.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\d\\s]+$")) {
+                JOptionPane.showMessageDialog(null, "Ámbito laboral no válido. Debe contener solo letras, números y espacios.", "", JOptionPane.ERROR_MESSAGE);
             } else {
-                //  validaciones antes de agregar el ciudadano
-                if (validarCampos()) {
-                    //sino NO están los campos vacíos, modifica los valores con los que ingresa el usuario en los campos de texto
-                    ciudadano.setDNI(Integer.parseInt(ciudadanoVista.txt_ciudadano_dni.getText().trim()));
-                    ciudadano.setNombreCompleto(ciudadanoVista.txt_ciudadano_nombreCompleto.getText().trim());
-                    ciudadano.setEmail(ciudadanoVista.txt_ciudadano_email.getText().trim());
-                    ciudadano.setCelular(ciudadanoVista.txt_ciudadano_celular.getText().trim());
+                // Si pasa todas las validaciones, procede a agregar el ciudadano
+                ciudadano.setDNI(Integer.parseInt(dni));
+                ciudadano.setNombreCompleto(nombreCompleto);
+                ciudadano.setEmail(email);
+                ciudadano.setCelular(celular);
+                ciudadano.setPatologia(patologia);
+                ciudadano.setAmbitoLaboral(ambitoLaboral);
+                ciudadano.setProvincia((String) ciudadanoVista.jCB_Ciudadano_Provincias1.getSelectedItem());
+                ciudadano.setLocalidad((String) ciudadanoVista.jCB_Ciudadano_Ciudades1.getSelectedItem());
 
-                    // Verifica si el campo patologia no está vacío antes de asignarlo
-                    /* String patologia = ciudadanoVista.txt_ciudadano_patologia.getText().trim();
-                if (!patologia.isEmpty()) {
+                if (ciudadanoData.insertarCiudadano(ciudadano)) {
+                    limpiarCampos();
+                    listarTodosLosCiudadanos();
+                    JOptionPane.showMessageDialog(null, "Ciudadano agregado.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al agregar Ciudadano.");
+                }
+            }
+        } else if (e.getSource() == ciudadanoVista.btn_ciudadano_modificar) {
+            String dni = ciudadanoVista.txt_ciudadano_dni.getText().trim();
+            if (dni.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Seleccione una fila.");
+            } else if (!dni.matches("\\d{8}")) {
+                JOptionPane.showMessageDialog(null, "DNI no válido. Debe contener solo 8 dígitos.", "", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Si pasa la validación, procede a modificar el ciudadano
+                String patologia = ciudadanoVista.txt_ciudadano_patologia.getText().trim();
+                String ambitoLaboral = ciudadanoVista.txt_ciudadano_ambito_laboral1.getText().trim();
+                if (!patologia.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\d\\s]*$")) {
+                    JOptionPane.showMessageDialog(null, "Patología no válida. Debe contener solo letras, números y espacios.", "", JOptionPane.ERROR_MESSAGE);
+                } else if (!ambitoLaboral.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\d\\s]*$")) {
+                    JOptionPane.showMessageDialog(null, "Ámbito laboral no válido. Debe contener solo letras, números y espacios.", "", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    ciudadano.setDNI(Integer.parseInt(dni));
                     ciudadano.setPatologia(patologia);
-                }*/
-                    ciudadano.setAmbitoLaboral(ciudadanoVista.txt_ciudadano_ambito_laboral1.getText().trim());
-                    ciudadano.setProvincia((String) ciudadanoVista.jCB_Ciudadano_Provincias1.getSelectedItem());
-                    ciudadano.setLocalidad((String) ciudadanoVista.jCB_Ciudadano_Ciudades1.getSelectedItem());
+                    ciudadano.setAmbitoLaboral(ambitoLaboral);
 
-                    if (ciudadanoData.insertarCiudadano(ciudadano)) {
-
-                        // LIMPIA LOS CAMPOS DESPUÉS DE LA INSERCIÓN
+                    if (ciudadanoData.actualizarCiudadano(ciudadano)) {
+                        limpiarTabla();
                         limpiarCampos();
                         listarTodosLosCiudadanos();
-                        JOptionPane.showMessageDialog(null, "Ciudadano agregado.");
+                        JOptionPane.showMessageDialog(null, "Ciudadano actualizado.");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error al agregar Ciudadano!.");
+                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar Ciudadano.");
                     }
                 }
             }
-            //       //SI CLIC BOTON MODIFICAR CIUDADANO
-        } else if (e.getSource() == ciudadanoVista.btn_ciudadano_modificar) {
-            int DNI;
-            try {
-                DNI = Integer.parseInt(ciudadanoVista.txt_ciudadano_dni.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "El documento debe ser solo números.");
-                return;
-            }
-            // Aquí, no necesitas verificar la longitud del DNI
-
-            Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNI);
-            if (ciudadano != null) {
-                DNI = Integer.parseInt(ciudadanoVista.txt_ciudadano_dni.getText());
-                String nombre = ciudadanoVista.txt_ciudadano_nombreCompleto.getText();
-                String email = ciudadanoVista.txt_ciudadano_email.getText();
-                String celular = ciudadanoVista.txt_ciudadano_celular.getText();
-                String patologia = ciudadanoVista.txt_ciudadano_patologia.getText();
-                String ambito = ciudadanoVista.txt_ciudadano_ambito_laboral1.getText();
-                String provincia = ciudadanoVista.jCB_Ciudadano_Provincias1.getSelectedItem().toString();
-                String ciudad = ciudadanoVista.jCB_Ciudadano_Ciudades1.getSelectedItem().toString();
-                ciudadano = new Ciudadano(DNI, nombre, email, celular, patologia, ambito, provincia, ciudad);
-                if (nombre.isEmpty() || email.isEmpty() || celular.isEmpty() || ambito.isEmpty() || provincia.isEmpty() || ciudad.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios. Por favor, complete todos los datos.");
-                } else if (!nombre.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]+$")) {
-                    JOptionPane.showMessageDialog(null, "El nombre y apellido solo deben tener letras.");
-                } else {
-                    ciudadanoData.actualizarCiudadano(ciudadano);
-                    limpiarCampos();
-                   listarTodosLosCiudadanos();
-                    JOptionPane.showMessageDialog(null, "Ciudadano actualizado");
-                   
-                }
+        } else if (e.getSource() == ciudadanoVista.btn_ciudadano_eliminar) {
+            int row = ciudadanoVista.jTable_ciudadano_tabla.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Seleccione un Ciudadano para eliminar.");
             } else {
-                JOptionPane.showMessageDialog(null, "No existe ciudadano con ese DNI");
+                int dni = Integer.parseInt(ciudadanoVista.jTable_ciudadano_tabla.getValueAt(row, 0).toString());
+                int preguntaConfir = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este ciudadano?");
+
+                if (preguntaConfir == 0 && ciudadanoData.borrarCiudadano(dni)) {
+                    limpiarTabla();
+                    limpiarCampos();
+                    listarTodosLosCiudadanos();
+                    JOptionPane.showMessageDialog(null, "Ciudadano eliminado.");
+                }
             }
-
         }
-
     }
 
     //llena la tabla ciudadano con el metodo listarCiudadanos de ciudadanoData
     public void listarTodosLosCiudadanos() {
         List<Ciudadano> listaCiudadanos = ciudadanoData.listarCiudadanos(ciudadanoVista.txt_ciudadano_buscar.getText());
         model = (DefaultTableModel) ciudadanoVista.jTable_ciudadano_tabla.getModel();
-
-        Object[] row = new Object[8];
+        model.setRowCount(0); // Limpia todas las filas existentes en la tabla
 
         for (int i = 0; i < listaCiudadanos.size(); i++) {
+            Object[] row = new Object[8];
             row[0] = listaCiudadanos.get(i).getDNI();
             row[1] = listaCiudadanos.get(i).getNombreCompleto();
             row[2] = listaCiudadanos.get(i).getEmail();
@@ -150,9 +150,8 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
             row[6] = listaCiudadanos.get(i).getProvincia();
             row[7] = listaCiudadanos.get(i).getLocalidad();
             model.addRow(row);
-
         }
-        ciudadanoVista.jTable_ciudadano_tabla.setModel(model); //establece los valores de las filas
+        ciudadanoVista.jTable_ciudadano_tabla.setModel(model);
     }
 
     //MOUSE
@@ -227,53 +226,6 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
 
     }
 
-    private boolean validarCampos() {
-        String dni = ciudadanoVista.txt_ciudadano_dni.getText().trim();
-        String nombreCompleto = ciudadanoVista.txt_ciudadano_nombreCompleto.getText().trim();
-        String email = ciudadanoVista.txt_ciudadano_email.getText().trim();
-        String celular = ciudadanoVista.txt_ciudadano_celular.getText().trim();
-        String patologia = ciudadanoVista.txt_ciudadano_patologia.getText().trim();
-        String ambitoLaboral = ciudadanoVista.txt_ciudadano_ambito_laboral1.getText().trim();
-
-        // Validar DNI
-        if (!dni.matches("\\d{8}")) {
-            JOptionPane.showMessageDialog(null, "DNI no válido. Debe contener solo 8  dígitos", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // validar nombre completo
-        if (!nombreCompleto.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]+$")) {
-            JOptionPane.showMessageDialog(null, "Nombre completo no válido. Debe contener solo letras y espacios.", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // validar email
-        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            JOptionPane.showMessageDialog(null, "Dirección de correo electrónico no válida.", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // validar celular
-        if (!celular.matches("\\d{1,15}")) {
-            JOptionPane.showMessageDialog(null, "Número de celular no válido. Debe contener solo dígitos y tener entre 1 y 15 caracteres.", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // validar patología (permitir que sea nulo o diferente a vacia y cumpla las validaciones)
-        patologia = ciudadanoVista.txt_ciudadano_patologia.getText().trim();
-        if (patologia != null && !patologia.isEmpty() && !patologia.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\d\\s]+$")) {
-            JOptionPane.showMessageDialog(null, "Patología no válida. Debe contener solo letras, números y espacios.", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Validar ámbito laboral
-        if (!ambitoLaboral.matches("^[a-zA-ZñÑáÁéÉíÍóÓúÚ\\d\\s]+$")) {
-            JOptionPane.showMessageDialog(null, "Ámbito laboral no válido. Debe contener solo letras, números y espacios.", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true; // si todas las validaciones pasan, retorna verdadero
-    }
 
     //METODO LIMPIAR TABLA
     public void limpiarTabla() {
@@ -291,8 +243,9 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
         }
     }*/
     // Métod limpia los campos de la vista del ciudadano
-    public  void limpiarCampos() {
+    public void limpiarCampos() {
         ciudadanoVista.txt_ciudadano_dni.setText("");
+        ciudadanoVista.txt_ciudadano_dni.setEditable(true);
         ciudadanoVista.txt_ciudadano_nombreCompleto.setText("");
         ciudadanoVista.txt_ciudadano_email.setText("");
         ciudadanoVista.txt_ciudadano_celular.setText("");

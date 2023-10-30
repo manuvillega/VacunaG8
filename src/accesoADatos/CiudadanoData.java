@@ -45,10 +45,12 @@ public class CiudadanoData {
         }
     }
 
-    public void actualizarCiudadano(Ciudadano ciudadano) {
-        String sql = "UPDATE ciudadano SET nombreCompleto=?, email=?, celular=?, patologia=?, ambitoTrabajo=?, provincia=?, localidad=?  WHERE DNI=?";
+    public boolean actualizarCiudadano(Ciudadano ciudadano) {
+        String sql = "UPDATE ciudadano SET nombreCompleto=?, email=?, celular=?, patologia=?, ambitoTrabajo=?, provincia=?, localidad=? "
+                + "WHERE DNI=?";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
+
             preparedStatement.setString(1, ciudadano.getNombreCompleto());
             preparedStatement.setString(2, ciudadano.getEmail());
             preparedStatement.setString(3, ciudadano.getCelular());
@@ -58,26 +60,38 @@ public class CiudadanoData {
             preparedStatement.setString(7, ciudadano.getLocalidad());
             preparedStatement.setInt(8, ciudadano.getDNI());
 
-            preparedStatement.executeUpdate();
-            System.out.println("ciudadano actualizado!.");
+            int rowCount = preparedStatement.executeUpdate();
+            System.out.println("Ciudadano actualizado correctamente.");
+
+            return rowCount > 0;
         } catch (SQLException e) {
-            System.err.println("Error al actualizar ciudadano: " + e.getMessage());
+            System.err.println("Error al modificar ciudadano: " + e.getMessage());
+            return false; // en caso de error, devuelve falso.
         }
     }
 
-    public void borrarCiudadano(Ciudadano ciudadano) {
-        String sql = "DELETE FROM ciudadano WHERE DNI=?";
+    public boolean borrarCiudadano(int DNI) {
+
+        String sql = "DELETE FROM ciudadano WHERE DNI = ?";
 
         try (PreparedStatement preparedStatement = conexion.prepareStatement(sql)) {
-            preparedStatement.setInt(1, ciudadano.getDNI());
-            preparedStatement.executeUpdate();
-            System.out.println("Ciudadano eliminado.");
+            preparedStatement.setInt(1, DNI);
+            int rowCount = preparedStatement.executeUpdate();
+
+            if (rowCount > 0) {
+                System.out.println("Ciudadano eliminado correctamente.");
+                return true;
+            } else {
+                System.out.println("No se encontró un ciudadano con DNI " + DNI + " para eliminar.");
+                return false;
+            }
         } catch (SQLException e) {
             System.err.println("Error al eliminar ciudadano: " + e.getMessage());
+            return false;
         }
     }
 
-    public List<Ciudadano> listarCiudadanos(String valor) {
+public List<Ciudadano> listarCiudadanos(String valor) {
         List<Ciudadano> ciudadanos = new ArrayList<>();
         String sql = "SELECT * FROM ciudadano";
         String sql_buscarCiudadano = "SELECT * FROM ciudadano WHERE DNI LIKE ?";

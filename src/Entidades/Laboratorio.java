@@ -15,6 +15,9 @@ public class Laboratorio {
     private String pais;
     private String domComercial;
 
+    public Laboratorio() {
+    }
+    
     public Laboratorio(String cuit, String nomLaboratorio, String pais, String domComercial) {
         this.cuit = cuit;
         this.nomLaboratorio = nomLaboratorio;

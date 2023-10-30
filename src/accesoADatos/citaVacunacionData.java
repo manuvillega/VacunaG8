@@ -29,13 +29,14 @@ public class citaVacunacionData {
     }
  
     public void CrearCita(citaVacunacion cita){
-        String sql = "INSERT INTO citavacunacion (persona, codRefuerzo, fechaHoraCita, centroVacunacion)"
+        String sql = "INSERT INTO citavacunacion (persona, codRefuerzo, fechaHoraCita, centroVacunacion, dosis)"
                 + "VALUES(?, ?, ?, ?, ?)";
         try(PreparedStatement preparedStatement = conexion.prepareStatement(sql)){
             preparedStatement.setInt(1, cita.getPersona().getDNI());
-            preparedStatement.setInt(2, 1);
+            preparedStatement.setInt(2, cita.getMedida().getNroSerieDosis());
             preparedStatement.setString(3, cita.getFechaHoraCita());
             preparedStatement.setInt(4, cita.getCentroVacunacion().getIDcentro());
+            preparedStatement.setInt(5, 1);
             int exito = preparedStatement.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Cita vacunacion creada");
@@ -47,6 +48,36 @@ public class citaVacunacionData {
         }
     }
     
+    public citaVacunacion BuscarCitaPorCodCita(int codCita){
+        String sql = "SELECT  codCita, persona, codRefuerzo, fechaHoraCita, centroVacunacion FROM citavacunacion WHERE codCita=?";
+        citaVacunacion cita = null;
+        PreparedStatement ps = null;        
+        try{    
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, codCita);            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                cita=new citaVacunacion();
+                cita.setCodCita(codCita);
+                int dni = rs.getInt("persona");
+                System.out.println(dni);
+                Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(dni);
+                cita.setPersona(ciudadano);
+                cita.setFechaHoraCita(rs.getString("fechaHoraCita"));
+                CentroVacunacion centro = centroVacunacionData.obtenerCentroVacunacionPorId(rs.getInt("centroVacunacion"));
+                cita.setCentroVacunacion(centro);
+                Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(rs.getInt("codRefuerzo"));
+                cita.setMedida(vacuna);
+            }else{
+               JOptionPane.showMessageDialog(null,"No existe cita con ese codigo");                
+            }
+            ps.close();
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "error al acceder a la tabla citaVacunacion");          
+    }
+        return cita;
+    }
     public void ModificarCita(citaVacunacion cita){
         String sql = "UPDATE citavacunacion SET fechaHoraCita = ? WHERE persona = ?";
         

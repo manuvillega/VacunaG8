@@ -31,11 +31,12 @@ public class Principal extends javax.swing.JFrame {
     //ATRIBUTOS CLASES PANELES
     private CiudadanoVista_2 ciudadanoVista;
     private CitaVacunacionVista citaVacunacionVista;
-    private CentroVacunacionVista centroVacunacionVista;
-    private LaboratorioVista laboratorioVista;
+    private CentroVacunacionVista_2 centroVacunacionVista;
+    private LaboratorioVista_2 laboratorioVista;
 //    private VacinaVista VacinaVista;
     private Ciudadano ciudadano;
     private CiudadanoData ciudadanoData;
+    private VacunaVista vacunaVista;
 
     public Principal() {
         initComponents();
@@ -50,7 +51,10 @@ public class Principal extends javax.swing.JFrame {
         ciudadanoVista = new CiudadanoVista_2(this);
         ciudadano = new Ciudadano();
         ciudadanoData = new CiudadanoData(conexion);
-        laboratorioVista = new LaboratorioVista();
+        laboratorioVista = new LaboratorioVista_2();
+        vacunaVista = new VacunaVista();
+        centroVacunacionVista = new CentroVacunacionVista_2();
+        citaVacunacionVista = new CitaVacunacionVista();
 
         //CONFIGS CONTROLADOR
         ConfiguracionControlador controladorconfig = new ConfiguracionControlador(this);
@@ -61,14 +65,7 @@ public class Principal extends javax.swing.JFrame {
         this.repaint(); //al final siempre
     }
 
-    public void mostrarLaboratorio() {
-        jPanel_Escritorio.removeAll();
-        jPanel_Escritorio.add(laboratorioVista);
-        laboratorioVista.setVisible(true);
-        jPanel_Escritorio.revalidate();
-        jPanel_Escritorio.repaint();
-    }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -235,6 +232,11 @@ public class Principal extends javax.swing.JFrame {
         btn_centro_vacunacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_centro_vacunacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_centro_vacunacion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btn_centro_vacunacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_centro_vacunacionActionPerformed(evt);
+            }
+        });
 
         btn_vacuna.setBackground(new java.awt.Color(23, 37, 84));
         btn_vacuna.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
@@ -246,6 +248,11 @@ public class Principal extends javax.swing.JFrame {
         btn_vacuna.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_vacuna.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_vacuna.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btn_vacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_vacunaActionPerformed(evt);
+            }
+        });
 
         btn_cita_vacunacion.setBackground(new java.awt.Color(23, 37, 84));
         btn_cita_vacunacion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
@@ -257,6 +264,11 @@ public class Principal extends javax.swing.JFrame {
         btn_cita_vacunacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_cita_vacunacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_cita_vacunacion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btn_cita_vacunacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cita_vacunacionActionPerformed(evt);
+            }
+        });
 
         btn_salir.setBackground(new java.awt.Color(23, 37, 84));
         btn_salir.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
@@ -594,13 +606,49 @@ public class Principal extends javax.swing.JFrame {
 
     //BOTON LABORATORIO
     private void btn_laboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laboratorioActionPerformed
-        mostrarLaboratorio();
+         jPanel_Escritorio.removeAll();
+        jPanel_Escritorio.add(laboratorioVista, BorderLayout.CENTER);
+        laboratorioVista.setVisible(true);
+        jPanel_Escritorio.revalidate();
+        jPanel_Escritorio.repaint();
     }//GEN-LAST:event_btn_laboratorioActionPerformed
 
     private void jL_logo_ulpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jL_logo_ulpMouseClicked
         // en vez boton volver al escritotio usaremos el logo para mostrar el escritorio
-        mostrarEscritorio();
+        jPanel_Escritorio.removeAll();
+        jPanel_Escritorio.add(jDesktopVacuna);
+        jDesktopVacuna.setVisible(true);
+        jPanel_Escritorio.revalidate();
+        jPanel_Escritorio.repaint();
+//        mostrarEscritorio();
     }//GEN-LAST:event_jL_logo_ulpMouseClicked
+
+    private void btn_cita_vacunacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cita_vacunacionActionPerformed
+          jPanel_Escritorio.removeAll();
+        jPanel_Escritorio.add(citaVacunacionVista, BorderLayout.CENTER);
+        citaVacunacionVista.setVisible(true);
+        jPanel_Escritorio.revalidate();
+        jPanel_Escritorio.repaint();
+        
+        
+    }//GEN-LAST:event_btn_cita_vacunacionActionPerformed
+
+    private void btn_centro_vacunacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_centro_vacunacionActionPerformed
+        jPanel_Escritorio.removeAll();
+        jPanel_Escritorio.add(centroVacunacionVista, BorderLayout.CENTER);
+        centroVacunacionVista.setVisible(true);
+        jPanel_Escritorio.revalidate();
+        jPanel_Escritorio.repaint();
+    }//GEN-LAST:event_btn_centro_vacunacionActionPerformed
+
+    private void btn_vacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vacunaActionPerformed
+         jPanel_Escritorio.removeAll();
+        jPanel_Escritorio.add(vacunaVista, BorderLayout.CENTER);
+        vacunaVista.setVisible(true);
+        jPanel_Escritorio.revalidate();
+        jPanel_Escritorio.repaint();
+    
+    }//GEN-LAST:event_btn_vacunaActionPerformed
 
     //VUELVE A MOSTRAR EL ESCRITORIO AL CLICKEAR LOGO ULP (funcion escondida -_º)...
     private void mostrarEscritorio() {

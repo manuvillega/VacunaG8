@@ -6,7 +6,9 @@ package vistas2;
 
 import Entidades.Ciudadano;
 import accesoADatos.CiudadanoData;
+import accesoADatos.Conexion;
 import controladores.CiudadanoControlador;
+import java.sql.Connection;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,18 +24,21 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
     private boolean esPrioritario = false; // Validar despues
     private final Principal principal;
     private CiudadanoData ciudadanoData;
+    private Ciudadano ciudadano;
     private CiudadanoControlador ciudadanoControlador;
+    private Connection conexion;
+    
 
     /**
      * Creates new form CiudadanoVista_2
      */
     public CiudadanoVista_2(Principal principal) {
-//       con = Conexion.getConexion();
+        conexion = Conexion.getConexion();
         this.principal = principal;
         initComponents();
 
-//      ciudadanoData = new CiudadanoData( con);
-//      ciudadano = new Ciudadano(con);
+        ciudadanoData = new CiudadanoData(conexion);
+        ciudadanoControlador = new CiudadanoControlador(ciudadano, ciudadanoData, this);
         cargarProvincias();
 
     }
@@ -50,7 +55,7 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         bGrupo_prioritarios = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel_ciudadano = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         txt_ciudadano_dni = new javax.swing.JTextField();
         txt_ciudadano_nombreCompleto = new javax.swing.JTextField();
@@ -79,7 +84,7 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         jSeparator6 = new javax.swing.JSeparator();
         btn_ciudadano_modificar = new javax.swing.JButton();
         btn_ciudadano_eliminar = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        jPanel_listar_ciudadano = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         txt_ciudadano_buscar = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
@@ -97,7 +102,7 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         jTabbedPane1.setBackground(new java.awt.Color(191, 200, 209));
         jTabbedPane1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
 
-        jPanel3.setBackground(new java.awt.Color(59, 66, 109));
+        jPanel_ciudadano.setBackground(new java.awt.Color(59, 66, 109));
 
         jPanel6.setBackground(new java.awt.Color(191, 200, 209));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -326,20 +331,20 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
                     .addGap(0, 36, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel_ciudadanoLayout = new javax.swing.GroupLayout(jPanel_ciudadano);
+        jPanel_ciudadano.setLayout(jPanel_ciudadanoLayout);
+        jPanel_ciudadanoLayout.setHorizontalGroup(
+            jPanel_ciudadanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel_titulo_ciudadano1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel_ciudadanoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanel_ciudadanoLayout.setVerticalGroup(
+            jPanel_ciudadanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ciudadanoLayout.createSequentialGroup()
                 .addComponent(jPanel_titulo_ciudadano1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
@@ -347,9 +352,9 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Ciudadano", jPanel3);
+        jTabbedPane1.addTab("Ciudadano", jPanel_ciudadano);
 
-        jPanel4.setBackground(new java.awt.Color(59, 66, 109));
+        jPanel_listar_ciudadano.setBackground(new java.awt.Color(59, 66, 109));
 
         jPanel7.setBackground(new java.awt.Color(191, 200, 209));
 
@@ -444,6 +449,11 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         btn_ciudadano_nuevo.setForeground(new java.awt.Color(246, 247, 248));
         btn_ciudadano_nuevo.setText("Nuevo");
         btn_ciudadano_nuevo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_ciudadano_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ciudadano_nuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -472,20 +482,20 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
                     .addGap(0, 36, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel_listar_ciudadanoLayout = new javax.swing.GroupLayout(jPanel_listar_ciudadano);
+        jPanel_listar_ciudadano.setLayout(jPanel_listar_ciudadanoLayout);
+        jPanel_listar_ciudadanoLayout.setHorizontalGroup(
+            jPanel_listar_ciudadanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel_titulo_ciudadano2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel_listar_ciudadanoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jPanel_listar_ciudadanoLayout.setVerticalGroup(
+            jPanel_listar_ciudadanoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_listar_ciudadanoLayout.createSequentialGroup()
                 .addComponent(jPanel_titulo_ciudadano2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -493,7 +503,7 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Lista Ciudadano", jPanel4);
+        jTabbedPane1.addTab("Lista Ciudadano", jPanel_listar_ciudadano);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -526,17 +536,16 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_ciudadano_patologiaActionPerformed
 
-                //SELECCION PROVINCIA COMBOBOX
+    //SELECCION PROVINCIA COMBOBOX
     private void jCB_Ciudadano_Provincias1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_Ciudadano_Provincias1ActionPerformed
-         if (jCB_Ciudadano_Provincias1.getSelectedItem() != null) {
+        if (jCB_Ciudadano_Provincias1.getSelectedItem() != null) {
             String provinciaSeleccionada = jCB_Ciudadano_Provincias1.getSelectedItem().toString();
             cargarCiudadesPorProvincia(provinciaSeleccionada);
             jCB_Ciudadano_Ciudades1.setEnabled(true);  // habilito el ComboBox de ciudades
         }
     }//GEN-LAST:event_jCB_Ciudadano_Provincias1ActionPerformed
 
-    
-            //CHECK BOX CIUDADANO PRIORITARIO O NO
+    //CHECK BOX CIUDADANO PRIORITARIO O NO
     private void jCBox_no_prioritario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBox_no_prioritario1ActionPerformed
         if (jCBox_no_prioritario1.isSelected()) {
             // "No Prioritario" está seleccionado, habilita la caja de texto
@@ -553,39 +562,51 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jCBox_prioritario1ActionPerformed
 
-    
-    
+
     private void jCB_Ciudadano_Ciudades1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_Ciudadano_Ciudades1ActionPerformed
 
     }//GEN-LAST:event_jCB_Ciudadano_Ciudades1ActionPerformed
 
     private void btn_ciudadano_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ciudadano_modificarActionPerformed
-        
+
     }//GEN-LAST:event_btn_ciudadano_modificarActionPerformed
 
     private void btn_ciudadano_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ciudadano_eliminarActionPerformed
-               int DNI;
-        try{
-        DNI = Integer.parseInt(txt_ciudadano_dni.getText());
-        }catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El documento debe ser solo números!.");
-            return;
-        }
-        if(DNI != 0 || txt_ciudadano_dni.getText().length() != 8){
-            Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNI);
-            
-            if(ciudadano != null){
-                ciudadanoData.borrarCiudadano(ciudadano);
-                JOptionPane.showMessageDialog(this, "Ciudadano eliminado");
-                ciudadanoControlador.limpiarCampos();
-            } else{
-                JOptionPane.showMessageDialog(this, "No existe ciudadano con ese dni");
-            }
-        }else{
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido");
-        }
-    
+//        int DNI;
+//        try {
+//            DNI = Integer.parseInt(txt_ciudadano_dni.getText());
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "El documento debe ser solo números!.");
+//            return;
+//        }
+//        if (DNI != 0 &&  txt_ciudadano_dni.getText().length()!= 8) {
+//            Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNI);
+//
+//            if (ciudadano != null) {
+//                ciudadanoData.borrarCiudadano(ciudadano);
+//                ciudadanoControlador.limpiarCampos();
+//                ciudadanoControlador.listarTodosLosCiudadanos();
+//                JOptionPane.showMessageDialog(this, "Ciudadano eliminado");
+//
+//            } else {
+//                JOptionPane.showMessageDialog(this, "No existe ciudadano con ese dni");
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Ingrese un DNI valido");
+//        }
+
+
     }//GEN-LAST:event_btn_ciudadano_eliminarActionPerformed
+
+    private void btn_ciudadano_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ciudadano_nuevoActionPerformed
+        if (jPanel_ciudadano.isVisible()) {
+            jPanel_ciudadano.setVisible(false); // Ocultar el JPanel
+        } else {
+            jPanel_ciudadano.setVisible(true); // Mostrar el JPanel
+        }
+        btn_ciudadano_agregar.setEnabled(true);
+        ciudadanoControlador.limpiarCampos();
+    }//GEN-LAST:event_btn_ciudadano_nuevoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -611,11 +632,11 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanel_ciudadano;
+    private javax.swing.JPanel jPanel_listar_ciudadano;
     private javax.swing.JPanel jPanel_titulo_ciudadano1;
     private javax.swing.JPanel jPanel_titulo_ciudadano2;
     private javax.swing.JScrollPane jScrollPane1;

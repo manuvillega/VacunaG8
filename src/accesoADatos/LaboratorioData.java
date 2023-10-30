@@ -4,7 +4,6 @@ package accesoADatos;
  *
  * @author Gonz@_
  */
-
 import Entidades.Laboratorio;
 import utilidades.ValidarCUIT;  //Mi paquete es este, No el de arriba 
 import java.sql.Connection;
@@ -13,8 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-
+import javax.swing.JOptionPane;
 
 public class LaboratorioData {
 
@@ -25,13 +23,6 @@ public class LaboratorioData {
     }
 
     public void agregarLaboratorio(Laboratorio laboratorio) {
-    // Valida el CUIT antes de agregarlo a la base de datos
-    String cuit = laboratorio.getCuit();  // obtiene el CUIT
-    System.out.println("CUIT antes de validación: " + cuit);
-    if (!ValidarCUIT.esUnCUITValido(cuit)) {
-        throw new IllegalArgumentException("El CUIT no es válido.");
-    }
-
         String query = "INSERT INTO laboratorio (CUIT, nomLaboratorio, pais, domComercial) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = conexion.prepareStatement(query)) {
@@ -42,9 +33,11 @@ public class LaboratorioData {
 
             statement.executeUpdate();
             System.out.println("Laboratorio agregado");
+            JOptionPane.showMessageDialog(null, "Laboratorio agregado correctamente.");
         } catch (SQLException e) {
             System.err.println("Error al insertar laboratorio: " + e.getMessage());
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al insertar laboratorio.", "", JOptionPane.ERROR_MESSAGE);
         }
     }
 
