@@ -52,10 +52,11 @@ public class LaboratorioVista_2 extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jPanel9 = new javax.swing.JPanel();
-        btn_ciudadano_agregar = new javax.swing.JButton();
+        btn_laboratorio_agregar = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
         btn_laboratorio_modificar = new javax.swing.JButton();
         btn_laboratorio_eliminar = new javax.swing.JButton();
+        btn_buscar_laboratotio = new javax.swing.JButton();
 
         jP_laboratorio_fondo.setBackground(new java.awt.Color(137, 161, 209));
 
@@ -144,14 +145,14 @@ public class LaboratorioVista_2 extends javax.swing.JPanel {
 
         jPanel9.setBackground(new java.awt.Color(108, 132, 197));
 
-        btn_ciudadano_agregar.setBackground(new java.awt.Color(59, 66, 109));
-        btn_ciudadano_agregar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        btn_ciudadano_agregar.setForeground(new java.awt.Color(246, 247, 248));
-        btn_ciudadano_agregar.setText("Agregar");
-        btn_ciudadano_agregar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
-        btn_ciudadano_agregar.addActionListener(new java.awt.event.ActionListener() {
+        btn_laboratorio_agregar.setBackground(new java.awt.Color(59, 66, 109));
+        btn_laboratorio_agregar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_laboratorio_agregar.setForeground(new java.awt.Color(246, 247, 248));
+        btn_laboratorio_agregar.setText("Agregar");
+        btn_laboratorio_agregar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_laboratorio_agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ciudadano_agregarActionPerformed(evt);
+                btn_laboratorio_agregarActionPerformed(evt);
             }
         });
 
@@ -180,18 +181,30 @@ public class LaboratorioVista_2 extends javax.swing.JPanel {
             }
         });
 
+        btn_buscar_laboratotio.setBackground(new java.awt.Color(59, 66, 109));
+        btn_buscar_laboratotio.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_buscar_laboratotio.setForeground(new java.awt.Color(246, 247, 248));
+        btn_buscar_laboratotio.setText("Buscar");
+        btn_buscar_laboratotio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscar_laboratotioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(btn_ciudadano_agregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(260, 260, 260)
-                .addComponent(btn_laboratorio_modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(255, 255, 255)
-                .addComponent(btn_laboratorio_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(38, 38, 38))
+                .addGap(53, 53, 53)
+                .addComponent(btn_buscar_laboratotio, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101)
+                .addComponent(btn_laboratorio_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(88, 88, 88)
+                .addComponent(btn_laboratorio_modificar, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                .addGap(104, 104, 104)
+                .addComponent(btn_laboratorio_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addGap(58, 58, 58))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -203,9 +216,10 @@ public class LaboratorioVista_2 extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_ciudadano_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_laboratorio_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_laboratorio_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_laboratorio_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_laboratorio_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar_laboratotio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(60, Short.MAX_VALUE))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -264,42 +278,95 @@ public class LaboratorioVista_2 extends javax.swing.JPanel {
        
     }//GEN-LAST:event_txt_Laboratorio_paisActionPerformed
 
-    private void btn_laboratorio_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laboratorio_modificarActionPerformed
-
-    }//GEN-LAST:event_btn_laboratorio_modificarActionPerformed
-
     private void btn_laboratorio_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laboratorio_eliminarActionPerformed
+       String cuit = txt_Laboratorio_Cuit.getText();
 
+     laboratoriodata.eliminarLaboratorio(cuit);
+
+ 
+    JOptionPane.showMessageDialog(null, "Laboratorio eliminado correctamente.");
     }//GEN-LAST:event_btn_laboratorio_eliminarActionPerformed
 
-    private void btn_ciudadano_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ciudadano_agregarActionPerformed
-            // 1. Obtener valores de los campos de texto
-    String cuit = txt_Laboratorio_Cuit.getText().trim();
-    String nombreLab = txt_laboratorio_nombreLab.getText().trim();
-    String pais = txt_Laboratorio_pais.getText().trim();
-    String domComercial = txt_Laboratorio_domComercial.getText().trim();
+    private void btn_laboratorio_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laboratorio_agregarActionPerformed
+     try {
+        // Obtén los datos ingresados por el usuario desde los campos de texto
+        String cuitCompleto = txt_Laboratorio_Cuit.getText();
+        String nombreLaboratorio = txt_laboratorio_nombreLab.getText();
+        String pais = txt_Laboratorio_pais.getText();
+        String direccion = txt_Laboratorio_domComercial.getText();
 
-    // 2. Crear un objeto Laboratorio
-    Laboratorio laboratorio = new Laboratorio(cuit, nombreLab, pais, domComercial);
-
-    try {
-        // 3. Validar el CUIT
-        if (!ValidarCUIT.esUnCUITValido(cuit)) {
-            JOptionPane.showMessageDialog(null, "El CUIT no es válido.", "", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // 4. Llamar al método para agregar el laboratorio
-            laboratoriodata.agregarLaboratorio(laboratorio);
+        // Validación del CUIT
+        if (!ValidarCUIT.esUnCUITValido(cuitCompleto)) {
+            String cuitSinUltimoDigito = cuitCompleto.substring(0, 10);
+            int digitoVerificadorCalculado = ValidarCUIT.calcularDigitoVerificador(cuitSinUltimoDigito);
+            int option = JOptionPane.showConfirmDialog(
+                    null,
+                    "El CUIT ingresado es incorrecto. ¿Desea utilizar el CUIT corregido: " + cuitSinUltimoDigito + digitoVerificadorCalculado + "?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (option == JOptionPane.YES_OPTION) {
+                cuitCompleto = cuitSinUltimoDigito + digitoVerificadorCalculado;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha agregado el laboratorio debido a un CUIT incorrecto.", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null, ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+
+        // Crear un nuevo laboratorio y agregarlo a la base de datos
+        Laboratorio laboratorio = new Laboratorio(cuitCompleto, nombreLaboratorio, pais, direccion);
+        laboratoriodata.agregarLaboratorio(laboratorio);
+
+        JOptionPane.showMessageDialog(null, "Laboratorio agregado correctamente.");
+    } catch (Exception e) {
+        System.err.println("Error al agregar laboratorio: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al agregar laboratorio.", "", JOptionPane.ERROR_MESSAGE);
     }
-    }//GEN-LAST:event_btn_ciudadano_agregarActionPerformed
+    }//GEN-LAST:event_btn_laboratorio_agregarActionPerformed
+
+    private void btn_laboratorio_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laboratorio_modificarActionPerformed
+          String cuit = txt_Laboratorio_Cuit.getText();
+    String nombreLaboratorio = txt_laboratorio_nombreLab.getText();
+    String pais = txt_Laboratorio_pais.getText();
+    String domComercial = txt_Laboratorio_domComercial.getText();
+
+ 
+    Laboratorio laboratorio = new Laboratorio(cuit, nombreLaboratorio, pais, domComercial);
+
+  
+    laboratoriodata.actualizarLaboratorio(laboratorio);
+
+  
+    JOptionPane.showMessageDialog(null, "Laboratorio actualizado correctamente.");
+    }//GEN-LAST:event_btn_laboratorio_modificarActionPerformed
+
+    private void btn_buscar_laboratotioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_laboratotioActionPerformed
+            // Obtén el CUIT ingresado por el usuario desde un campo de texto
+    String cuit = txt_Laboratorio_Cuit.getText();
+    
+    // Llama al método para buscar un laboratorio por CUIT
+    Laboratorio laboratorio = laboratoriodata.obtenerLaboratorioPorCUIT(cuit);
+
+    // Verifica si se encontró el laboratorio
+    if (laboratorio != null) {
+        // Establece los valores de los campos de texto con los datos del laboratorio encontrado
+        txt_laboratorio_nombreLab.setText(laboratorio.getNomLaboratorio());
+        txt_Laboratorio_pais.setText(laboratorio.getPais());
+        txt_Laboratorio_domComercial.setText(laboratorio.getDomComercial());
+
+        // Otros campos...
+    } else {
+        // Si no se encontró el laboratorio, muestra un mensaje indicando que no se encontró
+        JOptionPane.showMessageDialog(null, "Laboratorio no encontrado.", "", JOptionPane.INFORMATION_MESSAGE);
+    }
+    }//GEN-LAST:event_btn_buscar_laboratotioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btn_ciudadano_agregar;
-    public javax.swing.JButton btn_laboratorio_eliminar;
-    public javax.swing.JButton btn_laboratorio_modificar;
+    private javax.swing.JButton btn_buscar_laboratotio;
+    private javax.swing.JButton btn_laboratorio_agregar;
+    private javax.swing.JButton btn_laboratorio_eliminar;
+    private javax.swing.JButton btn_laboratorio_modificar;
     public javax.swing.JLabel jLabel18;
     public javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
