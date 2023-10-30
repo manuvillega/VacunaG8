@@ -1,6 +1,11 @@
 package Entidades;
 
-import java.sql.Date;
+//import java.sql.Date;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+
 
 public class Vacuna {
     private int nroSerieDosis;
@@ -25,6 +30,18 @@ public class Vacuna {
         this.medida = medida;
         this.fechaCaduca = fechaCaduca;
         this.colocada = colocada;
+    }
+
+    public Vacuna(int nroSerieDosis, String marca, String medida, java.sql.Date fechaCaduca, boolean colocada) {
+        
+    }
+
+    public Vacuna(Integer numSerie, String marca, String medida, LocalDate fechaVenc, Boolean colocada) { //de VIstas1
+        
+    }
+
+    public Vacuna(int nroSerieDosis, String marca, String medida, Date fechaCaduca, boolean colocada) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getNroSerieDosis() {
