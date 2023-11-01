@@ -278,6 +278,7 @@ public class VacunaVista extends javax.swing.JPanel {
 //BOTON ELIMINAR
     private void jButton4_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4_EliminarActionPerformed
 
+        Vacuna vacunActual = null;
         int nroSerieDosis;
         try {
             nroSerieDosis = Integer.parseInt(jText_numSerie.getText());
@@ -285,29 +286,27 @@ public class VacunaVista extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "El n° de Serie debe contener solo numeros");
             return;
         }
-
         Vacuna vacunaEncontrada = vacunaData.obtenerVacunaPorNroSerie(nroSerieDosis);
 
         if (vacunaEncontrada != null) {
-            vacunaData.eliminarVacuna(vacunaEncontrada.getNroSerieDosis());
-
-            if (vacunaEncontrada.isColocada() == true) {
-                jRadioButtonSi.setSelected(true);
-
-            } else {
-                jRadioButtonNo.setSelected(true);
-
+            boolean colocada = true;
+            if (vacunActual == null) {
+                vacunActual = new Vacuna(nroSerieDosis, vacunaEncontrada.getMarca(), vacunaEncontrada.getMedida(), vacunaEncontrada.getFechaCaduca(), colocada);
             }
+            vacunaData.modificarStockVacunas(vacunActual);
+            limpiarCampos();
+
+            JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
 
         } else {
-            JOptionPane.showMessageDialog(this, "Vacuna no encontrada!.    ⚠", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vacuna no encontrada!");
         }
-        limpiarCampos();
     }//GEN-LAST:event_jButton4_EliminarActionPerformed
 
 //BOTON MODIFICAR    
     private void jButton3_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3_ModificarActionPerformed
 
+        Vacuna vacunActual = null;
         int nroSerieDosis;
         try {
             nroSerieDosis = Integer.parseInt(jText_numSerie.getText());
@@ -318,33 +317,26 @@ public class VacunaVista extends javax.swing.JPanel {
         Vacuna vacunaEncontrada = vacunaData.obtenerVacunaPorNroSerie(nroSerieDosis);
 
         if (vacunaEncontrada != null) {
-            jComboBox1_Marca.setSelectedItem(vacunaEncontrada.getMarca());
-            for (int i = 0; i < jComboBox1_Marca.getItemCount(); i++) {
-                if (vacunaEncontrada.getMarca().equals(jComboBox1_Marca.getItemAt(i))) {
-                    jComboBox1_Marca.setSelectedIndex(i);
-                    break;
-                }
-            }
-            jComboBox2_Medida.setSelectedItem(vacunaEncontrada.getMedida());
-            for (int i = 0; i < jComboBox2_Medida.getItemCount(); i++) {
-                if (vacunaEncontrada.getMedida() == (Double.valueOf(jComboBox2_Medida.getItemAt(i)))) {
-                    jComboBox2_Medida.setSelectedIndex(i);
-                    break;
-                }
-            }
-            jCFechaCad.setDate(vacunaEncontrada.getFechaCaduca());
+            String marca = jComboBox1_Marca.getSelectedItem().toString();
+            double medida = Double.parseDouble(jComboBox2_Medida.getSelectedItem().toString());
+            java.util.Date utilDate = jCFechaCad.getDate();
+            if (utilDate != null) {
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                boolean colocada = jRadioButtonSi.isSelected();
 
-                        if (vacunaEncontrada.isColocada() == true) {
-                            jRadioButtonSi.setSelected(true);
-                        } else {
-                            jRadioButtonNo.setSelected(true);
-                        }
-            vacunaData.modificarStockVacunas(vacunaEncontrada);
-            limpiarCampos();
-            JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
+                if (vacunActual == null) {
+                    vacunActual = new Vacuna(nroSerieDosis, marca, medida, sqlDate, colocada);
+                }
 
-        } else {
-            JOptionPane.showMessageDialog(this, "Vacuna no encontrada!");
+                vacunaData.modificarStockVacunas(vacunActual);
+
+                limpiarCampos();
+
+                JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Vacuna no encontrada!");
+            }
         }
     }//GEN-LAST:event_jButton3_ModificarActionPerformed
 
