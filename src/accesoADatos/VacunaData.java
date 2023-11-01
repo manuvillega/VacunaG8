@@ -19,7 +19,7 @@ public class VacunaData {
 
     public void cargarVacunas(Vacuna cargar) {
 
-        String sql = "INSERT INTO vacuna(roSerieDosis, marca, medida, fechaCaduca, colocada) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vacuna(nroSerieDosis, marca, medida, fechaCaduca, colocada) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setInt(1, cargar.getNroSerieDosis());
