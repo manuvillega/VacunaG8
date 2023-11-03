@@ -630,13 +630,13 @@ public class CiudadanoVista_2 extends javax.swing.JPanel {
     public javax.swing.JLabel jLabel25;
     public javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanel_ciudadano;
-    private javax.swing.JPanel jPanel_listar_ciudadano;
+    public javax.swing.JPanel jPanel_ciudadano;
+    public javax.swing.JPanel jPanel_listar_ciudadano;
     private javax.swing.JPanel jPanel_titulo_ciudadano1;
     private javax.swing.JPanel jPanel_titulo_ciudadano2;
     private javax.swing.JScrollPane jScrollPane1;
