@@ -15,13 +15,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,16 +35,24 @@ import javax.swing.SwingUtilities;
  */
 public class CitaVacunacionVista extends javax.swing.JPanel {
 
+    private DefaultTableModel modelo;
     private CiudadanoData ciudadanoData;
     private CentroVacunacionData centroVacunacionData;
     private VacunaData vacunaData;
     private citaVacunacionData citaData;
+    private LocalTime horaCita; //GREGADO
+    private LocalTime horaVacunacion; //GREGADO
+
     public CitaVacunacionVista() {
         initComponents();
+        modelo = (DefaultTableModel) jTable_citaVacunacion_tabla.getModel();
         ciudadanoData = new CiudadanoData(Conexion.getConexion());
         centroVacunacionData = new CentroVacunacionData(Conexion.getConexion());
         vacunaData = new VacunaData(Conexion.getConexion());
         citaData = new citaVacunacionData(Conexion.getConexion());
+//        cabecera();
+        cargarTabla();
+        cargarHorarios();//AGREGADO
     }
 
     /**
@@ -52,7 +66,7 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel_cita_vacunacion = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -60,30 +74,70 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jTCodCita = new javax.swing.JTextField();
+        jTCiudadano = new javax.swing.JTextField();
+        jDCFechaHoraCita = new com.toedter.calendar.JDateChooser();
+        jTCentroVac = new javax.swing.JTextField();
+        jTDosis = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jCB_hora_cita = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
-        jBBuscar = new javax.swing.JButton();
         jBModificar = new javax.swing.JButton();
         jBEliminar = new javax.swing.JButton();
         jBAgregar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
+        jBBuscar1 = new javax.swing.JButton();
+        jPanel_listar_citas = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        txt_citaVacunacion_buscar = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable_citaVacunacion_tabla = new javax.swing.JTable();
+        jBBuscar = new javax.swing.JButton();
+        jPanel_titulo_ciudadano2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        jPanel10 = new javax.swing.JPanel();
+        jSeparator8 = new javax.swing.JSeparator();
+        btn_centroVacunacion_nuevo = new javax.swing.JButton();
+        btn_centroVacunacion_postergar = new javax.swing.JButton();
+        btn_centroVacunacion_aplicada = new javax.swing.JButton();
+        btn_centroVacunacion_cumplidas = new javax.swing.JButton();
+        btn_centroVacunacion_NoCumplidas = new javax.swing.JButton();
+        jPanel_a_definir = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jDCFechaHoraVac = new com.toedter.calendar.JDateChooser();
-        jTCodCita = new javax.swing.JTextField();
-        jTCiudadano = new javax.swing.JTextField();
-        jTDosis = new javax.swing.JTextField();
-        jTCentroVac = new javax.swing.JTextField();
-        jDCFechaHoraCita = new com.toedter.calendar.JDateChooser();
+        jLabel9 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jTC1 = new javax.swing.JTextField();
+        jTCiudadano1 = new javax.swing.JTextField();
+        jDCFechaHoraCita1 = new com.toedter.calendar.JDateChooser();
+        jTCentroVac1 = new javax.swing.JTextField();
+        jDCFechaHoraVac1 = new com.toedter.calendar.JDateChooser();
+        jTDosis1 = new javax.swing.JTextField();
+        jSeparator5 = new javax.swing.JSeparator();
+        jCB_hora_cita1 = new javax.swing.JComboBox<>();
+        jCB_hora_vacunacion1 = new javax.swing.JComboBox<>();
+        jPanel9 = new javax.swing.JPanel();
+        jB1 = new javax.swing.JButton();
+        jBEl1 = new javax.swing.JButton();
+        jB4 = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
+        jBB2 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(137, 161, 209));
 
         jTabbedPane2.setBackground(new java.awt.Color(191, 200, 209));
         jTabbedPane2.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
 
-        jPanel2.setBackground(new java.awt.Color(137, 161, 209));
+        jPanel_cita_vacunacion.setBackground(new java.awt.Color(59, 66, 109));
 
         jPanel3.setBackground(new java.awt.Color(108, 132, 197));
 
@@ -138,149 +192,13 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(59, 66, 109));
         jLabel4.setText("Fecha y Hora Cita:");
 
-        jLabel5.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(59, 66, 109));
-        jLabel5.setText("Fecha y Hora Vacunación:");
-
         jLabel6.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(59, 66, 109));
-        jLabel6.setText("ID Centro de Vacunación:");
+        jLabel6.setText("Nro Serie Dosis:");
 
         jLabel8.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(59, 66, 109));
-        jLabel8.setText("Nro Serie Dosis:");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107))
-        );
-
-        jPanel5.setBackground(new java.awt.Color(108, 132, 197));
-
-        jBBuscar.setBackground(new java.awt.Color(59, 66, 109));
-        jBBuscar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jBBuscar.setForeground(new java.awt.Color(246, 247, 248));
-        jBBuscar.setText("Buscar");
-        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBBuscarActionPerformed(evt);
-            }
-        });
-
-        jBModificar.setBackground(new java.awt.Color(59, 66, 109));
-        jBModificar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jBModificar.setForeground(new java.awt.Color(246, 247, 248));
-        jBModificar.setText("Modificar");
-        jBModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBModificarActionPerformed(evt);
-            }
-        });
-
-        jBEliminar.setBackground(new java.awt.Color(59, 66, 109));
-        jBEliminar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jBEliminar.setForeground(new java.awt.Color(246, 247, 248));
-        jBEliminar.setText("Eliminar");
-        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBEliminarActionPerformed(evt);
-            }
-        });
-
-        jBAgregar.setBackground(new java.awt.Color(59, 66, 109));
-        jBAgregar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jBAgregar.setForeground(new java.awt.Color(246, 247, 248));
-        jBAgregar.setText("Agregar");
-        jBAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBAgregarActionPerformed(evt);
-            }
-        });
-
-        jSeparator2.setBackground(new java.awt.Color(48, 52, 59));
-        jSeparator2.setForeground(new java.awt.Color(48, 52, 59));
-
-        jSeparator3.setBackground(new java.awt.Color(48, 52, 59));
-        jSeparator3.setForeground(new java.awt.Color(48, 52, 59));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122)
-                .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118)
-                .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(0, 33, Short.MAX_VALUE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 33, Short.MAX_VALUE)))
-        );
-
-        jPanel6.setBackground(new java.awt.Color(191, 200, 209));
-        jPanel6.setForeground(new java.awt.Color(207, 214, 221));
-
-        jDCFechaHoraVac.setBackground(new java.awt.Color(137, 161, 209));
-        jDCFechaHoraVac.setForeground(new java.awt.Color(59, 66, 109));
-        jDCFechaHoraVac.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel8.setText("ID centro vacunacion:");
 
         jTCodCita.setBackground(new java.awt.Color(137, 161, 209));
         jTCodCita.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
@@ -295,83 +213,737 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         jTCiudadano.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jTCiudadano.setForeground(new java.awt.Color(59, 66, 109));
 
-        jTDosis.setBackground(new java.awt.Color(137, 161, 209));
-        jTDosis.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jTDosis.setForeground(new java.awt.Color(59, 66, 109));
+        jDCFechaHoraCita.setBackground(new java.awt.Color(137, 161, 209));
+        jDCFechaHoraCita.setForeground(new java.awt.Color(59, 66, 109));
+        jDCFechaHoraCita.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
 
         jTCentroVac.setBackground(new java.awt.Color(137, 161, 209));
         jTCentroVac.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jTCentroVac.setForeground(new java.awt.Color(59, 66, 109));
 
-        jDCFechaHoraCita.setBackground(new java.awt.Color(137, 161, 209));
-        jDCFechaHoraCita.setForeground(new java.awt.Color(59, 66, 109));
-        jDCFechaHoraCita.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTDosis.setBackground(new java.awt.Color(137, 161, 209));
+        jTDosis.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTDosis.setForeground(new java.awt.Color(59, 66, 109));
+
+        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jCB_hora_cita.setBackground(new java.awt.Color(137, 161, 209));
+        jCB_hora_cita.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jCB_hora_cita.setForeground(new java.awt.Color(59, 66, 109));
+        jCB_hora_cita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora" }));
+        jCB_hora_cita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCB_hora_citaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTCodCita, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTCentroVac, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTCiudadano, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDCFechaHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addComponent(jCB_hora_cita, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 233, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jCB_hora_cita, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(107, 107, 107))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72)
+                                .addComponent(jTCentroVac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(108, 108, 108))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jTCodCita, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTCiudadano, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDCFechaHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(108, 132, 197));
+
+        jBModificar.setBackground(new java.awt.Color(59, 66, 109));
+        jBModificar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBModificar.setForeground(new java.awt.Color(246, 247, 248));
+        jBModificar.setText("Modificar");
+        jBModificar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jBModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBModificarActionPerformed(evt);
+            }
+        });
+
+        jBEliminar.setBackground(new java.awt.Color(59, 66, 109));
+        jBEliminar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBEliminar.setForeground(new java.awt.Color(246, 247, 248));
+        jBEliminar.setText("Eliminar");
+        jBEliminar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
+
+        jBAgregar.setBackground(new java.awt.Color(59, 66, 109));
+        jBAgregar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBAgregar.setForeground(new java.awt.Color(246, 247, 248));
+        jBAgregar.setText("Agregar");
+        jBAgregar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jBAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarActionPerformed(evt);
+            }
+        });
+
+        jSeparator2.setBackground(new java.awt.Color(48, 52, 59));
+        jSeparator2.setForeground(new java.awt.Color(48, 52, 59));
+
+        jBBuscar1.setBackground(new java.awt.Color(59, 66, 109));
+        jBBuscar1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBBuscar1.setForeground(new java.awt.Color(246, 247, 248));
+        jBBuscar1.setText("Buscar");
+        jBBuscar1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jBBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscar1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jBBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128)
+                .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118)
+                .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGap(0, 33, Short.MAX_VALUE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 33, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout jPanel_cita_vacunacionLayout = new javax.swing.GroupLayout(jPanel_cita_vacunacion);
+        jPanel_cita_vacunacion.setLayout(jPanel_cita_vacunacionLayout);
+        jPanel_cita_vacunacionLayout.setHorizontalGroup(
+            jPanel_cita_vacunacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel_cita_vacunacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel_cita_vacunacionLayout.setVerticalGroup(
+            jPanel_cita_vacunacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_cita_vacunacionLayout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 326, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Cita Vacunación", jPanel_cita_vacunacion);
+
+        jPanel_listar_citas.setBackground(new java.awt.Color(59, 66, 109));
+
+        jPanel7.setBackground(new java.awt.Color(191, 200, 209));
+
+        txt_citaVacunacion_buscar.setBackground(new java.awt.Color(137, 161, 209));
+
+        jTable_citaVacunacion_tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo Cita", "DNI Ciudadano", "Fecha y Hora Cita", "ID Centro Vacunacion", "Fecha y Hora Vacunacion", "Nro Serie Dosis"
+            }
+        ));
+        jTable_citaVacunacion_tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_citaVacunacion_tablaMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable_citaVacunacion_tabla);
+
+        jBBuscar.setBackground(new java.awt.Color(59, 66, 109));
+        jBBuscar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBBuscar.setForeground(new java.awt.Color(246, 247, 248));
+        jBBuscar.setText("Buscar");
+        jBBuscar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_citaVacunacion_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_citaVacunacion_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel_titulo_ciudadano2.setBackground(new java.awt.Color(108, 132, 197));
+
+        jLabel7.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(48, 52, 59));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Formulario Ciudadano");
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jSeparator7.setBackground(new java.awt.Color(48, 52, 59));
+        jSeparator7.setForeground(new java.awt.Color(48, 52, 59));
+
+        javax.swing.GroupLayout jPanel_titulo_ciudadano2Layout = new javax.swing.GroupLayout(jPanel_titulo_ciudadano2);
+        jPanel_titulo_ciudadano2.setLayout(jPanel_titulo_ciudadano2Layout);
+        jPanel_titulo_ciudadano2Layout.setHorizontalGroup(
+            jPanel_titulo_ciudadano2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel_titulo_ciudadano2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_titulo_ciudadano2Layout.createSequentialGroup()
+                    .addGap(149, 149, 149)
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                    .addGap(149, 149, 149))
+                .addGroup(jPanel_titulo_ciudadano2Layout.createSequentialGroup()
+                    .addGap(271, 271, 271)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                    .addGap(269, 269, 269)))
+        );
+        jPanel_titulo_ciudadano2Layout.setVerticalGroup(
+            jPanel_titulo_ciudadano2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 71, Short.MAX_VALUE)
+            .addGroup(jPanel_titulo_ciudadano2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_titulo_ciudadano2Layout.createSequentialGroup()
+                    .addGap(6, 6, 6)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addGap(3, 3, 3)
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
+        );
+
+        jPanel10.setBackground(new java.awt.Color(108, 132, 197));
+
+        jSeparator8.setBackground(new java.awt.Color(48, 52, 59));
+        jSeparator8.setForeground(new java.awt.Color(48, 52, 59));
+
+        btn_centroVacunacion_nuevo.setBackground(new java.awt.Color(59, 66, 109));
+        btn_centroVacunacion_nuevo.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_centroVacunacion_nuevo.setForeground(new java.awt.Color(246, 247, 248));
+        btn_centroVacunacion_nuevo.setText("Nuevo");
+        btn_centroVacunacion_nuevo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_centroVacunacion_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_centroVacunacion_nuevoActionPerformed(evt);
+            }
+        });
+
+        btn_centroVacunacion_postergar.setBackground(new java.awt.Color(59, 66, 109));
+        btn_centroVacunacion_postergar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_centroVacunacion_postergar.setForeground(new java.awt.Color(246, 247, 248));
+        btn_centroVacunacion_postergar.setText("Postergar");
+        btn_centroVacunacion_postergar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_centroVacunacion_postergar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_centroVacunacion_postergarActionPerformed(evt);
+            }
+        });
+
+        btn_centroVacunacion_aplicada.setBackground(new java.awt.Color(59, 66, 109));
+        btn_centroVacunacion_aplicada.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_centroVacunacion_aplicada.setForeground(new java.awt.Color(246, 247, 248));
+        btn_centroVacunacion_aplicada.setText("Aplicada");
+        btn_centroVacunacion_aplicada.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_centroVacunacion_aplicada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_centroVacunacion_aplicadaActionPerformed(evt);
+            }
+        });
+
+        btn_centroVacunacion_cumplidas.setBackground(new java.awt.Color(59, 66, 109));
+        btn_centroVacunacion_cumplidas.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_centroVacunacion_cumplidas.setForeground(new java.awt.Color(246, 247, 248));
+        btn_centroVacunacion_cumplidas.setText("Cumplidas");
+        btn_centroVacunacion_cumplidas.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_centroVacunacion_cumplidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_centroVacunacion_cumplidasActionPerformed(evt);
+            }
+        });
+
+        btn_centroVacunacion_NoCumplidas.setBackground(new java.awt.Color(59, 66, 109));
+        btn_centroVacunacion_NoCumplidas.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        btn_centroVacunacion_NoCumplidas.setForeground(new java.awt.Color(246, 247, 248));
+        btn_centroVacunacion_NoCumplidas.setText("No Cumplidas");
+        btn_centroVacunacion_NoCumplidas.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        btn_centroVacunacion_NoCumplidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_centroVacunacion_NoCumplidasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(btn_centroVacunacion_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addComponent(btn_centroVacunacion_postergar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
+                .addComponent(btn_centroVacunacion_aplicada, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
+                .addComponent(btn_centroVacunacion_cumplidas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_centroVacunacion_NoCumplidas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61))
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_centroVacunacion_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_centroVacunacion_postergar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_centroVacunacion_aplicada, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_centroVacunacion_cumplidas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_centroVacunacion_NoCumplidas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGap(0, 37, Short.MAX_VALUE)
+                    .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 36, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout jPanel_listar_citasLayout = new javax.swing.GroupLayout(jPanel_listar_citas);
+        jPanel_listar_citas.setLayout(jPanel_listar_citasLayout);
+        jPanel_listar_citasLayout.setHorizontalGroup(
+            jPanel_listar_citasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel_titulo_ciudadano2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel_listar_citasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel_listar_citasLayout.setVerticalGroup(
+            jPanel_listar_citasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_listar_citasLayout.createSequentialGroup()
+                .addComponent(jPanel_titulo_ciudadano2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Lista Cita Vacunacion", jPanel_listar_citas);
+
+        jPanel_a_definir.setBackground(new java.awt.Color(59, 66, 109));
+
+        jPanel6.setBackground(new java.awt.Color(108, 132, 197));
+
+        jLabel9.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(48, 52, 59));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Formulario de Cita Vacunación");
+        jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jSeparator3.setBackground(new java.awt.Color(48, 52, 59));
+        jSeparator3.setForeground(new java.awt.Color(48, 52, 59));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTCodCita, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDCFechaHoraVac, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTCiudadano, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTCentroVac, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDCFechaHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(138, Short.MAX_VALUE))
+            .addGap(0, 895, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(149, 149, 149)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                    .addGap(149, 149, 149))
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(271, 271, 271)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(300, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTCodCita, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTCiudadano, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(jDCFechaHoraCita, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTCentroVac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jDCFechaHoraVac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(6, 6, 6)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(3, 3, 3)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanel8.setBackground(new java.awt.Color(191, 200, 209));
+        jPanel8.setForeground(new java.awt.Color(207, 214, 221));
+
+        jLabel10.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(59, 66, 109));
+        jLabel10.setText("DNI Ciudadano");
+
+        jLabel11.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(59, 66, 109));
+        jLabel11.setText("Aplicada:");
+
+        jLabel12.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(59, 66, 109));
+        jLabel12.setText("Fecha y Hora Cita:");
+
+        jLabel13.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(59, 66, 109));
+        jLabel13.setText("Fecha y Hora Vacunación:");
+
+        jLabel14.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(59, 66, 109));
+        jLabel14.setText("ID Centro de Vacunación:");
+
+        jLabel15.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(59, 66, 109));
+        jLabel15.setText("Nro Serie Dosis:");
+
+        jTC1.setBackground(new java.awt.Color(137, 161, 209));
+        jTC1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTC1.setForeground(new java.awt.Color(59, 66, 109));
+        jTC1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTC1ActionPerformed(evt);
+            }
+        });
+
+        jTCiudadano1.setBackground(new java.awt.Color(137, 161, 209));
+        jTCiudadano1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTCiudadano1.setForeground(new java.awt.Color(59, 66, 109));
+
+        jDCFechaHoraCita1.setBackground(new java.awt.Color(137, 161, 209));
+        jDCFechaHoraCita1.setForeground(new java.awt.Color(59, 66, 109));
+        jDCFechaHoraCita1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+
+        jTCentroVac1.setBackground(new java.awt.Color(137, 161, 209));
+        jTCentroVac1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTCentroVac1.setForeground(new java.awt.Color(59, 66, 109));
+
+        jDCFechaHoraVac1.setBackground(new java.awt.Color(137, 161, 209));
+        jDCFechaHoraVac1.setForeground(new java.awt.Color(59, 66, 109));
+        jDCFechaHoraVac1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+
+        jTDosis1.setBackground(new java.awt.Color(137, 161, 209));
+        jTDosis1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jTDosis1.setForeground(new java.awt.Color(59, 66, 109));
+
+        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jCB_hora_cita1.setBackground(new java.awt.Color(137, 161, 209));
+        jCB_hora_cita1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jCB_hora_cita1.setForeground(new java.awt.Color(59, 66, 109));
+        jCB_hora_cita1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora" }));
+        jCB_hora_cita1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCB_hora_cita1ActionPerformed(evt);
+            }
+        });
+
+        jCB_hora_vacunacion1.setBackground(new java.awt.Color(137, 161, 209));
+        jCB_hora_vacunacion1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jCB_hora_vacunacion1.setForeground(new java.awt.Color(59, 66, 109));
+        jCB_hora_vacunacion1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora" }));
+        jCB_hora_vacunacion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCB_hora_vacunacion1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTC1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDCFechaHoraVac1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTCentroVac1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTCiudadano1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDCFechaHoraCita1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTDosis1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jCB_hora_vacunacion1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jCB_hora_cita1, 0, 124, Short.MAX_VALUE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jCB_hora_cita1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(107, 107, 107))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTDosis1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCB_hora_vacunacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addComponent(jDCFechaHoraVac1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTCentroVac1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(108, 108, 108))))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jTC1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTCiudadano1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDCFechaHoraCita1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel9.setBackground(new java.awt.Color(108, 132, 197));
+
+        jB1.setBackground(new java.awt.Color(59, 66, 109));
+        jB1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jB1.setForeground(new java.awt.Color(246, 247, 248));
+        jB1.setText("a definir");
+        jB1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jB1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB1ActionPerformed(evt);
+            }
+        });
+
+        jBEl1.setBackground(new java.awt.Color(59, 66, 109));
+        jBEl1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBEl1.setForeground(new java.awt.Color(246, 247, 248));
+        jBEl1.setText("a definir");
+        jBEl1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jBEl1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEl1ActionPerformed(evt);
+            }
+        });
+
+        jB4.setBackground(new java.awt.Color(59, 66, 109));
+        jB4.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jB4.setForeground(new java.awt.Color(246, 247, 248));
+        jB4.setText("a definir");
+        jB4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jB4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jB4ActionPerformed(evt);
+            }
+        });
+
+        jSeparator6.setBackground(new java.awt.Color(48, 52, 59));
+        jSeparator6.setForeground(new java.awt.Color(48, 52, 59));
+
+        jBB2.setBackground(new java.awt.Color(59, 66, 109));
+        jBB2.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jBB2.setForeground(new java.awt.Color(246, 247, 248));
+        jBB2.setText("a definir");
+        jBB2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jBB2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBB2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jBB2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jB1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128)
+                .addComponent(jBEl1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118)
+                .addComponent(jB4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66))
+            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBEl1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jB4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jB1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBB2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
+            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addGap(0, 33, Short.MAX_VALUE)
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 33, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout jPanel_a_definirLayout = new javax.swing.GroupLayout(jPanel_a_definir);
+        jPanel_a_definir.setLayout(jPanel_a_definirLayout);
+        jPanel_a_definirLayout.setHorizontalGroup(
+            jPanel_a_definirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel_a_definirLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel_a_definirLayout.setVerticalGroup(
+            jPanel_a_definirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_a_definirLayout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 325, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 326, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Cita Vacunación", jPanel2);
+        jTabbedPane2.addTab("a definir", jPanel_a_definir);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,169 +962,389 @@ public class CitaVacunacionVista extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBB2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBB2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBB2ActionPerformed
+
+    private void jB4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jB4ActionPerformed
+
+    private void jBEl1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEl1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBEl1ActionPerformed
+
+    private void jB1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jB1ActionPerformed
+
+    private void jCB_hora_vacunacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_hora_vacunacion1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCB_hora_vacunacion1ActionPerformed
+
+    private void jCB_hora_cita1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_hora_cita1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCB_hora_cita1ActionPerformed
+
+    private void jTC1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTC1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTC1ActionPerformed
+
+    private void btn_centroVacunacion_NoCumplidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_centroVacunacion_NoCumplidasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_centroVacunacion_NoCumplidasActionPerformed
+
+    private void btn_centroVacunacion_cumplidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_centroVacunacion_cumplidasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_centroVacunacion_cumplidasActionPerformed
+
+    private void btn_centroVacunacion_aplicadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_centroVacunacion_aplicadaActionPerformed
+        int selectedRow = jTable_citaVacunacion_tabla.getSelectedRow();
+
+        if (selectedRow != -1) {
+            int codCita = (int) modelo.getValueAt(selectedRow, 0);
+            citaData.VacunaAplicada(codCita);
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una fila para aplicar la vacuna.", "Sin selección", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_centroVacunacion_aplicadaActionPerformed
+
+    private void btn_centroVacunacion_postergarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_centroVacunacion_postergarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_centroVacunacion_postergarActionPerformed
+
+    private void btn_centroVacunacion_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_centroVacunacion_nuevoActionPerformed
+        if (jPanel_cita_vacunacion.isVisible()) {
+            jPanel_cita_vacunacion.setVisible(false); // Ocultar el JPanel
+        } else {
+            jPanel_cita_vacunacion.setVisible(true); // Mostrar el JPanel
+        }
+        jPanel_cita_vacunacion.setEnabled(true);
+        limpiarCampos();
+    }//GEN-LAST:event_btn_centroVacunacion_nuevoActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        botonesDeBuscar();
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
+    //AGREGADO- CHEKEAR EL DATE DEL TRY CATCH
+    private void jTable_citaVacunacion_tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_citaVacunacion_tablaMouseClicked
+        if (evt.getClickCount() == 1) { // Asegura que se haya hecho un solo clic
+            int row = jTable_citaVacunacion_tabla.getSelectedRow();
+            if (row != -1) {
+                int codCita = (int) jTable_citaVacunacion_tabla.getValueAt(row, 0);
+                int dniCiudadano = (int) jTable_citaVacunacion_tabla.getValueAt(row, 1);
+                String fechaHoraCita = jTable_citaVacunacion_tabla.getValueAt(row, 2).toString();
+                int idCentroVacunacion = (int) jTable_citaVacunacion_tabla.getValueAt(row, 3);
+                String fechaHoraVacunacion = jTable_citaVacunacion_tabla.getValueAt(row, 4).toString();
+                int nroSerieDosis = (int) jTable_citaVacunacion_tabla.getValueAt(row, 5);
+
+                // Llena los campos de texto con los valores obtenidos
+                jTCodCita.setText(Integer.toString(codCita));
+                jTCiudadano.setText(Integer.toString(dniCiudadano));
+                jTCentroVac.setText(Integer.toString(idCentroVacunacion));
+                jTDosis.setText(Integer.toString(nroSerieDosis));
+
+                SimpleDateFormat formatoFechaHora = new SimpleDateFormat("EEE MMM dd HH:mm", Locale.ENGLISH);
+
+                try {
+                    Date fechaUtilCita = (Date) formatoFechaHora.parse(fechaHoraCita);
+                    java.sql.Date fechaSqlCita = new java.sql.Date(fechaUtilCita.getTime());
+                    jDCFechaHoraCita.setDate(fechaSqlCita);
+
+                    Date fechaUtilVacunacion = (Date) formatoFechaHora.parse(fechaHoraVacunacion);
+                    java.sql.Date fechaSqlVacunacion = new java.sql.Date(fechaUtilVacunacion.getTime());
+                } catch (ParseException ex) {
+
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }//GEN-LAST:event_jTable_citaVacunacion_tablaMouseClicked
+
+    private void jBBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscar1ActionPerformed
+        botonesDeBuscar();
+    }//GEN-LAST:event_jBBuscar1ActionPerformed
+
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
-       String codCita = jTCodCita.getText();
-       LocalDateTime localDateTime = null;
-       if(!codCita.isEmpty()){
+        String codCita = jTCodCita.getText();
+        LocalDateTime localDateTime = null;
+        if (!codCita.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Para agregar una cita nueva por favor deje el codigo de cita vacio");
-       } else if(codCita.isEmpty()){
-           int DNIc = Integer.parseInt(jTCiudadano.getText());
-          Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
-           if (ciudadano == null){
-              JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
-           } else{
-               String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
-               int IDcentro = Integer.parseInt(jTCentroVac.getText());
-               CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
-               if (centroVacunacion == null){
-                   JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
-               } else{
-                   try{
-                   Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
-                   Instant instant = fechaHoraColoca.toInstant();
-                    localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-                   } catch(NullPointerException ex){
-                   }                         
-                   int nroDosis = Integer.parseInt(jTDosis.getText());
-                   Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
-                   if(vacuna == null){
-                       JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
-                   } else{
-                       int codCita2 = 0;
-                       citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
-                       citaData.CrearCita(cita);
-                   }                         
-               }
-           }
-       }
+        } else if (codCita.isEmpty()) {
+            int DNIc = Integer.parseInt(jTCiudadano.getText());
+            Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
+            if (ciudadano == null) {
+                JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
+            } else {
+                String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
+                int IDcentro = Integer.parseInt(jTCentroVac.getText());
+                CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
+                if (centroVacunacion == null) {
+                    JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
+                } else {
+                    int nroDosis = Integer.parseInt(jTDosis.getText());
+                    Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
+                    if (vacuna == null) {
+                        JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
+                    } else {
+                        int codCita2 = 0;
+                        citaVacunacion cita = new citaVacunacion(codCita2, ciudadano, fechaHoraCita, centroVacunacion, localDateTime, vacuna);
+                        citaData.CrearCita(cita);
+                        cargarTabla();
+                        limpiarCampos();
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_jBAgregarActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        String codCita = jTCodCita.getText();
+        if (!codCita.isEmpty()) {
+            int cod = Integer.parseInt(codCita);
+            citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+            if (citaVac != null) {
+                citaData.EliminarCita(cod);
+                limpiarCampos();
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
+            }
+        } else if (codCita.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
+        String codCita = jTCodCita.getText();
+        LocalDateTime localDateTime = null;
+        if (!codCita.isEmpty()) {
+            int cod = Integer.parseInt(codCita);
+            citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+            if (citaVac != null) {
+                int DNIc = Integer.parseInt(jTCiudadano.getText());
+                Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
+                if (ciudadano == null) {
+                    JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
+                } else {
+                    String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
+                    int IDcentro = Integer.parseInt(jTCentroVac.getText());
+                    CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
+                    if (centroVacunacion == null) {
+                        JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
+                    } else {
+                        try {
+
+                        } catch (NullPointerException ex) {
+                        }
+                        int nroDosis = Integer.parseInt(jTDosis.getText());
+                        Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
+                        if (vacuna == null) {
+                            JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
+                        } else {
+                            int codCita2 = 0;
+                            citaVacunacion cita = new citaVacunacion(codCita2, ciudadano, fechaHoraCita, centroVacunacion, localDateTime, vacuna);
+                            citaData.ModificarCita(cita);
+                            limpiarCampos();
+                            cargarTabla();
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
+            }
+        } else if (codCita.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Para modificar una cita por favor escriba un id de cita");
+        }
+    }//GEN-LAST:event_jBModificarActionPerformed
+
+    //AGREGADO
+    private void jCB_hora_citaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCB_hora_citaActionPerformed
+        String horaSelecComboBox = (String) jCB_hora_cita.getSelectedItem();
+        horaCita = LocalTime.parse(horaSelecComboBox);
+        System.out.println("la hora seleccionada es " + horaCita);
+    }//GEN-LAST:event_jCB_hora_citaActionPerformed
 
     private void jTCodCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTCodCitaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTCodCitaActionPerformed
 
-    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
-       String codCita = jTCodCita.getText();
-       LocalDateTime localDateTime = null;
-       if(!codCita.isEmpty()){
-          int cod = Integer.parseInt(codCita);
-          citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
-          if(citaVac != null){
-          int DNIc = Integer.parseInt(jTCiudadano.getText());
-          Ciudadano ciudadano = ciudadanoData.buscarCiudadanoPorDNI(DNIc);
-           if (ciudadano == null){
-              JOptionPane.showMessageDialog(this, "Ciudadano no registrado con ese DNI");
-           } else{
-               String fechaHoraCita = jDCFechaHoraCita.getDate().toString();
-               int IDcentro = Integer.parseInt(jTCentroVac.getText());
-               CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(IDcentro);
-               if (centroVacunacion == null){
-                   JOptionPane.showMessageDialog(this, "No existe un Centro de Vacunacion registrado con ese ID");
-               } else{
-                   try{
-                   Date fechaHoraColoca = (Date) jDCFechaHoraVac.getDate();
-                   Instant instant = fechaHoraColoca.toInstant();
-                    localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-                   } catch(NullPointerException ex){
-                   }                         
-                   int nroDosis = Integer.parseInt(jTDosis.getText());
-                   Vacuna vacuna = vacunaData.obtenerVacunaPorNroSerie(nroDosis);
-                   if(vacuna == null){
-                       JOptionPane.showMessageDialog(this, "No existe vacuna con ese numero de dosis");
-                   } else{
-                       int codCita2 = 0;
-                       citaVacunacion cita = new citaVacunacion(codCita2, ciudadano,fechaHoraCita, centroVacunacion, localDateTime, vacuna);
-                       citaData.ModificarCita(cita);
-                   }                         
-               }
-           }
-          } else{
-              JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
-          }
-       } else if(codCita.isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para modificar una cita por favor escriba un id de cita");
-       }
-    }//GEN-LAST:event_jBModificarActionPerformed
-
-    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-       String codCita = jTCodCita.getText();
-        if(!codCita.isEmpty()){
-          int cod = Integer.parseInt(codCita);
-          citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
-          if(citaVac != null){
-              jTCiudadano.setText(Integer.toString(citaVac.getPersona().getDNI()));
-              SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-              try {
-                  jDCFechaHoraCita.setDate(formato.parse(citaVac.getFechaHoraCita()));
-              } catch (ParseException ex) {
-                  Logger.getLogger(CitaVacunacionVista.class.getName()).log(Level.SEVERE, null, ex);
-              }
-              jTCentroVac.setText(Integer.toString(citaVac.getCentroVacunacion().getIDcentro()));
-              try{
-              Date date = (Date) Date.from(citaVac.getFechaHoraVacunacion().atZone(ZoneId.systemDefault()).toInstant());
-              jDCFechaHoraVac.setDate(date);
-              jTDosis.setText(Integer.toString(citaVac.getMedida().getNroSerieDosis()));
-              } catch(NullPointerException ex){                  
-              }
-          } else{
-              JOptionPane.showMessageDialog(this, "No existe una cita con ese codigo de cita");
-          }
-        }else if(codCita.isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
-       }
-    }//GEN-LAST:event_jBBuscarActionPerformed
-
-    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+    private void botonesDeBuscar() {
         String codCita = jTCodCita.getText();
-        if(!codCita.isEmpty()){
-            
-        }else if(codCita.isEmpty()){
-           JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un id de cita");
-       }
-    }//GEN-LAST:event_jBEliminarActionPerformed
+        if (!codCita.isEmpty()) {
+            int cod = Integer.parseInt(codCita);
+            citaVacunacion citaVac = citaData.BuscarCitaPorCodCita(cod);
+            if (citaVac != null) {
+                jTCiudadano.setText(Integer.toString(citaVac.getPersona().getDNI()));
+                SimpleDateFormat formatoSinAnio = new SimpleDateFormat("EEE MMM dd HH:mm", Locale.ENGLISH);
+
+                try {
+                    java.util.Date fechaUtil = formatoSinAnio.parse(citaVac.getFechaHoraCita());
+                    java.sql.Date fechaSql = new java.sql.Date(fechaUtil.getTime());
+                    jDCFechaHoraCita.setDate(fechaSql);
+
+                    // Ahora establece un nuevo formato para mostrar la fecha sin el año
+                    SimpleDateFormat formatoVisualizacion = new SimpleDateFormat("EEE dd MMM HH:mm", Locale.ENGLISH);
+                    jDCFechaHoraCita.setDateFormatString(formatoVisualizacion.toPattern());
+                } catch (ParseException ex) {
+                    Logger.getLogger(CitaVacunacionVista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                jTCentroVac.setText(Integer.toString(citaVac.getCentroVacunacion().getIDcentro()));               
+                jTDosis.setText(Integer.toString(citaVac.getMedida().getNroSerieDosis()));
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe una cita con ese código de cita");
+            }
+        } else if (codCita.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Para buscar una cita por favor escriba un ID de cita");
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btn_centroVacunacion_NoCumplidas;
+    public javax.swing.JButton btn_centroVacunacion_aplicada;
+    public javax.swing.JButton btn_centroVacunacion_cumplidas;
+    public javax.swing.JButton btn_centroVacunacion_nuevo;
+    public javax.swing.JButton btn_centroVacunacion_postergar;
+    private javax.swing.JButton jB1;
+    private javax.swing.JButton jB4;
     private javax.swing.JButton jBAgregar;
+    private javax.swing.JButton jBB2;
     private javax.swing.JButton jBBuscar;
+    private javax.swing.JButton jBBuscar1;
+    private javax.swing.JButton jBEl1;
     private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBModificar;
-    private com.toedter.calendar.JDateChooser jDCFechaHoraCita;
-    private com.toedter.calendar.JDateChooser jDCFechaHoraVac;
+    public javax.swing.JComboBox<String> jCB_hora_cita;
+    public javax.swing.JComboBox<String> jCB_hora_cita1;
+    public javax.swing.JComboBox<String> jCB_hora_vacunacion1;
+    public com.toedter.calendar.JDateChooser jDCFechaHoraCita;
+    private com.toedter.calendar.JDateChooser jDCFechaHoraCita1;
+    private com.toedter.calendar.JDateChooser jDCFechaHoraVac1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanel_a_definir;
+    private javax.swing.JPanel jPanel_cita_vacunacion;
+    private javax.swing.JPanel jPanel_listar_citas;
+    private javax.swing.JPanel jPanel_titulo_ciudadano2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JTextField jTC1;
     private javax.swing.JTextField jTCentroVac;
+    private javax.swing.JTextField jTCentroVac1;
     private javax.swing.JTextField jTCiudadano;
+    private javax.swing.JTextField jTCiudadano1;
     private javax.swing.JTextField jTCodCita;
     private javax.swing.JTextField jTDosis;
+    private javax.swing.JTextField jTDosis1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    public javax.swing.JTable jTable_citaVacunacion_tabla;
+    public javax.swing.JTextField txt_citaVacunacion_buscar;
     // End of variables declaration//GEN-END:variables
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Centro de Vacunación");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(900, 500);
-            
-            CitaVacunacionVista citaVacunacionVista = new CitaVacunacionVista();
-            frame.add(citaVacunacionVista);
-            
-            frame.setVisible(true);
-        });
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            JFrame frame = new JFrame("Centro de Vacunación");
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            frame.setSize(900, 500);
+//            
+//            CitaVacunacionVista citaVacunacionVista = new CitaVacunacionVista();
+//            frame.add(citaVacunacionVista);
+//            
+//            frame.setVisible(true);
+//        });
+//    }
+    private void limpiarCampos() {
+        Date date = null;
+        jTCodCita.setText("");
+        jTDosis.setText("");
+        jTCiudadano.setText("");
+        jTCentroVac.setText("");
+        jDCFechaHoraCita.setDate(date);
     }
+
+//    private void cabecera() {
+//        modelo.addColumn("Codigo cita");
+//        modelo.addColumn("DNI ciudadano");
+//        modelo.addColumn("Fecha y hora cita");
+//        modelo.addColumn("ID centro vacunacion");
+//        modelo.addColumn("fecha y hora vacunacion");
+//        modelo.addColumn("Nro serie dosis");
+//        jTable1.setModel(modelo);
+//
+//    }
+    private void cargarTabla() {
+        LimpiarTabla();
+        List<citaVacunacion> citasVacunacion = citaData.listarCitasCumplidas();
+        for (citaVacunacion cit : citasVacunacion) {
+            modelo.addRow(new Object[]{
+                cit.getCodCita(),
+                cit.getPersona().getDNI(),
+                cit.getFechaHoraCita(),
+                cit.getCentroVacunacion().getIDcentro(),
+                cit.getFechaHoraVacunacion(),
+                cit.getMedida().getNroSerieDosis(),});
+        }
+    }
+
+    //AGREGADO
+    private void cargarHorarios() {
+        String[] horarios = getHorarios();
+        jCB_hora_cita.setModel(new DefaultComboBoxModel<>(horarios));
+    }
+
+    public String[] getHorarios() {
+        List<String> horarios = new ArrayList<>();
+        int hora = 8;
+        int minuto = 0;
+
+        while (hora < 20) {
+            String horario = String.format("%02d:%02d", hora, minuto);
+            horarios.add(horario);
+
+            minuto += 15;
+            if (minuto == 60) {
+                minuto = 0;
+                hora += 1;
+            }
+        }
+
+        return horarios.toArray(new String[0]);
+    }
+    
+    private void LimpiarTabla() {
+    DefaultTableModel modelo = (DefaultTableModel) jTable_citaVacunacion_tabla.getModel();
+    modelo.setRowCount(0); // Elimina todas las filas de la tabla
+}
 
 }

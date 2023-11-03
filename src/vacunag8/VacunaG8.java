@@ -1,10 +1,11 @@
 package vacunag8;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Gonz@_
  */
-
 //import accesoADatos.Conexion;
 //import Entidades.Laboratorio;
 //import Entidades.Vacuna;
@@ -17,10 +18,17 @@ package vacunag8;
 //import javax.swing.JOptionPane;
 //import utilidades.ValidarCUIT;
 //import accesoADatos.VacunaData;
-
 public class VacunaG8 {
 
     public static void main(String[] args) {
+        LocalDateTime fecha1 = LocalDateTime.parse("2023-10-24T17:52:06");
+        LocalDateTime fecha2 = LocalDateTime.parse("2023-10-24T17:52:06");
+
+        if (fecha1.equals(fecha2)) {
+            System.out.println("Las fechas son iguales.");
+        } else {
+            System.out.println("Las fechas no son iguales.");
+        }
 
 //        Connection conexion = Conexion.getConexion();
 
@@ -61,9 +69,7 @@ public class VacunaG8 {
         ciudadanoData.borrarCiudadano(ciudadano);
     }
          ###################################################################################*/
-        
-        
-                //##LABORATORIO##
+        //##LABORATORIO##
         // instancias
 //         LaboratorioData laboratorioData = new LaboratorioData(conexion);
 //
@@ -113,10 +119,8 @@ public class VacunaG8 {
 //        // cerrar la conexión al finalizar
 //        Conexion.desconectar();
 //    }
-
 //    ###################################################################################*/
-                
-                //##VACUNA##
+        //##VACUNA##
 //    
 //     VacunaData vacunaData = new VacunaData(conexion);
 //
@@ -153,4 +157,3 @@ public class VacunaG8 {
 //        Conexion.desconectar();
     }
 }
-    

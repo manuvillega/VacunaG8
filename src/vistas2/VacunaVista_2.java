@@ -1,16 +1,37 @@
 package vistas2;
 
+import Entidades.Vacuna;
+import accesoADatos.Conexion;
+import accesoADatos.VacunaData;
+import java.sql.Connection;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gonz@_
  */
-public class VacunaVista extends javax.swing.JPanel {
+public class VacunaVista_2 extends javax.swing.JPanel {
+
     private boolean esAplicada = false;
+    private VacunaData vacunaData;
+    private Vacuna vacunActual = null;
+    private Vacuna borrar = null;
+    private Vacuna vacunaEncontrada = null;
+    private Connection conexion;
+    private boolean colocada;
+    private String[] marcas = {"Moderna", "Pfizer", "AstraZeneca", "Sinopharm", "Sputnik"};
+    private String[] medidas = {"0.3", "0.5", "0.9"};
+
     /**
      * Creates new form VacunaVista
      */
-    public VacunaVista() {
+    public VacunaVista_2() {
+        conexion = Conexion.getConexion();
         initComponents();
+        cargarMarcas();
+        cargarMedidas();
+        vacunaData = new VacunaData();
     }
 
     /**
@@ -27,26 +48,27 @@ public class VacunaVista extends javax.swing.JPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel_vacuna = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        txt_Laboratorio_Cuit = new javax.swing.JTextField();
-        txt_laboratorio_nombreLab = new javax.swing.JTextField();
-        txt_Laboratorio_pais = new javax.swing.JTextField();
-        txt_Laboratorio_domComercial = new javax.swing.JTextField();
+        jText_numSerie = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel23 = new javax.swing.JLabel();
-        jCBox_no_falso = new javax.swing.JCheckBox();
-        jCBox_si_verdadero = new javax.swing.JCheckBox();
+        jRadioButtonNo = new javax.swing.JCheckBox();
+        jRadioButtonSi = new javax.swing.JCheckBox();
+        jComboBox1_Marca = new javax.swing.JComboBox<>();
+        jComboBox2_Medida = new javax.swing.JComboBox<>();
+        jCFechaCad = new com.toedter.calendar.JDateChooser();
         jPanel_titulo_ciudadano1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jPanel9 = new javax.swing.JPanel();
-        btn_vacuna_agregar = new javax.swing.JButton();
+        jButton1_Agregar = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
-        btn_modificar_modificar = new javax.swing.JButton();
-        btn_laboratorio_eliminar = new javax.swing.JButton();
+        jButton3_Modificar = new javax.swing.JButton();
+        jButton4_Eliminar = new javax.swing.JButton();
+        jButton2_Buscar = new javax.swing.JButton();
 
         jP_vacuna_fondo.setBackground(new java.awt.Color(137, 161, 209));
 
@@ -58,22 +80,8 @@ public class VacunaVista extends javax.swing.JPanel {
         jPanel6.setBackground(new java.awt.Color(191, 200, 209));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_Laboratorio_Cuit.setBackground(new java.awt.Color(137, 161, 209));
-        jPanel6.add(txt_Laboratorio_Cuit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 210, 30));
-
-        txt_laboratorio_nombreLab.setBackground(new java.awt.Color(137, 161, 209));
-        jPanel6.add(txt_laboratorio_nombreLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 210, 30));
-
-        txt_Laboratorio_pais.setBackground(new java.awt.Color(137, 161, 209));
-        txt_Laboratorio_pais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_Laboratorio_paisActionPerformed(evt);
-            }
-        });
-        jPanel6.add(txt_Laboratorio_pais, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 210, 30));
-
-        txt_Laboratorio_domComercial.setBackground(new java.awt.Color(137, 161, 209));
-        jPanel6.add(txt_Laboratorio_domComercial, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 210, 30));
+        jText_numSerie.setBackground(new java.awt.Color(137, 161, 209));
+        jPanel6.add(jText_numSerie, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 210, 30));
 
         jLabel18.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(59, 66, 109));
@@ -103,29 +111,56 @@ public class VacunaVista extends javax.swing.JPanel {
         jLabel23.setText("Fecha Caducidad:");
         jPanel6.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 140, 30));
 
-        jCBox_no_falso.setBackground(new java.awt.Color(191, 200, 209));
-        buttonGroup_aplicada.add(jCBox_no_falso);
-        jCBox_no_falso.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
-        jCBox_no_falso.setForeground(new java.awt.Color(59, 66, 109));
-        jCBox_no_falso.setText("No");
-        jCBox_no_falso.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonNo.setBackground(new java.awt.Color(191, 200, 209));
+        buttonGroup_aplicada.add(jRadioButtonNo);
+        jRadioButtonNo.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
+        jRadioButtonNo.setForeground(new java.awt.Color(59, 66, 109));
+        jRadioButtonNo.setText("No");
+        jRadioButtonNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBox_no_falsoActionPerformed(evt);
+                jRadioButtonNoActionPerformed(evt);
             }
         });
-        jPanel6.add(jCBox_no_falso, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, 30));
+        jPanel6.add(jRadioButtonNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, 30));
 
-        jCBox_si_verdadero.setBackground(new java.awt.Color(191, 200, 209));
-        buttonGroup_aplicada.add(jCBox_si_verdadero);
-        jCBox_si_verdadero.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
-        jCBox_si_verdadero.setForeground(new java.awt.Color(59, 66, 109));
-        jCBox_si_verdadero.setText("Si");
-        jCBox_si_verdadero.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonSi.setBackground(new java.awt.Color(191, 200, 209));
+        buttonGroup_aplicada.add(jRadioButtonSi);
+        jRadioButtonSi.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
+        jRadioButtonSi.setForeground(new java.awt.Color(59, 66, 109));
+        jRadioButtonSi.setText("Si");
+        jRadioButtonSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBox_si_verdaderoActionPerformed(evt);
+                jRadioButtonSiActionPerformed(evt);
             }
         });
-        jPanel6.add(jCBox_si_verdadero, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, 30));
+        jPanel6.add(jRadioButtonSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, 30));
+
+        jComboBox1_Marca.setBackground(new java.awt.Color(137, 161, 209));
+        jComboBox1_Marca.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jComboBox1_Marca.setForeground(new java.awt.Color(59, 66, 109));
+        jComboBox1_Marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Marca" }));
+        jComboBox1_Marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1_MarcaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jComboBox1_Marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 210, 30));
+
+        jComboBox2_Medida.setBackground(new java.awt.Color(137, 161, 209));
+        jComboBox2_Medida.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jComboBox2_Medida.setForeground(new java.awt.Color(59, 66, 109));
+        jComboBox2_Medida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Medida" }));
+        jComboBox2_Medida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2_MedidaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jComboBox2_Medida, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 210, 32));
+
+        jCFechaCad.setBackground(new java.awt.Color(137, 161, 209));
+        jCFechaCad.setForeground(new java.awt.Color(59, 66, 109));
+        jCFechaCad.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jPanel6.add(jCFechaCad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 210, 30));
 
         jPanel_titulo_ciudadano1.setBackground(new java.awt.Color(108, 132, 197));
 
@@ -167,39 +202,50 @@ public class VacunaVista extends javax.swing.JPanel {
 
         jPanel9.setBackground(new java.awt.Color(108, 132, 197));
 
-        btn_vacuna_agregar.setBackground(new java.awt.Color(59, 66, 109));
-        btn_vacuna_agregar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        btn_vacuna_agregar.setForeground(new java.awt.Color(246, 247, 248));
-        btn_vacuna_agregar.setText("Agregar");
-        btn_vacuna_agregar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
-        btn_vacuna_agregar.addActionListener(new java.awt.event.ActionListener() {
+        jButton1_Agregar.setBackground(new java.awt.Color(59, 66, 109));
+        jButton1_Agregar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jButton1_Agregar.setForeground(new java.awt.Color(246, 247, 248));
+        jButton1_Agregar.setText("Agregar");
+        jButton1_Agregar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jButton1_Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_vacuna_agregarActionPerformed(evt);
+                jButton1_AgregarActionPerformed(evt);
             }
         });
 
         jSeparator6.setBackground(new java.awt.Color(48, 52, 59));
         jSeparator6.setForeground(new java.awt.Color(48, 52, 59));
 
-        btn_modificar_modificar.setBackground(new java.awt.Color(59, 66, 109));
-        btn_modificar_modificar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        btn_modificar_modificar.setForeground(new java.awt.Color(246, 247, 248));
-        btn_modificar_modificar.setText("Modificar");
-        btn_modificar_modificar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
-        btn_modificar_modificar.addActionListener(new java.awt.event.ActionListener() {
+        jButton3_Modificar.setBackground(new java.awt.Color(59, 66, 109));
+        jButton3_Modificar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jButton3_Modificar.setForeground(new java.awt.Color(246, 247, 248));
+        jButton3_Modificar.setText("Modificar");
+        jButton3_Modificar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jButton3_Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificar_modificarActionPerformed(evt);
+                jButton3_ModificarActionPerformed(evt);
             }
         });
 
-        btn_laboratorio_eliminar.setBackground(new java.awt.Color(59, 66, 109));
-        btn_laboratorio_eliminar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        btn_laboratorio_eliminar.setForeground(new java.awt.Color(246, 247, 248));
-        btn_laboratorio_eliminar.setText("Eliminar");
-        btn_laboratorio_eliminar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
-        btn_laboratorio_eliminar.addActionListener(new java.awt.event.ActionListener() {
+        jButton4_Eliminar.setBackground(new java.awt.Color(59, 66, 109));
+        jButton4_Eliminar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jButton4_Eliminar.setForeground(new java.awt.Color(246, 247, 248));
+        jButton4_Eliminar.setText("Eliminar");
+        jButton4_Eliminar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jButton4_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_laboratorio_eliminarActionPerformed(evt);
+                jButton4_EliminarActionPerformed(evt);
+            }
+        });
+
+        jButton2_Buscar.setBackground(new java.awt.Color(59, 66, 109));
+        jButton2_Buscar.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jButton2_Buscar.setForeground(new java.awt.Color(246, 247, 248));
+        jButton2_Buscar.setText("Buscar");
+        jButton2_Buscar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(51, 0, 255)));
+        jButton2_Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2_BuscarActionPerformed(evt);
             }
         });
 
@@ -208,12 +254,14 @@ public class VacunaVista extends javax.swing.JPanel {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(btn_vacuna_agregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(260, 260, 260)
-                .addComponent(btn_modificar_modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(255, 255, 255)
-                .addComponent(btn_laboratorio_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(58, 58, 58)
+                .addComponent(jButton2_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(121, 121, 121)
+                .addComponent(jButton1_Agregar, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                .addGap(107, 107, 107)
+                .addComponent(jButton3_Modificar, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                .addGap(117, 117, 117)
+                .addComponent(jButton4_Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                 .addGap(38, 38, 38))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
@@ -226,10 +274,11 @@ public class VacunaVista extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_vacuna_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_laboratorio_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3_Modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(0, 37, Short.MAX_VALUE)
@@ -268,7 +317,7 @@ public class VacunaVista extends javax.swing.JPanel {
         );
         jP_vacuna_fondoLayout.setVerticalGroup(
             jP_vacuna_fondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -283,38 +332,165 @@ public class VacunaVista extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_Laboratorio_paisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_Laboratorio_paisActionPerformed
+    private void jButton1_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_AgregarActionPerformed
+        int nroSerieDosis = 0;
+        try {
+            nroSerieDosis = Integer.parseInt(jText_numSerie.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El n° de Serie debe contener solo numeros");
+        }
+        String marca = jComboBox1_Marca.getSelectedItem().toString();
+        double medida = Double.parseDouble(jComboBox2_Medida.getSelectedItem().toString());
+        java.util.Date utilDate = jCFechaCad.getDate();
+        if (utilDate != null) {
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            boolean colocada = jRadioButtonSi.isSelected();
+            if (vacunActual == null) {
+                vacunActual = new Vacuna(nroSerieDosis, marca, medida, sqlDate, colocada);
+            }
 
-    }//GEN-LAST:event_txt_Laboratorio_paisActionPerformed
+            vacunaData.cargarVacunas(vacunActual);
 
-    private void btn_vacuna_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vacuna_agregarActionPerformed
+            limpiarCampos();
+        } else {
+            JOptionPane.showMessageDialog(this, "La fecha de caducidad no está seleccionada");
+        }
+    }//GEN-LAST:event_jButton1_AgregarActionPerformed
 
-    }//GEN-LAST:event_btn_vacuna_agregarActionPerformed
+    private void jButton3_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3_ModificarActionPerformed
+        Vacuna vacunActual = null;
+        int nroSerieDosis;
+        try {
+            nroSerieDosis = Integer.parseInt(jText_numSerie.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El n° de Serie debe contener solo numeros");
+            return;
+        }
+        Vacuna vacunaEncontrada = vacunaData.obtenerVacunaPorNroSerie(nroSerieDosis);
 
-    private void btn_modificar_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificar_modificarActionPerformed
+        if (vacunaEncontrada != null) {
+            String marca = jComboBox1_Marca.getSelectedItem().toString();
+            double medida = Double.parseDouble(jComboBox2_Medida.getSelectedItem().toString());
+            java.util.Date utilDate = jCFechaCad.getDate();
+            if (utilDate != null) {
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                boolean colocada = jRadioButtonSi.isSelected();
 
-    }//GEN-LAST:event_btn_modificar_modificarActionPerformed
+                if (vacunActual == null) {
+                    vacunActual = new Vacuna(nroSerieDosis, marca, medida, sqlDate, colocada);
+                }
 
-    private void btn_laboratorio_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laboratorio_eliminarActionPerformed
+                vacunaData.modificarStockVacunas(vacunActual);
 
-    }//GEN-LAST:event_btn_laboratorio_eliminarActionPerformed
+                limpiarCampos();
 
-    private void jCBox_no_falsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBox_no_falsoActionPerformed
-        esAplicada = !jCBox_no_falso.isSelected();
-    }//GEN-LAST:event_jCBox_no_falsoActionPerformed
+                JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
 
-    private void jCBox_si_verdaderoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBox_si_verdaderoActionPerformed
-        esAplicada = jCBox_si_verdadero.isSelected();
-    }//GEN-LAST:event_jCBox_si_verdaderoActionPerformed
+            } else {
+                JOptionPane.showMessageDialog(this, "Vacuna no encontrada!");
+            }
+        }
+    }//GEN-LAST:event_jButton3_ModificarActionPerformed
+
+    private void jButton4_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4_EliminarActionPerformed
+        Vacuna vacunActual = null;
+        int nroSerieDosis;
+        try {
+            nroSerieDosis = Integer.parseInt(jText_numSerie.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El n° de Serie debe contener solo numeros");
+            return;
+        }
+        Vacuna vacunaEncontrada = vacunaData.obtenerVacunaPorNroSerie(nroSerieDosis);
+
+        if (vacunaEncontrada != null) {
+            boolean colocada = true;
+            if (vacunActual == null) {
+                vacunActual = new Vacuna(nroSerieDosis, vacunaEncontrada.getMarca(), vacunaEncontrada.getMedida(), vacunaEncontrada.getFechaCaduca(), colocada);
+            }
+            vacunaData.modificarStockVacunas(vacunActual);
+            limpiarCampos();
+
+            JOptionPane.showMessageDialog(this, "Vacuna modificada con éxito");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Vacuna no encontrada!");
+        }
+    }//GEN-LAST:event_jButton4_EliminarActionPerformed
+
+    private void jRadioButtonNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNoActionPerformed
+        esAplicada = !jRadioButtonNo.isSelected();
+    }//GEN-LAST:event_jRadioButtonNoActionPerformed
+
+    private void jRadioButtonSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSiActionPerformed
+        esAplicada = jRadioButtonSi.isSelected();
+    }//GEN-LAST:event_jRadioButtonSiActionPerformed
+
+    private void jComboBox1_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1_MarcaActionPerformed
+
+    }//GEN-LAST:event_jComboBox1_MarcaActionPerformed
+
+    private void jComboBox2_MedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2_MedidaActionPerformed
+
+    }//GEN-LAST:event_jComboBox2_MedidaActionPerformed
+
+    private void jButton2_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_BuscarActionPerformed
+        int nroSerieDosis;
+        try {
+            nroSerieDosis = Integer.parseInt(jText_numSerie.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El n° de Serie debe contener solo numeros");
+            return;
+        }
+        Vacuna vacunaEncontrada = vacunaData.obtenerVacunaPorNroSerie(nroSerieDosis);
+
+        //        JOptionPane.showMessageDialog(this, vacunaEncontrada);   // para ver si llega vacuna de la BD
+        if (vacunaEncontrada != null) {
+            jComboBox1_Marca.setSelectedItem(vacunaEncontrada.getMarca());
+
+            for (int i = 0; i < jComboBox1_Marca.getItemCount(); i++) {
+                if (vacunaEncontrada.getMarca().equals(jComboBox1_Marca.getItemAt(i))) {
+
+                    jComboBox1_Marca.setSelectedIndex(i);
+                    break;
+                }
+            }
+
+            jComboBox2_Medida.setSelectedItem(vacunaEncontrada.getMedida());
+
+            for (int i = 0; i < jComboBox2_Medida.getItemCount(); i++) {
+                if (vacunaEncontrada.getMedida() == (Double.valueOf(jComboBox2_Medida.getItemAt(i)))) {
+                    jComboBox2_Medida.setSelectedIndex(i);
+                    break;
+                }
+            }
+
+            jCFechaCad.setDate(vacunaEncontrada.getFechaCaduca());
+
+            if (vacunaEncontrada.isColocada() == true) {
+                jRadioButtonSi.setSelected(true);
+
+            } else {
+                jRadioButtonNo.setSelected(true);
+            }
+
+            limpiarCampos();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Vacuna no encontrada!");
+        }
+    }//GEN-LAST:event_jButton2_BuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btn_laboratorio_eliminar;
-    public javax.swing.JButton btn_modificar_modificar;
-    public javax.swing.JButton btn_vacuna_agregar;
     private javax.swing.ButtonGroup buttonGroup_aplicada;
-    public javax.swing.JCheckBox jCBox_no_falso;
-    public javax.swing.JCheckBox jCBox_si_verdadero;
+    public javax.swing.JButton jButton1_Agregar;
+    public javax.swing.JButton jButton2_Buscar;
+    public javax.swing.JButton jButton3_Modificar;
+    public javax.swing.JButton jButton4_Eliminar;
+    private com.toedter.calendar.JDateChooser jCFechaCad;
+    public javax.swing.JComboBox<String> jComboBox1_Marca;
+    public javax.swing.JComboBox<String> jComboBox2_Medida;
     public javax.swing.JLabel jLabel18;
     public javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -326,17 +502,28 @@ public class VacunaVista extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanel_titulo_ciudadano1;
     private javax.swing.JPanel jPanel_vacuna;
+    public javax.swing.JCheckBox jRadioButtonNo;
+    public javax.swing.JCheckBox jRadioButtonSi;
     public javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    public javax.swing.JTextField txt_Laboratorio_Cuit;
-    public javax.swing.JTextField txt_Laboratorio_domComercial;
-    public javax.swing.JTextField txt_Laboratorio_pais;
-    public javax.swing.JTextField txt_laboratorio_nombreLab;
+    public javax.swing.JTextField jText_numSerie;
     // End of variables declaration//GEN-END:variables
 
-public boolean esAplicada() {
-    return esAplicada;
-}
+    private void limpiarCampos() {
+    }
+
+    public boolean esAplicada() {
+        return esAplicada;
+    }
+
+    private void cargarMarcas() {
+        jComboBox1_Marca.setModel(new DefaultComboBoxModel<>(marcas));
+    }
+
+    private void cargarMedidas() {
+        jComboBox2_Medida.setModel(new DefaultComboBoxModel<>(medidas));
+    }
+
 }

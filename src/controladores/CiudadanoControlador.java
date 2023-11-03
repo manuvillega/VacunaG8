@@ -109,6 +109,7 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
                         limpiarTabla();
                         limpiarCampos();
                         listarTodosLosCiudadanos();
+                       ciudadanoVista.btn_ciudadano_agregar.setEnabled(true);
                         JOptionPane.showMessageDialog(null, "Ciudadano actualizado.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar Ciudadano.");
@@ -127,12 +128,12 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
                     limpiarTabla();
                     limpiarCampos();
                     listarTodosLosCiudadanos();
+                    ciudadanoVista.btn_ciudadano_agregar.setEnabled(true);
                     JOptionPane.showMessageDialog(null, "Ciudadano eliminado.");
                 }
             }
-        }
+        } 
     }
-
     //llena la tabla ciudadano con el metodo listarCiudadanos de ciudadanoData
     public void listarTodosLosCiudadanos() {
         List<Ciudadano> listaCiudadanos = ciudadanoData.listarCiudadanos(ciudadanoVista.txt_ciudadano_buscar.getText());
@@ -225,7 +226,6 @@ public class CiudadanoControlador implements ActionListener, MouseListener, KeyL
         }
 
     }
-
 
     //METODO LIMPIAR TABLA
     public void limpiarTabla() {

@@ -3,7 +3,7 @@ package Entidades;
 
 import java.time.LocalDateTime;
 
-public class citaVacunacion {
+    public class citaVacunacion {
     private int codCita;
     private Ciudadano persona;
     private String fechaHoraCita;

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,15 +26,22 @@ public class LaboratorioData {
     public void agregarLaboratorio(Laboratorio laboratorio) {
         String query = "INSERT INTO laboratorio (CUIT, nomLaboratorio, pais, domComercial) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement statement = conexion.prepareStatement(query)) {
+        try (PreparedStatement statement = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, laboratorio.getCuit());
             statement.setString(2, laboratorio.getNomLaboratorio());
             statement.setString(3, laboratorio.getPais());
             statement.setString(4, laboratorio.getDomComercial());
 
-            statement.executeUpdate();
-            System.out.println("Laboratorio agregado");
-            JOptionPane.showMessageDialog(null, "Laboratorio agregado correctamente.");
+            int filasAfectadas = statement.executeUpdate();
+            if (filasAfectadas == 1) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int idLaboratorio = generatedKeys.getInt(1);
+                    laboratorio.setIdLaboratorio(idLaboratorio);
+                    System.out.println("Laboratorio agregado con ID: " + idLaboratorio);
+                    JOptionPane.showMessageDialog(null, "Laboratorio agregado correctamente.");
+                }
+            }
         } catch (SQLException e) {
             System.err.println("Error al insertar laboratorio: " + e.getMessage());
             e.printStackTrace();
@@ -65,13 +73,14 @@ public class LaboratorioData {
     }
 
     public void actualizarLaboratorio(Laboratorio laboratorio) {
-        String query = "UPDATE laboratorio SET nomLaboratorio = ?, pais = ?, domComercial = ? WHERE CUIT = ?";
+        String query = "UPDATE laboratorio SET CUIT = ?, nomLaboratorio = ?, pais = ?, domComercial = ? WHERE idLaboratorio = ?";
 
         try (PreparedStatement statement = conexion.prepareStatement(query)) {
-            statement.setString(1, laboratorio.getNomLaboratorio());
-            statement.setString(2, laboratorio.getPais());
-            statement.setString(3, laboratorio.getDomComercial());
-            statement.setString(4, laboratorio.getCuit());
+            statement.setString(1, laboratorio.getCuit());
+            statement.setString(2, laboratorio.getNomLaboratorio());
+            statement.setString(3, laboratorio.getPais());
+            statement.setString(4, laboratorio.getDomComercial());
+            statement.setInt(5, laboratorio.getIdLaboratorio());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -80,11 +89,11 @@ public class LaboratorioData {
         }
     }
 
-    public void eliminarLaboratorio(String cuit) {
-        String query = "DELETE FROM laboratorio WHERE CUIT = ?";
+    public void eliminarLaboratorio(int idLaboratorio) {
+        String query = "DELETE FROM laboratorio WHERE idLaboratorio = ?";
 
         try (PreparedStatement statement = conexion.prepareStatement(query)) {
-            statement.setString(1, cuit);
+            statement.setInt(1, idLaboratorio);
             statement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error al eliminar laboratorio: " + e.getMessage());
@@ -116,4 +125,5 @@ public class LaboratorioData {
 
         return laboratorios;
     }
+
 }

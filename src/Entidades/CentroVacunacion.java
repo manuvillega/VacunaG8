@@ -5,6 +5,9 @@ public class CentroVacunacion {
         private String nombre;
         private String direccion;
         private String Provincia;
+
+    public CentroVacunacion() {
+    }
         private String Ciudad;
 
     public CentroVacunacion(int IDcentro, String nombre, String direccion, String Provincia, String Ciudad) {

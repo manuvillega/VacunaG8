@@ -4,8 +4,10 @@ import Entidades.CentroVacunacion;
 import accesoADatos.CentroVacunacionData;
 import accesoADatos.Conexion;
 import java.awt.BorderLayout;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import utilidades.ProvinciasCiudades;
 
 /**
@@ -13,14 +15,19 @@ import utilidades.ProvinciasCiudades;
  * @author Gonz@_
  */
 public class CentroVacunacionVista_2 extends javax.swing.JPanel {
-     private CentroVacunacionData centroVacunacionData;
+
+    private CentroVacunacionData centroVacunacionData;
+   private DefaultTableModel modelo;
+
     /**
      * Creates new form CentroVacunacion_2
      */
     public CentroVacunacionVista_2() {
         initComponents();
         cargarProvincias();
-         centroVacunacionData = new CentroVacunacionData(Conexion.getConexion());
+        centroVacunacionData = new CentroVacunacionData(Conexion.getConexion());
+        modelo = new DefaultTableModel();
+       
     }
 
     /**
@@ -465,7 +472,7 @@ public class CentroVacunacionVista_2 extends javax.swing.JPanel {
     }//GEN-LAST:event_txt_direccion_centroVacActionPerformed
 
     private void btn_centroVacunacion_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_centroVacunacion_nuevoActionPerformed
-                if (jPanel_centroVac.isVisible()) {
+        if (jPanel_centroVac.isVisible()) {
             jPanel_centroVac.setVisible(false); // Ocultar el JPanel
         } else {
             jPanel_centroVac.setVisible(true); // Mostrar el JPanel
@@ -476,9 +483,9 @@ public class CentroVacunacionVista_2 extends javax.swing.JPanel {
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         int id = Integer.parseInt(txt_centroVacunacion_id.getText());
-        if(id != 0){
-            CentroVacunacion centroVacunacion =  centroVacunacionData.obtenerCentroVacunacionPorId(id);
-            if(centroVacunacion != null){
+        if (id != 0) {
+            CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(id);
+            if (centroVacunacion != null) {
                 txt_nombre_centroVacunacion.setText(centroVacunacion.getNombre());
                 txt_direccion_centroVac.setText(centroVacunacion.getDireccion());
                 for (int i = 0; i < jCB_CentroVacunacion_Provincias.getItemCount(); i++) {
@@ -496,19 +503,19 @@ public class CentroVacunacionVista_2 extends javax.swing.JPanel {
                     jCB_CentroVacunacion_Ciudades.setSelectedIndex(id);
                 }
 
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(this, "No existe un centro de vacunacion con ese ID, por favor pruebe nuevamente con otro ID");
             }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "El ID no puede ser 0 o un numero negativo");
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
         int id = Integer.parseInt(txt_centroVacunacion_id.getText());
-        if(id != 0){
+        if (id != 0) {
             CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(id);
-            if(centroVacunacion != null){
+            if (centroVacunacion != null) {
                 String nombre = txt_nombre_centroVacunacion.getText();
                 String direccion = txt_direccion_centroVac.getText();
                 String provincia = jCB_CentroVacunacion_Provincias.getSelectedItem().toString();
@@ -518,7 +525,7 @@ public class CentroVacunacionVista_2 extends javax.swing.JPanel {
             } else {
                 JOptionPane.showMessageDialog(this, "No existe un centro de vacunacion con ese ID, por favor pruebe nuevamente con otro ID");
             }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "El ID no puede ser 0 o un numero negativo");
         }
 
@@ -526,25 +533,25 @@ public class CentroVacunacionVista_2 extends javax.swing.JPanel {
 
     private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
         int id = Integer.parseInt(txt_centroVacunacion_id.getText());
-        if(id != 0){
+        if (id != 0) {
             CentroVacunacion centroVacunacion = centroVacunacionData.obtenerCentroVacunacionPorId(id);
-            if(centroVacunacion != null){
+            if (centroVacunacion != null) {
                 centroVacunacionData.borrarCentro(id);
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(this, "No existe un centro de vacunacion con ese ID, por favor pruebe nuevamente con otro ID");
             }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "El ID no puede ser 0 o un numero negativo");
         }
     }//GEN-LAST:event_jBEliminarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
-        try{
+        try {
             int id = Integer.parseInt(txt_centroVacunacion_id.getText());
-            if(id > 0){
+            if (id > 0) {
                 JOptionPane.showMessageDialog(this, "Por favor para crear un centro de vacunacion nuevo, deje el campo ID vacio");
             }
-        } catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
 
         }
         int idN = 0;
@@ -625,4 +632,21 @@ public class CentroVacunacionVista_2 extends javax.swing.JPanel {
         String[] ciudades = ProvinciasCiudades.obtenerCiudadesPorProvincia(provincia);
         jCB_CentroVacunacion_Ciudades.setModel(new DefaultComboBoxModel<>(ciudades));
     }
+
+
+    
+//        private void LlenarTabla() {
+//        List<CentroVacunacion> listaCentros = centroVacunacionData.listarCentros();
+//        for (CentroVacunacion centro : listaCentros) {
+//            modelo.addRow(new Object[]{
+//                centro.getIDcentro(),
+//                centro.getNombre(),
+//                centro.getDireccion(),
+//                centro.getProvincia(),
+//                centro.getCiudad()
+//            });
+//        }
+//    }
+    
+  
 }

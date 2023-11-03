@@ -36,7 +36,7 @@ public class Principal extends javax.swing.JFrame {
 //    private VacinaVista VacinaVista;
     private Ciudadano ciudadano;
     private CiudadanoData ciudadanoData;
-    private VacunaVista vacunaVista;
+    private VacunaVista_2 vacunaVista;
 
     public Principal() {
         initComponents();
@@ -52,7 +52,7 @@ public class Principal extends javax.swing.JFrame {
         ciudadano = new Ciudadano();
         ciudadanoData = new CiudadanoData(conexion);
         laboratorioVista = new LaboratorioVista_2();
-        vacunaVista = new VacunaVista();
+        vacunaVista = new VacunaVista_2();
         centroVacunacionVista = new CentroVacunacionVista_2();
         citaVacunacionVista = new CitaVacunacionVista();
 
