@@ -1,6 +1,10 @@
 package vacunag8;
 
+import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
 import java.time.LocalDateTime;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import vistas2.Principal;
 
 /**
  *
@@ -21,6 +25,19 @@ import java.time.LocalDateTime;
 public class VacunaG8 {
 
     public static void main(String[] args) {
+        try {
+            // Configurar el look and feel antes de crear la instancia de la ventana principal
+            UIManager.setLookAndFeel(new McWinLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            ex.printStackTrace();
+        }
+        
+        // Crear una instancia de la clase Principal
+        Principal principal = new Principal();
+        
+        // Hacer visible la ventana principal
+        principal.setVisible(true);
+    
         LocalDateTime fecha1 = LocalDateTime.parse("2023-10-24T17:52:06");
         LocalDateTime fecha2 = LocalDateTime.parse("2023-10-24T17:52:06");
 
@@ -29,6 +46,8 @@ public class VacunaG8 {
         } else {
             System.out.println("Las fechas no son iguales.");
         }
+        
+        
 
 //        Connection conexion = Conexion.getConexion();
 
