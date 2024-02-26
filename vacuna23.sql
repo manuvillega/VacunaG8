@@ -66,8 +66,8 @@ CREATE TABLE `citavacunacion` (
 -- Volcado de datos para la tabla `citavacunacion`
 --
 
-INSERT INTO `citavacunacion` (`codCita`, `persona`, `codRefuerzo`, `fechaHoraCita`, `centroVacunacion`, `fechaHoraColoca`, `dosis`) VALUES
-(NULL, 34434322, 1, '2023-9-24 17:52', '1', '2023-10-24 17:52:06', 2);
+/*INSERT INTO `citavacunacion` (`codCita`, `persona`, `codRefuerzo`, `fechaHoraCita`, `centroVacunacion`, `fechaHoraColoca`, `dosis`) VALUES
+(NULL, 34434322, 1, '2023-9-24 17:52', '1', '2023-10-24 17:52:06', 2);*/
 
 -- --------------------------------------------------------
 
